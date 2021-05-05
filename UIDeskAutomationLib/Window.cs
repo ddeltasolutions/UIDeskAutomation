@@ -330,7 +330,7 @@ namespace dDeltaSolutions.PSLib
         /// <summary>
         /// gets/sets width of window
         /// </summary>
-        public int Width
+        new public int Width
         {
             get
             {
@@ -372,7 +372,7 @@ namespace dDeltaSolutions.PSLib
         /// <summary>
         /// gets/sets window height
         /// </summary>
-        public int Height
+        new public int Height
         {
             get
             {
