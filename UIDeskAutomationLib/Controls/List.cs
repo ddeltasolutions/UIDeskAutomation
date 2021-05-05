@@ -11,6 +11,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class List: ElementBase
     {
+		/// <summary>
+        /// Creates a List using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public List(AutomationElement el)
         {
             this.uiElement = el;
@@ -215,7 +219,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             listItem.Select();
         }
@@ -255,7 +258,6 @@ namespace dDeltaSolutions.PSLib
                 {
                     Engine.TraceInLogFile("Item not found");
                     throw new Exception("Item not found");
-                    return;
                 }
                 
                 listItem.Select();
@@ -297,7 +299,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             listItem.AddToSelection();
         }
@@ -337,7 +338,6 @@ namespace dDeltaSolutions.PSLib
                 {
                     Engine.TraceInLogFile("Item not found");
                     throw new Exception("Item not found");
-                    return;
                 }
                 
                 listItem.AddToSelection();
@@ -375,7 +375,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             listItem.RemoveFromSelection();
         }
@@ -415,7 +414,6 @@ namespace dDeltaSolutions.PSLib
                 {
                     Engine.TraceInLogFile("Item not found");
                     throw new Exception("Item not found");
-                    return;
                 }
                 
                 listItem.RemoveFromSelection();

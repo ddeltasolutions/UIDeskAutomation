@@ -173,7 +173,7 @@ namespace dDeltaSolutions.PSLib
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
         /// <returns>ListItem elements</returns>
-        public ListItem[] ListItems(string name = null, bool searchDescendants = false,
+        new public ListItem[] ListItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allListItems = FindAll(ControlType.ListItem,
@@ -293,7 +293,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             listItem.Select();
             
@@ -321,7 +320,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             
             listItem.Select();

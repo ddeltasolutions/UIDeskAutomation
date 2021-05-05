@@ -13,6 +13,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class DatePicker: ElementBase
     {
+		/// <summary>
+        /// Creates a DatePicker using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public DatePicker(AutomationElement el)
         {
             base.uiElement = el;

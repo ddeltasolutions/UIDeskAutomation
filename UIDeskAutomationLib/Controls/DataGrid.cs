@@ -286,7 +286,7 @@ namespace dDeltaSolutions.PSLib
         /// <summary>
         /// Gets all groups in a DataGrid control.
         /// </summary>
-        public Group[] Groups
+        new public Group[] Groups
         {
             get
             {
@@ -478,7 +478,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             dataItem.Select();
         }
@@ -505,7 +504,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             dataItem.AddToSelection();
         }
@@ -532,7 +530,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("Item not found");
                 throw new Exception("Item not found");
-                return;
             }
             dataItem.RemoveFromSelection();
         }
@@ -1027,7 +1024,7 @@ namespace dDeltaSolutions.PSLib
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
         /// <returns>Group element</returns>
-        public Group Group(string name = null, bool searchDescendants = false,
+        new public Group Group(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Group,
@@ -1059,7 +1056,7 @@ namespace dDeltaSolutions.PSLib
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
         /// <returns>Group element</returns>
-        public Group GroupAt(string name, int index, bool searchDescendants = false,
+        new public Group GroupAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)

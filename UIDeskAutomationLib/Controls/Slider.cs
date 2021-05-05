@@ -11,6 +11,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class Slider: GenericSpinner
     {
+		/// <summary>
+        /// Creates a Slider using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public Slider(AutomationElement el)
             : base(el)
         { }
@@ -64,7 +68,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the minimum value the current slider can get.
         /// </summary>
         /// <returns>The minimum value of the slider</returns>
-        public double GetMinimum()
+        new public double GetMinimum()
         {
             return base.GetMinimum();
         }
@@ -73,7 +77,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the maximum value the current slider can get.
         /// </summary>
         /// <returns>The maximum value of the slider</returns>
-        public double GetMaximum()
+        new public double GetMaximum()
         {
             return base.GetMaximum();
         }
@@ -81,7 +85,7 @@ namespace dDeltaSolutions.PSLib
         /// <summary>
         /// Gets/Sets the value of the current slider.
         /// </summary>
-        public double Value
+        new public double Value
         {
             get { return base.Value; }
             set { base.Value = value; }

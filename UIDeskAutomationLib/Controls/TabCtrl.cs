@@ -11,6 +11,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class TabCtrl : ElementBase
     {
+		/// <summary>
+        /// Creates a TabCtrl using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public TabCtrl(AutomationElement el)
         {
             this.uiElement = el;
@@ -182,7 +186,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("TabItem not found");
                 throw new Exception("TabItem not found");
-                return;
             }
             tabItem.Select();
         }
@@ -199,7 +202,6 @@ namespace dDeltaSolutions.PSLib
             {
                 Engine.TraceInLogFile("TabItem not found");
                 throw new Exception("TabItem not found");
-                return;
             }
             tabItem.Select();
         }

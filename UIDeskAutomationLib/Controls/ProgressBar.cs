@@ -11,13 +11,17 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class ProgressBar: GenericSpinner
     {
+		/// <summary>
+        /// Creates a ProgressBar using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public ProgressBar(AutomationElement el): base(el)
         { }
         
         /// <summary>
         /// Gets the value of the current progressbar.
         /// </summary>
-        public double Value
+        new public double Value
         {
             get { return base.Value; }
         }
@@ -26,7 +30,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the minimum value the current progressbar can get.
         /// </summary>
         /// <returns>The minimum value of the progressbar</returns>
-        public double GetMinimum()
+        new public double GetMinimum()
         {
             return base.GetMinimum();
         }
@@ -35,7 +39,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the maximum value the current progressbar can get.
         /// </summary>
         /// <returns>The maximum value of the progressbar</returns>
-        public double GetMaximum()
+        new public double GetMaximum()
         {
             return base.GetMaximum();
         }

@@ -12,6 +12,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class Spinner: GenericSpinner
     {
+		/// <summary>
+        /// Creates a Spinner using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public Spinner(AutomationElement el): base(el)
         {
             //this.uiElement = el;
@@ -83,7 +87,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the minimum value the current spinner can get.
         /// </summary>
         /// <returns>The minimum value of the spinner</returns>
-        public double GetMinimum()
+        new public double GetMinimum()
         {
             return base.GetMinimum();
         }
@@ -92,7 +96,7 @@ namespace dDeltaSolutions.PSLib
         /// Gets the maximum value the current spinner can get.
         /// </summary>
         /// <returns>The maximum value of the spinner</returns>
-        public double GetMaximum()
+        new public double GetMaximum()
         {
             return base.GetMaximum();
         }
@@ -100,7 +104,7 @@ namespace dDeltaSolutions.PSLib
         /// <summary>
         /// Gets/Sets the value of the current spinner.
         /// </summary>
-        public double Value
+        new public double Value
         {
             get { return base.Value; }
             set { base.Value = value; }

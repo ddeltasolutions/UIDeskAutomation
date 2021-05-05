@@ -13,6 +13,10 @@ namespace dDeltaSolutions.PSLib
     /// </summary>
     public class ListItem: ElementBase
     {
+		/// <summary>
+        /// Creates a ListItem using an AutomationElement
+        /// </summary>
+        /// <param name="el">UI Automation AutomationElement</param>
         public ListItem(AutomationElement el)
         {
             base.uiElement = el;
@@ -272,8 +276,6 @@ namespace dDeltaSolutions.PSLib
                     if (className.ToString() == "SysListView32")
                     { 
                         // Win32 standard listview control
-                        LV_ITEM lvItem = new LV_ITEM();
-
                         int index = this.Index;
 
                         IntPtr itemState = UnsafeNativeFunctions.SendMessage(
