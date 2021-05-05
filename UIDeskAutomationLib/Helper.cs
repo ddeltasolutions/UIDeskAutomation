@@ -1156,8 +1156,6 @@ namespace dDeltaSolutions.PSLib
                 }
             }
             while (true);
-            
-            return null;
         }
         
         internal static Bitmap CaptureElementToFile(AutomationElement element)
