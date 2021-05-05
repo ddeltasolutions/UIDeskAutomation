@@ -196,7 +196,7 @@ namespace dDeltaSolutions.PSLib
         public static UInt32 LVM_GETITEMSTATE = LVM_FIRST + 44;
     }
     
-    public enum TernaryRasterOperations : uint 
+    internal enum TernaryRasterOperations : uint 
     {
         SRCCOPY     = 0x00CC0020,
         SRCPAINT    = 0x00EE0086,
