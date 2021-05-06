@@ -30,7 +30,7 @@ namespace dDeltaSolutions.PSLib
     {
         private static int wait = 5000; //default wait 5 seconds
         private static string logFileName = string.Empty;
-        private static bool throwExceptionsWhenSearch = true;
+        private static bool throwExceptionsWhenSearch = false;
 
         private static Engine instance = null;
 
@@ -99,7 +99,8 @@ namespace dDeltaSolutions.PSLib
         }
 
         /// <summary>
-        /// Gets/Sets whether script should raise exceptions when elements are not found.
+        /// Gets/Sets whether this library should raise exceptions when searched elements are not found.
+		/// Default value is false which means the search functions will return null if elements are not found.
         /// </summary>
         public bool ThrowExceptionsForSearchFunctions
         {
@@ -272,7 +273,6 @@ namespace dDeltaSolutions.PSLib
                 }
 
                 nWaitMs -= 100; //wait 100 milliseconds
-
                 Thread.Sleep(100);
             }
 
@@ -421,7 +421,6 @@ namespace dDeltaSolutions.PSLib
         public Pane GetDesktopPane()
         {
             AutomationElement desktopPane = AutomationElement.RootElement;
-
             return new Pane(desktopPane);
         }
 

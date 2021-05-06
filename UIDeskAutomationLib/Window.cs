@@ -212,11 +212,11 @@ namespace dDeltaSolutions.PSLib
         }
 
         /// <summary>
-        /// Moves current window to specified x and y screen coordinates.
+        /// Moves this window to specified x and y screen coordinates.
         /// </summary>
-        /// <param name="horizontal">x coordinate</param>
-        /// <param name="vertical">y coordinate</param>
-        public void Move(int horizontal, int vertical)
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        public void Move(int x, int y)
         {
             if (this.hWnd == IntPtr.Zero)
             {
@@ -231,34 +231,25 @@ namespace dDeltaSolutions.PSLib
             int width = rect.Right - rect.Left;
             int height = rect.Bottom - rect.Top;
 
-            UnsafeNativeFunctions.MoveWindow(this.hWnd, horizontal, vertical, width, height, true );
+            UnsafeNativeFunctions.MoveWindow(this.hWnd, x, y, width, height, true);
         }
 
         /// <summary>
-        /// Moves a window relatively with x and y offsets
+        /// Moves a window relatively with horizontal and vertical offsets
         /// </summary>
-        /// <param name="horizontal">horizontal offset</param>
-        /// <param name="vertical">vertical offset</param>
-        public void Move(double horizontal, double vertical)
+        /// <param name="horizontalOffset">horizontal offset</param>
+        /// <param name="verticalOffset">vertical offset</param>
+        public void MoveOffset(int horizontalOffset, int verticalOffset)
         {
-            int horizontalInteger = 0;
-            int verticalInteger = 0;
+			System.Windows.Point pt = GetPosition();
+			int newX = (int)(pt.X + horizontalOffset);
+			int newY = (int)(pt.Y + verticalOffset);
 
-            try
-            {
-                horizontalInteger = Convert.ToInt32(horizontal);
-                verticalInteger = Convert.ToInt32(vertical);
-            }
-            catch
-            {
-                return;
-            }
-
-            this.Move(horizontalInteger, verticalInteger);
+            this.Move(newX, newY);
         }
 
         /// <summary>
-        /// Sets both width and height of window
+        /// Sets both width and height of this window
         /// </summary>
         /// <param name="width">width in pixels</param>
         /// <param name="height">height in pixels</param>
@@ -271,36 +262,12 @@ namespace dDeltaSolutions.PSLib
             }
 
             RECT rect = new RECT(0, 0, 0, 0);
-
             UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
             int x = rect.Left;
             int y = rect.Top;
 
             UnsafeNativeFunctions.MoveWindow(this.hWnd, x, y, width, height, true);
-        }
-
-        /// <summary>
-        /// Resizes a window
-        /// </summary>
-        /// <param name="width">new width</param>
-        /// <param name="height">new height</param>
-        public void Resize(double width, double height)
-        {
-            int widthInteger = 0;
-            int heightInteger = 0;
-
-            try
-            {
-                widthInteger = Convert.ToInt32(width);
-                heightInteger = Convert.ToInt32(height);
-            }
-            catch
-            {
-                return;
-            }
-
-            this.Resize(widthInteger, heightInteger);
         }
 
         /// <summary>
@@ -318,7 +285,6 @@ namespace dDeltaSolutions.PSLib
             }
 
             RECT rect = new RECT(0, 0, 0, 0);
-
             UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
             point.X = (double)rect.Left;
@@ -341,7 +307,6 @@ namespace dDeltaSolutions.PSLib
                 }
 
                 RECT rect = new RECT(0, 0, 0, 0);
-
                 UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
                 int width = rect.Right - rect.Left;
@@ -357,7 +322,6 @@ namespace dDeltaSolutions.PSLib
                 }
 
                 RECT rect = new RECT(0, 0, 0, 0);
-
                 UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
                 int x = rect.Left;
@@ -383,7 +347,6 @@ namespace dDeltaSolutions.PSLib
                 }
 
                 RECT rect = new RECT(0, 0, 0, 0);
-
                 UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
                 int height = rect.Bottom - rect.Top;
@@ -399,7 +362,6 @@ namespace dDeltaSolutions.PSLib
                 }
 
                 RECT rect = new RECT(0, 0, 0, 0);
-
                 UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
                 int x = rect.Left;
