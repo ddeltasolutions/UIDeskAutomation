@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Automation;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Generic base class for Spinner, Slider, ProgressBar and Scrollbar.

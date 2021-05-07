@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Automation;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Represents a CheckBox UI element

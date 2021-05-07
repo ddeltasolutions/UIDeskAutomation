@@ -6,7 +6,7 @@ using System.Windows.Automation;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Represents a DatePicker UI element

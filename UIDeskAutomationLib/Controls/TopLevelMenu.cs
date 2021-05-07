@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Automation;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Class that represents a Top Level Menu element, like a Contextual menu.

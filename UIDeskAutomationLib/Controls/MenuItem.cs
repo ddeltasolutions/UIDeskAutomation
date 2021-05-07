@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Automation;
 using System.Threading;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Class that represents a Menu Item ui element

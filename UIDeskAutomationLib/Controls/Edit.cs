@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Represents an EditBox UI element
