@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     internal class UnsafeNativeFunctions
     {
@@ -355,7 +355,7 @@ namespace dDeltaSolutions.PSLib
         public Int32 iGroup;
     }
 
-    enum WindowShowStyle : uint
+    internal enum WindowShowStyle : uint
     {
         /// <summary>Hides the window and activates another window.</summary>
         /// <remarks>See SW_HIDE</remarks>

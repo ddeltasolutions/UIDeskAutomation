@@ -13,16 +13,8 @@ using System.Windows.Automation;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
-    /// <summary>
-    /// dDeltaSolutions.PSLib namespace contains classes for automating 
-    /// Windows user interface elements.
-    /// </summary>
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc
-    { }
-
     /// <summary>
     /// Main entry point class. You need only one instance of this class.
     /// </summary>

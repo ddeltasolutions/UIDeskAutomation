@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     partial class ElementBase
     {

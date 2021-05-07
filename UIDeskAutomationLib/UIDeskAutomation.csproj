@@ -7,7 +7,7 @@
     <ProjectGuid>{7506122F-E538-4353-BB3B-CACDEC861CEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>dDeltaSolutions.PSLib</RootNamespace>
+    <RootNamespace>UIDeskAutomationLib</RootNamespace>
     <AssemblyName>UIDeskAutomation</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

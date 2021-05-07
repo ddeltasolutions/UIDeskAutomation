@@ -1,4 +1,4 @@
-﻿namespace dDeltaSolutions.PSLib
+﻿namespace UIDeskAutomationLib
 {
     partial class FrmDummy
     {

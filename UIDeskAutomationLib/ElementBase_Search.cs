@@ -6,7 +6,7 @@ using System.Threading;
 using System.Windows.Automation;
 using System.Windows.Forms;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     partial class ElementBase
     {

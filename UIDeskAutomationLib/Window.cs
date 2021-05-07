@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Automation;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     /// <summary>
     /// Class that represents a Window ui element.

@@ -8,7 +8,7 @@ using System.Windows.Automation;
 using System.Drawing;
 using System.Windows;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     internal class Helper
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace dDeltaSolutions.PSLib
+namespace UIDeskAutomationLib
 {
     internal partial class FrmDummy : Form
     {
