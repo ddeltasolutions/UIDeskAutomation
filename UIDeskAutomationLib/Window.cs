@@ -294,9 +294,9 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// gets/sets width of window
+        /// gets/sets width of this window
         /// </summary>
-        new public int Width
+        public int WindowWidth
         {
             get
             {
@@ -336,7 +336,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// gets/sets window height
         /// </summary>
-        new public int Height
+        public int WindowHeight
         {
             get
             {
