@@ -1084,7 +1084,7 @@ namespace UIDeskAutomationLib
             POINT pt;
             pt.X = left;
             pt.Y = top;
-            if (hWnd != null && UnsafeNativeFunctions.ScreenToClient(hWnd, ref pt) == false)
+            if (hWnd != IntPtr.Zero && UnsafeNativeFunctions.ScreenToClient(hWnd, ref pt) == false)
             {
                 return null;
             }
@@ -1158,7 +1158,7 @@ namespace UIDeskAutomationLib
             while (true);
         }
         
-        internal static Bitmap CaptureElementToFile(AutomationElement element)
+        internal static Bitmap CaptureElement(AutomationElement element)
         {
             if (element.Current.ControlType == ControlType.Menu || 
                 element.Current.ControlType == ControlType.MenuItem)
@@ -1213,7 +1213,7 @@ namespace UIDeskAutomationLib
 			return bitmap;
         }
 		
-		internal static Bitmap CaptureVisibleElementToFile(AutomationElement element, Rect? cropRect = null)
+		internal static Bitmap CaptureVisibleElement(AutomationElement element, Rect? cropRect = null)
 		{
 			Rect rect = element.Current.BoundingRectangle;
 			System.Drawing.Size size = new System.Drawing.Size((int)rect.Width, (int)rect.Height);

@@ -708,7 +708,7 @@ namespace UIDeskAutomationLib
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
         public void CaptureToFile(string fileName, Rect? cropRect = null)
         {
-            Bitmap bitmap = Helper.CaptureElementToFile(uiElement);
+            Bitmap bitmap = Helper.CaptureElement(uiElement);
 			
 			if (cropRect.HasValue)
 			{
@@ -743,7 +743,7 @@ namespace UIDeskAutomationLib
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
         public void CaptureVisibleToFile(string fileName, Rect? cropRect = null)
         {
-            Bitmap bitmap = Helper.CaptureVisibleElementToFile(uiElement, cropRect);
+            Bitmap bitmap = Helper.CaptureVisibleElement(uiElement, cropRect);
             
             if (bitmap != null)
             {
@@ -770,7 +770,7 @@ namespace UIDeskAutomationLib
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
         public Bitmap CaptureToBitmap(Rect? cropRect = null)
         {
-            Bitmap bitmap = Helper.CaptureElementToFile(uiElement);
+            Bitmap bitmap = Helper.CaptureElement(uiElement);
 			
 			if (cropRect.HasValue)
 			{
@@ -789,7 +789,7 @@ namespace UIDeskAutomationLib
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
         public Bitmap CaptureVisibleToBitmap(Rect? cropRect = null)
         {
-            return Helper.CaptureVisibleElementToFile(uiElement, cropRect);
+            return Helper.CaptureVisibleElement(uiElement, cropRect);
 		}
 		
 		/// <summary>
