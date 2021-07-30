@@ -31,11 +31,7 @@ namespace UIDeskAutomationLib
         /// </summary>
         public Engine()
         {
-            //EvaluationFrm evaluationForm = new EvaluationFrm();
-            //evaluationForm.ShowDialog();
-
             Engine.instance = this;
-            return;
         }
 
         /// <summary>
