@@ -137,14 +137,14 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Gets a top-level window element given its class name and/or window text
+        /// Gets a top-level window element given its window text and/or class name
         /// </summary>
-        /// <param name="className">Window class name (optional)</param>
         /// <param name="windowText">Window text (optional), wildcards can be used</param>
-        /// <param name="index">index (optional)</param>
+        /// <param name="className">Window class name (optional)</param>
+        /// <param name="index">1-based index (optional)</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
         /// <returns>Window</returns>
-        public Window GetTopLevel(string className, string windowText, int index = 0,
+        public Window GetTopLevel(string windowText, string className = null, int index = 0,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -161,10 +161,10 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            if (index == 0)
+            /*if (index == 0)
             {
                 index = 1;
-            }
+            }*/
 
             int nWaitMs = Engine.wait;
             IntPtr hwnd = IntPtr.Zero;
@@ -182,7 +182,6 @@ namespace UIDeskAutomationLib
                 }
 
                 nWaitMs -= 100; //wait 100 milliseconds
-
                 Thread.Sleep(100);
             }
 
@@ -221,16 +220,16 @@ namespace UIDeskAutomationLib
 
         /// <summary>
         /// Gets the top level window of the specified process with the specified 
-        /// class name, window text and index
+        /// window text, class name and index
         /// </summary>
         /// <param name="processName">process name (ex: "myprocess.exe")</param>
-        /// <param name="className">Window class name</param>
         /// <param name="windowText">Window text, wildcards can be used</param>
-        /// <param name="index">index</param>
+        /// <param name="className">Window class name</param>
+        /// <param name="index">1-based index</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
         /// <returns>Top level Window</returns>
-        public Window GetTopLevelByProcName(string processName, string className = null,
-            string windowText = null, int index = 0, bool caseSensitive = true)
+        public Window GetTopLevelByProcName(string processName, 
+            string windowText = null, string className = null, int index = 0, bool caseSensitive = true)
         {
             int nWaitMs = Engine.wait;
             IntPtr windowHandle = IntPtr.Zero;
@@ -286,14 +285,14 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Get the toplevel windows with the specified class name and/or window text.
+        /// Get the toplevel windows with the specified window text and/or class name.
         /// </summary>
-        /// <param name="className">Window class name</param>
         /// <param name="windowText">Window text, wildcards can be used</param>
+        /// <param name="className">Window class name</param>
         /// <param name="caseSensitive">searches the windows text case sensitive, default true</param>
         /// <returns>Windows collection</returns>
-        public Window[] GetTopLevelWindows(string className = null,
-            string windowText = null, bool caseSensitive = true)
+        public Window[] GetTopLevelWindows(
+            string windowText = null, string className = null, bool caseSensitive = true)
         {
             IntPtr[] handles = Helper.GetWindows(IntPtr.Zero, className, 
                 windowText, caseSensitive);
@@ -308,18 +307,17 @@ namespace UIDeskAutomationLib
 
             return windows.ToArray();
         }
-        
 
         /// <summary>
-        /// Get the toplevel window of the specified process with the specified class name and/or window text.
+        /// Get the toplevel window of the specified process with the specified window text and/or class name.
         /// </summary>
         /// <param name="processId">Process Id</param>
-        /// <param name="className">Window class name</param>
         /// <param name="windowText">Window text, wildcards can be used</param>
+        /// <param name="className">Window class name</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
         /// <returns>Window</returns>
-        public Window GetTopLevelByProcId(int processId, string className = null, 
-            string windowText = null, bool caseSensitive = true)
+        public Window GetTopLevelByProcId(int processId, 
+            string windowText = null, string className = null, bool caseSensitive = true)
         {
             Process process = null;
             try
