@@ -99,14 +99,13 @@ namespace UIDeskAutomationLib
             if (index < 0)
             {
                 childHandle = IntPtr.Zero;
-
                 return Errors.NegativeIndex;
             }
 
-            if (index == 0)
+            /*if (index == 0)
             {
                 index = 1;
-            }
+            }*/
 
             IntPtr[] windows = Helper.GetWindows(/*IntPtr.Zero*/ 
                 parentHandle, className, windowText, caseSensitive);
@@ -135,12 +134,27 @@ namespace UIDeskAutomationLib
                 }
 
                 sortedWindowsList = sortedWindowsList.OrderBy(x => x.creationDate).ToList();
-                childHandle = sortedWindowsList[index - 1].hwnd;
+				if (index == 0)
+				{
+					// if index is not specified then get the most recent window
+					childHandle = sortedWindowsList[sortedWindowsList.Count - 1].hwnd;
+				}
+				else
+				{
+					childHandle = sortedWindowsList[index - 1].hwnd;
+				}
             }
             else
             {
                 //child windows, controls
-                childHandle = windows[index - 1];
+				if (index == 0)
+				{
+					childHandle = windows[windows.Length - 1];
+				}
+				else
+				{
+					childHandle = windows[index - 1];
+				}
             }
 
             return Errors.None;
@@ -584,21 +598,21 @@ namespace UIDeskAutomationLib
                     {
                         // Shift up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_SHIFT), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Shift), IntPtr.Zero);
                         bShiftIsPressed = false;
                     }
                     if (bCtrlIsPressed == true)
                     {
                         // Ctrl up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_CONTROL), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Control), IntPtr.Zero);
                         bCtrlIsPressed = false;
                     }
                     if (bAltIsPressed == true)
                     {
                         // Alt up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_MENU), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
                         bAltIsPressed = false;
                     }
 
@@ -611,208 +625,208 @@ namespace UIDeskAutomationLib
                 {
                     // Alt key down
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_MENU), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
                     bAltIsPressed = true;
                 }
                 else if (key == "+")
                 {
                     // Shift down
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_SHIFT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Shift), IntPtr.Zero);
                     bShiftIsPressed = true;
                 }
                 else if (key == "^")
                 {
                     // Ctrl down
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_CONTROL), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Control), IntPtr.Zero);
                     bCtrlIsPressed = true;
                 }
                 else if ((key == "{BACKSPACE}") || (key == "{BS}") || (key == "{BKSP}"))
                 {
                     // Backspace
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_BACK), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Back), IntPtr.Zero);
                 }
                 else if (key == "{BREAK}") // Ctrl-Break
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_CANCEL), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Cancel), IntPtr.Zero);
                 }
                 else if ((key == "{DELETE}") || (key == "{DEL}"))
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_DELETE), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Delete), IntPtr.Zero);
                 }
                 else if (key == "{DOWN}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_DOWN), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Down), IntPtr.Zero);
                 }
                 else if (key == "{END}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_END), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.End), IntPtr.Zero);
                 }
                 else if (key == "{ENTER}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_RETURN), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Return), IntPtr.Zero);
                 }
                 else if (key == "{ESC}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_ESCAPE), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Escape), IntPtr.Zero);
                 }
                 else if (key == "{HELP}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_HELP), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Help), IntPtr.Zero);
                 }
                 else if (key == "{HOME}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_HOME), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Home), IntPtr.Zero);
                 }
                 else if ((key == "{INS}") || (key == "{INSERT}"))
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_INSERT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Insert), IntPtr.Zero);
                 }
                 else if (key == "{LEFT}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_LEFT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Left), IntPtr.Zero);
                 }
                 else if (key == "{PGDN}") // page down
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_NEXT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Next), IntPtr.Zero);
                 }
                 else if (key == "{PGUP}") // page up
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_PRIOR), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Prior), IntPtr.Zero);
                 }
                 else if (key == "{PRTSC}") // print screen
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_SNAPSHOT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Snapshot), IntPtr.Zero);
                 }
                 else if (key == "{RIGHT}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_RIGHT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Right), IntPtr.Zero);
                 }
                 else if (key == "{TAB}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_TAB), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Tab), IntPtr.Zero);
                 }
                 else if (key == "{UP}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_UP), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Up), IntPtr.Zero);
                 }
                 else if (key == "{F1}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F1), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F1), IntPtr.Zero);
                 }
                 else if (key == "{F2}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F2), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F2), IntPtr.Zero);
                 }
                 else if (key == "{F3}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F3), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F3), IntPtr.Zero);
                 }
                 else if (key == "{F4}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F4), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F4), IntPtr.Zero);
                 }
                 else if (key == "{F5}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F5), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F5), IntPtr.Zero);
                 }
                 else if (key == "{F6}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F6), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F6), IntPtr.Zero);
                 }
                 else if (key == "{F7}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F7), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F7), IntPtr.Zero);
                 }
                 else if (key == "{F8}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F8), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F8), IntPtr.Zero);
                 }
                 else if (key == "{F9}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F9), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F9), IntPtr.Zero);
                 }
                 else if (key == "{F10}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F10), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F10), IntPtr.Zero);
                 }
                 else if (key == "{F11}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F11), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F11), IntPtr.Zero);
                 }
                 else if (key == "{F12}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F12), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F12), IntPtr.Zero);
                 }
                 else if (key == "{F13}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F13), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F13), IntPtr.Zero);
                 }
                 else if (key == "{F14}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F14), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F14), IntPtr.Zero);
                 }
                 else if (key == "{F15}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F15), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F15), IntPtr.Zero);
                 }
                 else if (key == "{F16}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_F16), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.F16), IntPtr.Zero);
                 }
                 else if (key == "{ADD}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_ADD), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Add), IntPtr.Zero);
                 }
                 else if (key == "{SUBTRACT}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_SUBTRACT), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Subtract), IntPtr.Zero);
                 }
                 else if (key == "{MULTIPLY}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_MULTIPLY), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Multiply), IntPtr.Zero);
                 }
                 else if (key == "{DIVIDE}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr(VirtualKeyCodes.VK_DIVIDE), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Divide), IntPtr.Zero);
                 }
                 else if (key.Length == 1) // one character string
                 {
@@ -822,7 +836,7 @@ namespace UIDeskAutomationLib
                     {
                         // Enter
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                            new IntPtr(VirtualKeyCodes.VK_RETURN), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Return), IntPtr.Zero);
                     }
                     else
                     {
@@ -839,21 +853,21 @@ namespace UIDeskAutomationLib
                     {
                         // Shift up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_SHIFT), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Shift), IntPtr.Zero);
                         bShiftIsPressed = false;
                     }
                     if (bCtrlIsPressed == true)
                     {
                         // Ctrl up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_CONTROL), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Control), IntPtr.Zero);
                         bCtrlIsPressed = false;
                     }
                     if (bAltIsPressed == true)
                     {
                         // Alt up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr(VirtualKeyCodes.VK_MENU), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
                         bAltIsPressed = false;
                     }
                 }

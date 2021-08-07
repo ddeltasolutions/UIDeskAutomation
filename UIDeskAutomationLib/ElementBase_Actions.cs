@@ -128,6 +128,51 @@ namespace UIDeskAutomationLib
                 throw ex;
             }
         }
+        
+        /// <summary>
+        /// This function gives focus to this element and presses a key (without releasing it).
+        /// </summary>
+        /// <param name="key">key to press</param>
+        public void KeyDown(VirtualKeys key)
+        {
+            this.Focus();
+            SendInputClass.KeyDown(key);
+        }
+        
+        /// <summary>
+        /// This function gives focus to this element and presses and releases a key.
+        /// </summary>
+        /// <param name="key">key to press and release</param>
+        public void KeyPress(VirtualKeys key)
+        {
+            this.Focus();
+            SendInputClass.KeyDown(key);
+            SendInputClass.KeyUp(key);
+        }
+        
+        /// <summary>
+        /// This function gives focus to this element and presses and releases multiple keys.
+        /// </summary>
+        /// <param name="keys">keys to press and release</param>
+        public void KeysPress(VirtualKeys[] keys)
+        {
+            this.Focus();
+            foreach (VirtualKeys key in keys)
+            {
+                SendInputClass.KeyDown(key);
+                SendInputClass.KeyUp(key);
+            }
+        }
+        
+        /// <summary>
+        /// This function gives focus to this element and releases a key.
+        /// </summary>
+        /// <param name="key">key to release</param>
+        public void KeyUp(VirtualKeys key)
+        {
+            this.Focus();
+            SendInputClass.KeyUp(key);
+        }
 		
 		/// <summary>
         /// Simulates sending keys to this element using Windows messages.

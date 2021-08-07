@@ -128,8 +128,6 @@ namespace UIDeskAutomationLib
         public void WriteInLogFile(string sMessage)
         {
             Engine.TraceInLogFile(sMessage);
-
-            return;
         }
 
         /// <summary>
@@ -419,6 +417,47 @@ namespace UIDeskAutomationLib
         public void SendKeys(string text)
         {
             System.Windows.Forms.SendKeys.SendWait(text);
+        }
+        
+        /// <summary>
+        /// This function presses a key (without releasing it).
+        /// </summary>
+        /// <param name="key">key to press</param>
+        public void KeyDown(VirtualKeys key)
+        {
+            SendInputClass.KeyDown(key);
+        }
+        
+        /// <summary>
+        /// This function presses and releases a key.
+        /// </summary>
+        /// <param name="key">key to press and release</param>
+        public void KeyPress(VirtualKeys key)
+        {
+            SendInputClass.KeyDown(key);
+            SendInputClass.KeyUp(key);
+        }
+        
+        /// <summary>
+        /// This function presses and releases multiple keys.
+        /// </summary>
+        /// <param name="keys">keys to press and release</param>
+        public void KeysPress(VirtualKeys[] keys)
+        {
+            foreach (VirtualKeys key in keys)
+            {
+                SendInputClass.KeyDown(key);
+                SendInputClass.KeyUp(key);
+            }
+        }
+        
+        /// <summary>
+        /// This function releases a key.
+        /// </summary>
+        /// <param name="key">key to release</param>
+        public void KeyUp(VirtualKeys key)
+        {
+            SendInputClass.KeyUp(key);
         }
 		
 		/// <summary>
