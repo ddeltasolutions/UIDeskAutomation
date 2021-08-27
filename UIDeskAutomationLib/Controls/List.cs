@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a List UI element
     /// </summary>
-    public class List: ElementBase
+    public class UIDA_List: ElementBase
     {
 		/// <summary>
-        /// Creates a List using an AutomationElement
+        /// Creates a UIDA_List using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public List(AutomationElement el)
+        public UIDA_List(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -23,7 +23,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets a collection of all list items. It is like calling ListItems(null).
         /// </summary>
-        public ListItem[] Items
+        public UIDA_ListItem[] Items
         {
             get
             {
@@ -32,11 +32,11 @@ namespace UIDeskAutomationLib
                     List<AutomationElement> allListItems = 
                         this.FindAll(ControlType.ListItem, null, false, false, true);
 
-                    List<ListItem> returnCollection = new List<ListItem>();
+                    List<UIDA_ListItem> returnCollection = new List<UIDA_ListItem>();
 
                     foreach (AutomationElement listItemEl in allListItems)
                     {
-                        ListItem listItem = new ListItem(listItemEl);
+                        UIDA_ListItem listItem = new UIDA_ListItem(listItemEl);
                         returnCollection.Add(listItem);
                     }
 
@@ -44,7 +44,7 @@ namespace UIDeskAutomationLib
                 }
                 else
                 {
-                    List<ListItem> returnRows = new List<ListItem>();
+                    List<UIDA_ListItem> returnRows = new List<UIDA_ListItem>();
                     
                     object objectPattern = null;
                     this.uiElement.TryGetCurrentPattern(ItemContainerPattern.Pattern, out objectPattern);
@@ -55,7 +55,7 @@ namespace UIDeskAutomationLib
                             this.FindAll(ControlType.ListItem, null, false, false, true);
                         foreach (AutomationElement listItemEl in allListItems)
                         {
-                            ListItem listItem = new ListItem(listItemEl);
+                            UIDA_ListItem listItem = new UIDA_ListItem(listItemEl);
                             returnRows.Add(listItem);
                         }
                         return returnRows.ToArray();
@@ -67,7 +67,7 @@ namespace UIDeskAutomationLib
                         crt = itemContainerPattern.FindItemByProperty(crt, null, null);
                         if (crt != null)
                         {
-                            ListItem listItem = new ListItem(crt);
+                            UIDA_ListItem listItem = new UIDA_ListItem(crt);
                             returnRows.Add(listItem);
                         }
                     }
@@ -83,9 +83,9 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void SelectAll()
         { 
-            ListItem[] allListItems = this.Items;
+            UIDA_ListItem[] allListItems = this.Items;
 
-            foreach (ListItem listItem in allListItems)
+            foreach (UIDA_ListItem listItem in allListItems)
             {
                 if (listItem.IsSelected == false)
                 {
@@ -97,16 +97,15 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Returns a collection with all selected list items in the current list
         /// </summary>
-        public ListItem[] SelectedItems
+        public UIDA_ListItem[] SelectedItems
         { 
             get
             {
-                System.Collections.Generic.List<ListItem> selectedItems =
-                    new List<ListItem>();
+                List<UIDA_ListItem> selectedItems = new List<UIDA_ListItem>();
 
-                ListItem[] allListItems = this.Items;
+                UIDA_ListItem[] allListItems = this.Items;
 
-                foreach (ListItem listItem in allListItems)
+                foreach (UIDA_ListItem listItem in allListItems)
                 {
                     if (listItem.IsSelected == true)
                     {
@@ -123,9 +122,9 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void ClearAllSelection()
         {
-            ListItem[] selectedItems = this.SelectedItems;
+            UIDA_ListItem[] selectedItems = this.SelectedItems;
 
-            foreach (ListItem selectedListItem in selectedItems)
+            foreach (UIDA_ListItem selectedListItem in selectedItems)
             {
                 selectedListItem.RemoveFromSelection();
             }
@@ -208,13 +207,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFListItem(index);
                 if (item != null)
                 {
-                    ListItem listItemWPF = new ListItem(item);
+                    UIDA_ListItem listItemWPF = new UIDA_ListItem(item);
                     listItemWPF.Select();
                     return;
                 }
             }
             
-            ListItem listItem = ListItemAt(null, index, true);
+            UIDA_ListItem listItem = ListItemAt(null, index, true);
             if (listItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -236,11 +235,11 @@ namespace UIDeskAutomationLib
                 AutomationElement[] items = GetItemsByText(itemText, selectAll);
                 if (items != null && items.Length > 0)
                 {
-                    ListItem listItem = new ListItem(items[0]);
+                    UIDA_ListItem listItem = new UIDA_ListItem(items[0]);
                     listItem.Select();
                     for (int i = 1; i < items.Length; i++)
                     {
-                        listItem = new ListItem(items[i]);
+                        listItem = new UIDA_ListItem(items[i]);
                         listItem.AddToSelection();
                     }
                     return;
@@ -253,7 +252,7 @@ namespace UIDeskAutomationLib
             
             if (selectAll == false)
             {
-                ListItem listItem = ListItem(itemText, true, caseSensitive);
+                UIDA_ListItem listItem = ListItem(itemText, true, caseSensitive);
                 if (listItem == null)
                 {
                     Engine.TraceInLogFile("Item not found");
@@ -264,7 +263,7 @@ namespace UIDeskAutomationLib
             }
             else
             {
-                ListItem[] items = ListItems(itemText, true, caseSensitive);
+                UIDA_ListItem[] items = ListItems(itemText, true, caseSensitive);
                 if (items.Length == 0)
                 {
                     return;
@@ -288,13 +287,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFListItem(index);
                 if (item != null)
                 {
-                    ListItem listItemWPF = new ListItem(item);
+                    UIDA_ListItem listItemWPF = new UIDA_ListItem(item);
                     listItemWPF.AddToSelection();
                     return;
                 }
             }
             
-            ListItem listItem = ListItemAt(null, index, true);
+            UIDA_ListItem listItem = ListItemAt(null, index, true);
             if (listItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -316,11 +315,11 @@ namespace UIDeskAutomationLib
                 AutomationElement[] items = GetItemsByText(itemText, selectAll);
                 if (items != null && items.Length > 0)
                 {
-                    ListItem listItem = new ListItem(items[0]);
+                    UIDA_ListItem listItem = new UIDA_ListItem(items[0]);
                     listItem.AddToSelection();
                     for (int i = 1; i < items.Length; i++)
                     {
-                        listItem = new ListItem(items[i]);
+                        listItem = new UIDA_ListItem(items[i]);
                         listItem.AddToSelection();
                     }
                     return;
@@ -333,7 +332,7 @@ namespace UIDeskAutomationLib
             
             if (selectAll == false)
             {
-                ListItem listItem = ListItem(itemText, true, caseSensitive);
+                UIDA_ListItem listItem = ListItem(itemText, true, caseSensitive);
                 if (listItem == null)
                 {
                     Engine.TraceInLogFile("Item not found");
@@ -344,9 +343,9 @@ namespace UIDeskAutomationLib
             }
             else
             {
-                ListItem[] items = ListItems(itemText, true, caseSensitive);
+                UIDA_ListItem[] items = ListItems(itemText, true, caseSensitive);
 
-                foreach (ListItem item in items)
+                foreach (UIDA_ListItem item in items)
                 {
                     item.AddToSelection();
                 }
@@ -364,13 +363,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFListItem(index);
                 if (item != null)
                 {
-                    ListItem listItemWPF = new ListItem(item);
+                    UIDA_ListItem listItemWPF = new UIDA_ListItem(item);
                     listItemWPF.RemoveFromSelection();
                     return;
                 }
             }
             
-            ListItem listItem = ListItemAt(null, index, true);
+            UIDA_ListItem listItem = ListItemAt(null, index, true);
             if (listItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -392,11 +391,11 @@ namespace UIDeskAutomationLib
                 AutomationElement[] items = GetItemsByText(itemText, all);
                 if (items != null && items.Length > 0)
                 {
-                    ListItem listItem = new ListItem(items[0]);
+                    UIDA_ListItem listItem = new UIDA_ListItem(items[0]);
                     listItem.RemoveFromSelection();
                     for (int i = 1; i < items.Length; i++)
                     {
-                        listItem = new ListItem(items[i]);
+                        listItem = new UIDA_ListItem(items[i]);
                         listItem.RemoveFromSelection();
                     }
                     return;
@@ -409,7 +408,7 @@ namespace UIDeskAutomationLib
             
             if (all == false)
             {
-                ListItem listItem = ListItem(itemText, true, caseSensitive);
+                UIDA_ListItem listItem = ListItem(itemText, true, caseSensitive);
                 if (listItem == null)
                 {
                     Engine.TraceInLogFile("Item not found");
@@ -420,9 +419,9 @@ namespace UIDeskAutomationLib
             }
             else
             {
-                ListItem[] items = ListItems(itemText, true, caseSensitive);
+                UIDA_ListItem[] items = ListItems(itemText, true, caseSensitive);
 
-                foreach (ListItem item in items)
+                foreach (UIDA_ListItem item in items)
                 {
                     item.RemoveFromSelection();
                 }

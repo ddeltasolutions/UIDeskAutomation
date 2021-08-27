@@ -9,11 +9,19 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a SplitButton control.
     /// </summary>
-    public class SplitButton: ElementBase
+    public class UIDA_SplitButton: ElementBase
     {
-        public SplitButton(AutomationElement el)
+        public UIDA_SplitButton(AutomationElement el)
         {
             this.uiElement = el;
+        }
+        
+        /// <summary>
+        /// Presses the split button
+        /// </summary>
+        public void Press()
+        {
+            base.Invoke();
         }
     }
 }

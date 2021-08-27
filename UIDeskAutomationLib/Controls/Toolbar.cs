@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Toolbar control.
     /// </summary>
-    public class Toolbar: ElementBase
+    public class UIDA_Toolbar: ElementBase
     {
-        public Toolbar(AutomationElement el)
+        public UIDA_Toolbar(AutomationElement el)
         {
             this.uiElement = el;
         }

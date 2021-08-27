@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a MenuBar ui element
     /// </summary>
-    public class MenuBar: ElementBase
+    public class UIDA_MenuBar: ElementBase
     {
-        public MenuBar(AutomationElement el)
+        public UIDA_MenuBar(AutomationElement el)
         {
             base.uiElement = el;
         }

@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Document UI element
     /// </summary>
-    public class Document: Edit
+    public class UIDA_Document: UIDA_Edit
     {
         /// <summary>
-        /// Creates a Document using an AutomationElement
+        /// Creates a UIDA_Document using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Document(AutomationElement el)
+        public UIDA_Document(AutomationElement el)
         {
             base.uiElement = el;
         }

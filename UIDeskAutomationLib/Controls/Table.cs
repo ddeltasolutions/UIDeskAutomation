@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a Table control.
     /// </summary>
-    public class Table: ElementBase
+    public class UIDA_Table: ElementBase
     {
-        public Table(AutomationElement el)
+        public UIDA_Table(AutomationElement el)
         {
             this.uiElement = el;
         }

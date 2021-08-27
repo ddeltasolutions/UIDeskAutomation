@@ -9,15 +9,15 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Tab Item control.
     /// </summary>
-    public class TabItem: ElementBase
+    public class UIDA_TabItem: ElementBase
     {
-        public TabItem(AutomationElement el, TabCtrl parent)
+        public UIDA_TabItem(AutomationElement el, UIDA_TabCtrl parent)
         {
             this.uiElement = el;
             this.parent = parent;
         }
 
-        private TabCtrl parent = null;
+        private UIDA_TabCtrl parent = null;
 
         /// <summary>
         /// Returns true is current tab is selected, false otherwise.
@@ -96,11 +96,11 @@ namespace UIDeskAutomationLib
         {
             get
             {
-                TabItem[] tabItems = this.parent.Items;
+                UIDA_TabItem[] tabItems = this.parent.Items;
 
                 for (int i = 0; i < tabItems.Length; i++)
                 {
-                    TabItem tabItem = tabItems[i];
+                    UIDA_TabItem tabItem = tabItems[i];
 
                     if (Helper.CompareAutomationElements(
                         tabItem.uiElement, this.uiElement) == true)

@@ -10,11 +10,19 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Menu Item ui element
     /// </summary>
-    public class MenuItem : ElementBase
+    public class UIDA_MenuItem : ElementBase
     {
-        public MenuItem(AutomationElement el)
+        public UIDA_MenuItem(AutomationElement el)
         {
             base.uiElement = el;
+        }
+        
+        /// <summary>
+        /// Accesses the menu item, like clicking on it
+        /// </summary>
+        public void AccessMenu()
+        {
+            base.Invoke();
         }
 
         /// <summary>
@@ -117,7 +125,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets or Sets the checked state of a menu item 
         /// </summary>
-        public bool Checked
+        public bool IsChecked
         {
             get
             {

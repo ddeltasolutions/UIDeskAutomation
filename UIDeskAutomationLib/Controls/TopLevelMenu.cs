@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Top Level Menu element, like a Contextual menu.
     /// </summary>
-    public class TopLevelMenu : ElementBase
+    public class UIDA_TopLevelMenu : ElementBase
     {
-        public TopLevelMenu(AutomationElement el)
+        public UIDA_TopLevelMenu(AutomationElement el)
         {
             base.uiElement = el;
         }

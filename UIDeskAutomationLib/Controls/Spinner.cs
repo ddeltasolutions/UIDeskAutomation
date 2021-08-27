@@ -10,13 +10,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a spinner UI control.
     /// </summary>
-    public class Spinner: GenericSpinner
+    public class UIDA_Spinner: GenericSpinner
     {
 		/// <summary>
-        /// Creates a Spinner using an AutomationElement
+        /// Creates a UIDA_Spinner using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Spinner(AutomationElement el): base(el)
+        public UIDA_Spinner(AutomationElement el): base(el)
         {
             //this.uiElement = el;
         }
@@ -26,8 +26,8 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Increment()
         {
-            Engine.TraceInLogFile("Spinner.Increment method");
-            Button forwardButton = null;
+            Engine.TraceInLogFile("UIDA_Spinner.Increment method");
+            UIDA_Button forwardButton = null;
 
             try
             {
@@ -35,8 +35,8 @@ namespace UIDeskAutomationLib
             }
             catch (Exception ex)
             {
-                Engine.TraceInLogFile("Spinner.Increment method failed");
-                throw new Exception("Spinner.Increment method failed");
+                Engine.TraceInLogFile("UIDA_Spinner.Increment method failed");
+                throw new Exception("UIDA_Spinner.Increment method failed");
             }
 
             if (forwardButton != null)
@@ -47,8 +47,8 @@ namespace UIDeskAutomationLib
                 }
                 catch 
                 {
-                    Engine.TraceInLogFile("Spinner.Increment Invoke failed");
-                    throw new Exception("Spinner.Increment Invoke failed");
+                    Engine.TraceInLogFile("UIDA_Spinner.Increment Invoke failed");
+                    throw new Exception("UIDA_Spinner.Increment Invoke failed");
                 }
             }
         }
@@ -58,15 +58,15 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Decrement()
         {
-            Button backwardButton = null;
+            UIDA_Button backwardButton = null;
             try
             {
                 backwardButton = this.ButtonAt(null, 2/*, true*/);
             }
             catch (Exception ex)
             {
-                Engine.TraceInLogFile("Spinner.Decrement method failed");
-                throw new Exception("Spinner.Decrement method failed");
+                Engine.TraceInLogFile("UIDA_Spinner.Decrement method failed");
+                throw new Exception("UIDA_Spinner.Decrement method failed");
             }
 
             if (backwardButton != null)
@@ -77,8 +77,8 @@ namespace UIDeskAutomationLib
                 }
                 catch
                 {
-                    Engine.TraceInLogFile("Spinner.Decrement Invoke failed");
-                    throw new Exception("Spinner.Decrement Invoke failed");
+                    Engine.TraceInLogFile("UIDA_Spinner.Decrement Invoke failed");
+                    throw new Exception("UIDA_Spinner.Decrement Invoke failed");
                 }
             }
         }

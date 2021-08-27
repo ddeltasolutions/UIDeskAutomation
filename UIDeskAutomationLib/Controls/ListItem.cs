@@ -11,13 +11,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a listitem UI element.
     /// </summary>
-    public class ListItem: ElementBase
+    public class UIDA_ListItem: ElementBase
     {
 		/// <summary>
-        /// Creates a ListItem using an AutomationElement
+        /// Creates a UIDA_ListItem using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public ListItem(AutomationElement el)
+        public UIDA_ListItem(AutomationElement el)
         {
             base.uiElement = el;
         }
@@ -133,12 +133,12 @@ namespace UIDeskAutomationLib
                     throw new Exception("Error getting ListItem index");
                 }
 
-                List parentList = new List(parent);
-                ListItem[] listItems = parentList.Items;
+                UIDA_List parentList = new UIDA_List(parent);
+                UIDA_ListItem[] listItems = parentList.Items;
 
                 int index = -1;
 
-                foreach (ListItem currentListItem in listItems)
+                foreach (UIDA_ListItem currentListItem in listItems)
                 {
                     index++;
 
@@ -262,7 +262,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets or sets the checked state of the current list item.
         /// </summary>
-        public bool Checked
+        public bool IsChecked
         {
             get
             {

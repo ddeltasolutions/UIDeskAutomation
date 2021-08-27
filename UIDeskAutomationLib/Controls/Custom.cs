@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a custom control.
     /// </summary>
-    public class Custom: ElementBase
+    public class UIDA_Custom: ElementBase
     {
         /// <summary>
-        /// Creates a Custom using an AutomationElement
+        /// Creates a UIDA_Custom using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Custom(AutomationElement el)
+        public UIDA_Custom(AutomationElement el)
         {
             this.uiElement = el;
         }

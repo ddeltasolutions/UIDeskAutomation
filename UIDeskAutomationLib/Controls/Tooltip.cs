@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Tooltip control.
     /// </summary>
-    public class Tooltip: ElementBase
+    public class UIDA_Tooltip: ElementBase
     {
-        public Tooltip(AutomationElement el)
+        public UIDA_Tooltip(AutomationElement el)
         {
             this.uiElement = el;
         }

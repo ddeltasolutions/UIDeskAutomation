@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents the class for a Progress Bar UI control.
     /// </summary>
-    public class ProgressBar: GenericSpinner
+    public class UIDA_ProgressBar: GenericSpinner
     {
 		/// <summary>
-        /// Creates a ProgressBar using an AutomationElement
+        /// Creates a UIDA_ProgressBar using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public ProgressBar(AutomationElement el): base(el)
+        public UIDA_ProgressBar(AutomationElement el): base(el)
         { }
         
         /// <summary>

@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a Data Grid control.
     /// </summary>
-    public class DataGrid: DataGridBase //ElementBase
+    public class UIDA_DataGrid: DataGridBase //ElementBase
     {
         /// <summary>
         /// Creates a DataGrid using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public DataGrid(AutomationElement el): base(el)
+        public UIDA_DataGrid(AutomationElement el): base(el)
         {
             //this.uiElement = el;
         }
@@ -66,18 +66,18 @@ namespace UIDeskAutomationLib
             /// <summary>
             /// Header items in a datagrid header.
             /// </summary>
-            public HeaderItem[] Items
+            public UIDA_HeaderItem[] Items
             {
                 get
                 {
                     List<AutomationElement> items = this.FindAll(ControlType.HeaderItem,
                         null, false, false, true);
 
-                    List<HeaderItem> headerItems = new List<HeaderItem>();
+                    List<UIDA_HeaderItem> headerItems = new List<UIDA_HeaderItem>();
 
                     foreach (AutomationElement item in items)
                     { 
-                        HeaderItem headerItem = new HeaderItem(item);
+                        UIDA_HeaderItem headerItem = new UIDA_HeaderItem(item);
                         headerItems.Add(headerItem);
                     }
 
@@ -181,7 +181,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Returns all rows in the current DataGrid control.
         /// </summary>
-        public DataItem[] Rows
+        public UIDA_DataItem[] Rows
         {
             get
             {
@@ -190,11 +190,11 @@ namespace UIDeskAutomationLib
                     List<AutomationElement> rows = this.FindAll(ControlType.DataItem,
                         null, true, false, true);
 
-                    List<DataItem> returnRows = new List<DataItem>();
+                    List<UIDA_DataItem> returnRows = new List<UIDA_DataItem>();
 
                     foreach (AutomationElement row in rows)
                     {
-                        DataItem dataItem = new DataItem(row);
+                        UIDA_DataItem dataItem = new UIDA_DataItem(row);
                         returnRows.Add(dataItem);
                     }
 
@@ -202,7 +202,7 @@ namespace UIDeskAutomationLib
                 }
                 else
                 {
-                    List<DataItem> returnRows = new List<DataItem>();
+                    List<UIDA_DataItem> returnRows = new List<UIDA_DataItem>();
                     
                     object objectPattern = null;
                     this.uiElement.TryGetCurrentPattern(ItemContainerPattern.Pattern, out objectPattern);
@@ -213,7 +213,7 @@ namespace UIDeskAutomationLib
                             null, true, false, true);
                         foreach (AutomationElement row in rows)
                         {
-                            DataItem dataItem = new DataItem(row);
+                            UIDA_DataItem dataItem = new UIDA_DataItem(row);
                             returnRows.Add(dataItem);
                         }
                         return returnRows.ToArray();
@@ -225,7 +225,7 @@ namespace UIDeskAutomationLib
                         crt = itemContainerPattern.FindItemByProperty(crt, null, null);
                         if (crt != null)
                         {
-                            DataItem dataItem = new DataItem(crt);
+                            UIDA_DataItem dataItem = new UIDA_DataItem(crt);
                             returnRows.Add(dataItem);
                         }
                     }
@@ -240,7 +240,7 @@ namespace UIDeskAutomationLib
         /// Gets the row at the specified index.
         /// </summary>
         /// <param name="index">zero based index</param>
-        public DataItem this[int index]
+        public UIDA_DataItem this[int index]
         {
             get
             {
@@ -276,7 +276,7 @@ namespace UIDeskAutomationLib
                         }
                         while (index >= 0);
                         
-                        DataItem dataItem = new DataItem(crt);
+                        UIDA_DataItem dataItem = new UIDA_DataItem(crt);
                         return dataItem;
                     }
                 }
@@ -286,18 +286,18 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets all groups in a DataGrid control.
         /// </summary>
-        new public Group[] Groups
+        new public DataGridGroup[] Groups
         {
             get
             {
                 List<AutomationElement> allGroups = this.FindAll(ControlType.Group,
                     null, false, false, true);
 
-                List<Group> returnGroups = new List<Group>();
+                List<DataGridGroup> returnGroups = new List<DataGridGroup>();
 
                 foreach (AutomationElement group in allGroups)
                 {
-                    Group returnGroup = new Group(group);
+                    DataGridGroup returnGroup = new DataGridGroup(group);
                     returnGroups.Add(returnGroup);
                 }
 
@@ -310,9 +310,9 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void SelectAll()
         {
-            DataItem[] items = this.Rows;
+            UIDA_DataItem[] items = this.Rows;
 
-            foreach (DataItem item in items)
+            foreach (UIDA_DataItem item in items)
             {
                 try
                 {
@@ -328,9 +328,9 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void ClearAllSelection()
         {
-            DataItem[] selectedItems = this.SelectedRows;
+            UIDA_DataItem[] selectedItems = this.SelectedRows;
 
-            foreach (DataItem selectedItem in selectedItems)
+            foreach (UIDA_DataItem selectedItem in selectedItems)
             {
                 try
                 {
@@ -344,7 +344,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Returns selected rows in the current DataGrid control.
         /// </summary>
-        public DataItem[] SelectedRows
+        public UIDA_DataItem[] SelectedRows
         {
             get
             {
@@ -364,11 +364,11 @@ namespace UIDeskAutomationLib
                     AutomationElement[] selectedItems =
                         selectionPattern.Current.GetSelection();
 
-                    List<DataItem> returnCollection = new List<DataItem>();
+                    List<UIDA_DataItem> returnCollection = new List<UIDA_DataItem>();
 
                     foreach (AutomationElement selectedItem in selectedItems)
                     {
-                        DataItem dataItem = new DataItem(selectedItem);
+                        UIDA_DataItem dataItem = new UIDA_DataItem(selectedItem);
                         returnCollection.Add(dataItem);
                     }
 
@@ -467,13 +467,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFDataItem(index);
                 if (item != null)
                 {
-                    DataItem dataItemWPF = new DataItem(item);
+                    UIDA_DataItem dataItemWPF = new UIDA_DataItem(item);
                     dataItemWPF.Select();
                     return;
                 }
             }
             
-            DataItem dataItem = DataItemAt(null, index, true);
+            UIDA_DataItem dataItem = DataItemAt(null, index, true);
             if (dataItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -493,13 +493,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFDataItem(index);
                 if (item != null)
                 {
-                    DataItem dataItemWPF = new DataItem(item);
+                    UIDA_DataItem dataItemWPF = new UIDA_DataItem(item);
                     dataItemWPF.AddToSelection();
                     return;
                 }
             }
             
-            DataItem dataItem = DataItemAt(null, index, true);
+            UIDA_DataItem dataItem = DataItemAt(null, index, true);
             if (dataItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -519,13 +519,13 @@ namespace UIDeskAutomationLib
                 AutomationElement item = GetWPFDataItem(index);
                 if (item != null)
                 {
-                    DataItem dataItemWPF = new DataItem(item);
+                    UIDA_DataItem dataItemWPF = new UIDA_DataItem(item);
                     dataItemWPF.RemoveFromSelection();
                     return;
                 }
             }
             
-            DataItem dataItem = DataItemAt(null, index, true);
+            UIDA_DataItem dataItem = DataItemAt(null, index, true);
             if (dataItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -566,13 +566,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a header item in a datagrid.
     /// </summary>
-    public class HeaderItem : ElementBase
+    public class UIDA_HeaderItem : ElementBase
     {
         /// <summary>
-        /// Creates a HeaderItem using an AutomationElement
+        /// Creates a UDA_HeaderItem using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public HeaderItem(AutomationElement el)
+        public UIDA_HeaderItem(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -604,13 +604,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a group.
     /// </summary>
-    public class Group : DataGridBase
+    public class DataGridGroup : DataGridBase
     {
         /// <summary>
-        /// Creates a Group using an AutomationElement
+        /// Creates a DataGridGroup using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Group(AutomationElement el)
+        public DataGridGroup(AutomationElement el)
             : base(el)
         { }
 
@@ -624,10 +624,10 @@ namespace UIDeskAutomationLib
             if (expandCollapsePattern == null)
             {
                 Engine.TraceInLogFile(
-                    "Group.Expand() - ExpandCollapsePattern not supported");
+                    "DataGridGroup.Expand() - ExpandCollapsePattern not supported");
 
                 throw new Exception(
-                    "Group.Expand() - ExpandCollapsePattern not supported");
+                    "DataGridGroup.Expand() - ExpandCollapsePattern not supported");
             }
 
             try
@@ -640,8 +640,8 @@ namespace UIDeskAutomationLib
             }
             catch (Exception ex)
             {
-                Engine.TraceInLogFile("Group.Expand() error: " + ex.Message);
-                throw new Exception("Group.Expand() error: " + ex.Message);
+                Engine.TraceInLogFile("DataGridGroup.Expand() error: " + ex.Message);
+                throw new Exception("DataGridGroup.Expand() error: " + ex.Message);
             }
         }
 
@@ -656,10 +656,10 @@ namespace UIDeskAutomationLib
             if (expandCollapsePattern == null)
             {
                 Engine.TraceInLogFile(
-                    "Group.Collapse() - ExpandCollapsePattern not supported");
+                    "DataGridGroup.Collapse() - ExpandCollapsePattern not supported");
 
                 throw new Exception(
-                    "Group.Collapse() - ExpandCollapsePattern not supported");
+                    "DataGridGroup.Collapse() - ExpandCollapsePattern not supported");
             }
 
             try
@@ -672,8 +672,8 @@ namespace UIDeskAutomationLib
             }
             catch (Exception ex)
             {
-                Engine.TraceInLogFile("Group.Collapse() error: " + ex.Message);
-                throw new Exception("Group.Collapse() error: " + ex.Message);
+                Engine.TraceInLogFile("DataGridGroup.Collapse() error: " + ex.Message);
+                throw new Exception("DataGridGroup.Collapse() error: " + ex.Message);
             }
         }
 
@@ -697,13 +697,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a data item.
     /// </summary>
-    public class DataItem : DataGridBase
+    public class UIDA_DataItem : DataGridBase
     {
         /// <summary>
-        /// Creates a DataItem using an AutomationElement
+        /// Creates a UIDA_DataItem using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public DataItem(AutomationElement el)
+        public UIDA_DataItem(AutomationElement el)
             : base(el)
         { }
 
@@ -855,7 +855,7 @@ namespace UIDeskAutomationLib
                 if (itemContainerPattern == null)
                 {
                     AutomationElementCollection collection = uiElement.FindAll(TreeScope.Children, Condition.TrueCondition);
-                    return (new Custom(collection[columnIndex])).GetText();
+                    return (new UIDA_Custom(collection[columnIndex])).GetText();
                 }
                 else
                 {
@@ -875,7 +875,7 @@ namespace UIDeskAutomationLib
                     }
                     while (columnIndex >= 0);
                     
-                    return (new Custom(crt)).GetText();
+                    return (new UIDA_Custom(crt)).GetText();
                 }
             }
         }
@@ -890,9 +890,9 @@ namespace UIDeskAutomationLib
             {
                 TreeWalker tw = TreeWalker.ControlViewWalker;
                 AutomationElement gridEl = tw.GetParent(this.uiElement);
-                DataGrid grid = new DataGrid(gridEl);
+                UIDA_DataGrid grid = new UIDA_DataGrid(gridEl);
                 
-                HeaderItem[] headerItems = grid.Header.Items;
+                UIDA_HeaderItem[] headerItems = grid.Header.Items;
                 int columnIndex = -1;
                 for (int i = 0; i < headerItems.Length; i++)
                 {
@@ -931,8 +931,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of header item</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>HeaderItem element</returns>
-        public HeaderItem HeaderItem(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_HeaderItem element</returns>
+        public UIDA_HeaderItem HeaderItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.HeaderItem,
@@ -952,7 +952,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            HeaderItem headerItem = new HeaderItem(returnElement);
+            UIDA_HeaderItem headerItem = new UIDA_HeaderItem(returnElement);
             return headerItem;
         }
 
@@ -963,8 +963,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of HeaderItem</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>HeaderItem element</returns>
-        public HeaderItem HeaderItemAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_HeaderItem element</returns>
+        public UIDA_HeaderItem HeaderItemAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1013,7 +1013,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            HeaderItem headerItem = new HeaderItem(returnElement);
+            UIDA_HeaderItem headerItem = new UIDA_HeaderItem(returnElement);
             return headerItem;
         }
 
@@ -1023,8 +1023,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of group item</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Group element</returns>
-        new public Group Group(string name = null, bool searchDescendants = false,
+        /// <returns>DataGridGroup element</returns>
+        new public DataGridGroup Group(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Group,
@@ -1044,7 +1044,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Group group = new Group(returnElement);
+            DataGridGroup group = new DataGridGroup(returnElement);
             return group;
         }
 
@@ -1055,8 +1055,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of group</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Group element</returns>
-        new public Group GroupAt(string name, int index, bool searchDescendants = false,
+        /// <returns>DataGridGroup element</returns>
+        new public DataGridGroup GroupAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1105,7 +1105,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Group group = new Group(returnElement);
+            DataGridGroup group = new DataGridGroup(returnElement);
             return group;
         }
 
@@ -1115,8 +1115,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of data item</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>DataItem element</returns>
-        public DataItem DataItem(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DataItem element</returns>
+        public UIDA_DataItem DataItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.DataItem,
@@ -1136,7 +1136,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DataItem dataItem = new DataItem(returnElement);
+            UIDA_DataItem dataItem = new UIDA_DataItem(returnElement);
             return dataItem;
         }
 
@@ -1147,8 +1147,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of DataItem</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>DataItem element</returns>
-        public DataItem DataItemAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_DataItem element</returns>
+        public UIDA_DataItem DataItemAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1197,7 +1197,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DataItem dataItem = new DataItem(returnElement);
+            UIDA_DataItem dataItem = new UIDA_DataItem(returnElement);
             return dataItem;
         }
         
@@ -1207,19 +1207,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of DataItem elements, use null to return all DataItems</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>ListItem elements</returns>
-        public DataItem[] DataItems(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DataItem elements</returns>
+        public UIDA_DataItem[] DataItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allDataItems = FindAll(ControlType.DataItem,
                 name, searchDescendants, false, caseSensitive);
 
-            List<DataItem> dataitems = new List<DataItem>();
+            List<UIDA_DataItem> dataitems = new List<UIDA_DataItem>();
             if (allDataItems != null)
             {
                 foreach (AutomationElement crtEl in allDataItems)
                 {
-                    dataitems.Add(new DataItem(crtEl));
+                    dataitems.Add(new UIDA_DataItem(crtEl));
                 }
             }
             return dataitems.ToArray();

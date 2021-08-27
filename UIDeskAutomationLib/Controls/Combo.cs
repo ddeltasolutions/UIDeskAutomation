@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a ComboBox UI element.
     /// </summary>
-    public class Combo: ElementBase
+    public class UIDA_ComboBox: ElementBase
     {
         /// <summary>
-        /// Creates a Combo using an AutomationElement
+        /// Creates a UIDA_ComboBox using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Combo(AutomationElement el)
+        public UIDA_ComboBox(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -23,7 +23,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets a collection with all ComboBox items.
         /// </summary>
-        public ListItem[] Items
+        public UIDA_ListItem[] Items
         {
             get
             {
@@ -32,11 +32,11 @@ namespace UIDeskAutomationLib
                     List<AutomationElement> allItems =
                         this.FindAll(ControlType.ListItem, null, true, false, true);
 
-                    List<ListItem> returnCollection = new List<ListItem>();
+                    List<UIDA_ListItem> returnCollection = new List<UIDA_ListItem>();
 
                     foreach (AutomationElement el in allItems)
                     {
-                        ListItem listItem = new ListItem(el);
+                        UIDA_ListItem listItem = new UIDA_ListItem(el);
                         returnCollection.Add(listItem);
                     }
 
@@ -44,7 +44,7 @@ namespace UIDeskAutomationLib
                 }
                 else
                 {
-                    List<ListItem> returnRows = new List<ListItem>();
+                    List<UIDA_ListItem> returnRows = new List<UIDA_ListItem>();
                     
                     object objectPattern = null;
                     this.uiElement.TryGetCurrentPattern(ItemContainerPattern.Pattern, out objectPattern);
@@ -55,7 +55,7 @@ namespace UIDeskAutomationLib
                             this.FindAll(ControlType.ListItem, null, true, false, true);
                         foreach (AutomationElement listItemEl in allListItems)
                         {
-                            ListItem listItem = new ListItem(listItemEl);
+                            UIDA_ListItem listItem = new UIDA_ListItem(listItemEl);
                             returnRows.Add(listItem);
                         }
                         return returnRows.ToArray();
@@ -67,7 +67,7 @@ namespace UIDeskAutomationLib
                         crt = itemContainerPattern.FindItemByProperty(crt, null, null);
                         if (crt != null)
                         {
-                            ListItem listItem = new ListItem(crt);
+                            UIDA_ListItem listItem = new UIDA_ListItem(crt);
                             returnRows.Add(listItem);
                         }
                     }
@@ -84,7 +84,7 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of combobox item</param>
         /// <param name="caseSensitive">true is name search is done case sensitive, default true</param>
         /// <returns>ComboBox item</returns>
-        public ListItem ListItem(string name = null, bool caseSensitive = true)
+        public UIDA_ListItem ListItem(string name = null, bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ListItem, name,
                 true, false, caseSensitive);
@@ -103,7 +103,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ListItem listItem = new ListItem(returnElement);
+            UIDA_ListItem listItem = new UIDA_ListItem(returnElement);
             return listItem;
         }
 
@@ -113,8 +113,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of ComboBox item</param>
         /// <param name="index">index</param>
         /// <param name="caseSensitive">true is name search is done case sensitive, false otherwise, default true</param>
-        /// <returns>ListItem element of ComboBox</returns>
-        public ListItem ListItemAt(string name, int index, bool caseSensitive = true)
+        /// <returns>UIDA_ListItem element of ComboBox</returns>
+        public UIDA_ListItem ListItemAt(string name, int index, bool caseSensitive = true)
         {
             if (index < 0)
             {
@@ -162,7 +162,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ListItem listItem = new ListItem(returnElement);
+            UIDA_ListItem listItem = new UIDA_ListItem(returnElement);
             return listItem;
         }
 
@@ -172,19 +172,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of ListItem elements, use null to return all ListItems</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>ListItem elements</returns>
-        new public ListItem[] ListItems(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ListItem elements</returns>
+        new public UIDA_ListItem[] ListItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allListItems = FindAll(ControlType.ListItem,
                 name, searchDescendants, false, caseSensitive);
 
-            List<ListItem> listitems = new List<ListItem>();
+            List<UIDA_ListItem> listitems = new List<UIDA_ListItem>();
             if (allListItems != null)
             {
                 foreach (AutomationElement crtEl in allListItems)
                 {
-                    listitems.Add(new ListItem(crtEl));
+                    listitems.Add(new UIDA_ListItem(crtEl));
                 }
             }
             return listitems.ToArray();
@@ -196,7 +196,7 @@ namespace UIDeskAutomationLib
         /// <param name="text">text to set</param>
         public void SetText(string text)
         {
-            Edit edit = this.Edit();
+            UIDA_Edit edit = this.Edit();
 
             if (edit == null)
             {
@@ -210,7 +210,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets the selected ComboBox item.
         /// </summary>
-        public ListItem SelectedItem
+        public UIDA_ListItem SelectedItem
         {
             get
             {
@@ -220,9 +220,9 @@ namespace UIDeskAutomationLib
                 
                 if (selectionPattern == null)
                 {
-                    ListItem[] allItems = this.Items;
+                    UIDA_ListItem[] allItems = this.Items;
 
-                    foreach (ListItem item in allItems)
+                    foreach (UIDA_ListItem item in allItems)
                     {
                         if (item.IsSelected)
                         {
@@ -236,7 +236,7 @@ namespace UIDeskAutomationLib
                     AutomationElement[] selection = selectionPattern.Current.GetSelection();
                     if (selection.Length >= 1)
                     {
-                        ListItem listItem = new ListItem(selection[0]);
+                        UIDA_ListItem listItem = new UIDA_ListItem(selection[0]);
                         return listItem;
                     }
                 }
@@ -288,7 +288,7 @@ namespace UIDeskAutomationLib
                 Expand();
             }
             
-            ListItem listItem = ListItemAt(null, index);
+            UIDA_ListItem listItem = ListItemAt(null, index);
             if (listItem == null)
             {
                 Engine.TraceInLogFile("Item not found");
@@ -315,7 +315,7 @@ namespace UIDeskAutomationLib
                 Expand();
             }
             
-            ListItem listItem = ListItem(itemText, caseSensitive);
+            UIDA_ListItem listItem = ListItem(itemText, caseSensitive);
             if (listItem == null)
             {
                 Engine.TraceInLogFile("Item not found");

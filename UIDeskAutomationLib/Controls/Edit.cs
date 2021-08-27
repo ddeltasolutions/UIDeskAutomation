@@ -11,18 +11,18 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents an EditBox UI element
     /// </summary>
-    public class Edit : ElementBase
+    public class UIDA_Edit : ElementBase
     {
-        internal Edit()
+        internal UIDA_Edit()
         {
 
         }
 
         /// <summary>
-        /// Creates a Edit using an AutomationElement
+        /// Creates a UIDA_Edit using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Edit(AutomationElement el)
+        public UIDA_Edit(AutomationElement el)
         {
             base.uiElement = el;
         }

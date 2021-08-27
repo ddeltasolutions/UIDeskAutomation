@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a TreeView Item.
     /// </summary>
-    public class TreeItem: ElementBase
+    public class UIDA_TreeItem: ElementBase
     {
-        public TreeItem(AutomationElement el)
+        public UIDA_TreeItem(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -19,19 +19,19 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets a collection of subitems of this TreeItem.
         /// </summary>
-        /// <returns>TreeItem array</returns>
-        public TreeItem[] SubItems
+        /// <returns>UIDA_TreeItem array</returns>
+        public UIDA_TreeItem[] SubItems
         {
             get
             {
-                List<TreeItem> tvItems = new List<TreeItem>();
+                List<UIDA_TreeItem> tvItems = new List<UIDA_TreeItem>();
 
                 List<AutomationElement> subItems =
                     this.FindAll(ControlType.TreeItem, null, false, false, true);
 
                 foreach (AutomationElement el in subItems)
                 {
-                    TreeItem tvItem = new TreeItem(el);
+                    UIDA_TreeItem tvItem = new UIDA_TreeItem(el);
                     tvItems.Add(tvItem);
                 }
 
@@ -54,16 +54,16 @@ namespace UIDeskAutomationLib
 
                 if (expandCollapsePattern == null)
                 {
-                    Engine.TraceInLogFile("TreeItem.Expand method failed");
-                    throw new Exception("TreeItem.Expand method failed");
+                    Engine.TraceInLogFile("UIDA_TreeItem.Expand method failed");
+                    throw new Exception("UIDA_TreeItem.Expand method failed");
                 }
 
                 expandCollapsePattern.Expand();
                 return;
             }
 
-            Engine.TraceInLogFile("TreeItem.Expand method - cannot expand");
-            throw new Exception("TreeItem.Expand method - cannot expand");
+            Engine.TraceInLogFile("UIDA_TreeItem.Expand method - cannot expand");
+            throw new Exception("UIDA_TreeItem.Expand method - cannot expand");
         }
 
         /// <summary>
@@ -81,16 +81,16 @@ namespace UIDeskAutomationLib
 
                 if (expandCollapsePattern == null)
                 {
-                    Engine.TraceInLogFile("TreeItem.Collapse method failed");
-                    throw new Exception("TreeItem.Collapse method failed");
+                    Engine.TraceInLogFile("UIDA_TreeItem.Collapse method failed");
+                    throw new Exception("UIDA_TreeItem.Collapse method failed");
                 }
 
                 expandCollapsePattern.Collapse();
                 return;
             }
 
-            Engine.TraceInLogFile("TreeItem.Collapse method - cannot collapse");
-            throw new Exception("TreeItem.Collapse method - cannot collapse");
+            Engine.TraceInLogFile("UIDA_TreeItem.Collapse method - cannot collapse");
+            throw new Exception("UIDA_TreeItem.Collapse method - cannot collapse");
         }
 		
 		/// <summary>
@@ -111,15 +111,15 @@ namespace UIDeskAutomationLib
 
 					if (expandCollapsePattern == null)
 					{
-						Engine.TraceInLogFile("TreeItem.ExpandCollapseState property failed");
-						throw new Exception("TreeItem.ExpandCollapseState property failed");
+						Engine.TraceInLogFile("UIDA_TreeItem.ExpandCollapseState property failed");
+						throw new Exception("UIDA_TreeItem.ExpandCollapseState property failed");
 					}
 					
 					return expandCollapsePattern.Current.ExpandCollapseState;
 				}
 				
-				Engine.TraceInLogFile("TreeItem.ExpandCollapseState property not supported");
-				throw new Exception("TreeItem.ExpandCollapseState property not supported");
+				Engine.TraceInLogFile("UIDA_TreeItem.ExpandCollapseState property not supported");
+				throw new Exception("UIDA_TreeItem.ExpandCollapseState property not supported");
 			}
 		}
 
@@ -136,8 +136,8 @@ namespace UIDeskAutomationLib
 				TogglePattern togglePattern = togglePatternObj as TogglePattern;
 				if (togglePattern == null)
 				{
-					Engine.TraceInLogFile("TreeItem.Toggle() failed");
-					throw new Exception("TreeItem.Toggle() failed");
+					Engine.TraceInLogFile("UIDA_TreeItem.Toggle() failed");
+					throw new Exception("UIDA_TreeItem.Toggle() failed");
 				}
 				
 				try
@@ -147,13 +147,13 @@ namespace UIDeskAutomationLib
 				}
 				catch (Exception ex)
 				{
-					Engine.TraceInLogFile("TreeItem.Toggle() error: " + ex.Message);
-					throw new Exception("TreeItem.Toggle() error: " + ex.Message);
+					Engine.TraceInLogFile("UIDA_TreeItem.Toggle() error: " + ex.Message);
+					throw new Exception("UIDA_TreeItem.Toggle() error: " + ex.Message);
 				} 
 			}
 			
-			Engine.TraceInLogFile("TreeItem.Toggle() failed: TogglePattern not supported");
-			throw new Exception("TreeItem.Toggle() failed: TogglePattern not supported");
+			Engine.TraceInLogFile("UIDA_TreeItem.Toggle() failed: TogglePattern not supported");
+			throw new Exception("UIDA_TreeItem.Toggle() failed: TogglePattern not supported");
         }
 
         /// <summary>
@@ -171,16 +171,16 @@ namespace UIDeskAutomationLib
 
                 if (selectionItemPattern == null)
                 {
-                    Engine.TraceInLogFile("TreeItem.Select() method failed");
-                    throw new Exception("TreeItem.Select() method failed");
+                    Engine.TraceInLogFile("UIDA_TreeItem.Select() method failed");
+                    throw new Exception("UIDA_TreeItem.Select() method failed");
                 }
 
                 selectionItemPattern.Select();
                 return;
             }
 
-            Engine.TraceInLogFile("TreeItem.Select() method failed");
-            throw new Exception("TreeItem.Select() method failed");
+            Engine.TraceInLogFile("UIDA_TreeItem.Select() method failed");
+            throw new Exception("UIDA_TreeItem.Select() method failed");
         }
 
         /// <summary>
@@ -198,8 +198,8 @@ namespace UIDeskAutomationLib
 
                 if (scrollItemPattern == null)
                 {
-                    Engine.TraceInLogFile("TreeItem.BringIntoView method failed");
-                    throw new Exception("TreeItem.BringIntoView method failed");
+                    Engine.TraceInLogFile("UIDA_TreeItem.BringIntoView method failed");
+                    throw new Exception("UIDA_TreeItem.BringIntoView method failed");
                 }
 
                 try
@@ -209,22 +209,22 @@ namespace UIDeskAutomationLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.TraceInLogFile("TreeItem.BringIntoView method failed: " + 
+                    Engine.TraceInLogFile("UIDA_TreeItem.BringIntoView method failed: " + 
                         ex.Message);
-                    throw new Exception("TreeItem.BringIntoView method failed: " +
+                    throw new Exception("UIDA_TreeItem.BringIntoView method failed: " +
                         ex.Message);
                 }
             }
 
-            Engine.TraceInLogFile("TreeItem.BringIntoView method failed");
-            throw new Exception("TreeItem.BringIntoView method failed");
+            Engine.TraceInLogFile("UIDA_TreeItem.BringIntoView method failed");
+            throw new Exception("UIDA_TreeItem.BringIntoView method failed");
         }
 		
 		/// <summary>
-        /// Gets or sets the checked state of the current tree item if supported.
+        /// Gets or sets the checked state of the tree item if supported.
         /// </summary>
 		/// <returns>true if tree item is checked, false otherwise</returns>
-        public bool Checked
+        public bool IsChecked
         {
             get
             {
@@ -237,8 +237,8 @@ namespace UIDeskAutomationLib
 
                     if (togglePattern == null)
                     {
-                        Engine.TraceInLogFile("TreeItem.Checked failed");
-                        throw new Exception("TreeItem.Checked failed");
+                        Engine.TraceInLogFile("UIDA_TreeItem.Checked failed");
+                        throw new Exception("UIDA_TreeItem.Checked failed");
                     }
 
                     try
@@ -254,13 +254,13 @@ namespace UIDeskAutomationLib
                     }
                     catch (Exception ex)
                     { 
-                        Engine.TraceInLogFile("TreeItem.Checked failed: " + ex.Message);
-                        throw new Exception("TreeItem.Checked failed: " + ex.Message);
+                        Engine.TraceInLogFile("UIDA_TreeItem.Checked failed: " + ex.Message);
+                        throw new Exception("UIDA_TreeItem.Checked failed: " + ex.Message);
                     }
                 }
 
-                Engine.TraceInLogFile("TreeItem.Checked not supported");
-                throw new Exception("TreeItem.Checked not supported");
+                Engine.TraceInLogFile("UIDA_TreeItem.Checked not supported");
+                throw new Exception("UIDA_TreeItem.Checked not supported");
             }
 
             set

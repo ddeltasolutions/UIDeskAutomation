@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a RadioButton UI element.
     /// </summary>
-    public class RadioButton: ElementBase
+    public class UIDA_RadioButton: ElementBase
     {
-        public RadioButton(AutomationElement el)
+        public UIDA_RadioButton(AutomationElement el)
         {
             this.uiElement = el;
         }

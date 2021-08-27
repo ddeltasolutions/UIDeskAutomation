@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a tab control.
     /// </summary>
-    public class TabCtrl : ElementBase
+    public class UIDA_TabCtrl : ElementBase
     {
 		/// <summary>
-        /// Creates a TabCtrl using an AutomationElement
+        /// Creates a UIDA_TabCtrl using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public TabCtrl(AutomationElement el)
+        public UIDA_TabCtrl(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -23,16 +23,16 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets a collection with all Tab Items. It's like calling TabItems(null).
         /// </summary>
-        public TabItem[] Items
+        public UIDA_TabItem[] Items
         {
             get
             {
                 List<AutomationElement> tabs = this.FindAll(ControlType.TabItem, null, false, false, true);
-                List<TabItem> tabItems = new List<TabItem>();
+                List<UIDA_TabItem> tabItems = new List<UIDA_TabItem>();
 
                 foreach (AutomationElement tab in tabs)
                 {
-                    TabItem tabItem = new TabItem(tab, this);
+                    UIDA_TabItem tabItem = new UIDA_TabItem(tab, this);
                     tabItems.Add(tabItem);
                 }
 
@@ -46,8 +46,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of tab item</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>TabItem element</returns>
-        public TabItem TabItem(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_TabItem element</returns>
+        public UIDA_TabItem TabItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.TabItem,
@@ -67,7 +67,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TabItem tabItem = new TabItem(returnElement, this);
+            UIDA_TabItem tabItem = new UIDA_TabItem(returnElement, this);
             return tabItem;
         }
 
@@ -79,8 +79,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">tab item index</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>TabItem</returns>
-        public TabItem TabItemAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_TabItem</returns>
+        public UIDA_TabItem TabItemAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -129,7 +129,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TabItem tabItem = new TabItem(returnElement, this);
+            UIDA_TabItem tabItem = new UIDA_TabItem(returnElement, this);
             return tabItem;
         }
 
@@ -139,19 +139,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of TabItem elements, use null to return all TabItems</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>TabItem elements</returns>
-        public TabItem[] TabItems(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_TabItem elements</returns>
+        public UIDA_TabItem[] TabItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTabItems = FindAll(ControlType.TabItem,
                 name, searchDescendants, false, caseSensitive);
 
-            List<TabItem> tabitems = new List<TabItem>();
+            List<UIDA_TabItem> tabitems = new List<UIDA_TabItem>();
             if (allTabItems != null)
             {
                 foreach (AutomationElement crtEl in allTabItems)
                 {
-                    tabitems.Add(new TabItem(crtEl, this));
+                    tabitems.Add(new UIDA_TabItem(crtEl, this));
                 }
             }
             return tabitems.ToArray();
@@ -160,10 +160,10 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets the currently selected Tab Item in this tab control.
         /// </summary>
-        /// <returns>TabItem element</returns>
-        public TabItem GetSelectedTabItem()
+        /// <returns>UIDA_TabItem element</returns>
+        public UIDA_TabItem GetSelectedTabItem()
         {
-            foreach (TabItem tabItem in this.Items)
+            foreach (UIDA_TabItem tabItem in this.Items)
             {
                 if (tabItem.IsSelected)
                 {
@@ -181,7 +181,7 @@ namespace UIDeskAutomationLib
         /// <param name="index">tab item index, starts with 1</param>
         public void Select(int index)
         {
-            TabItem tabItem = TabItemAt(null, index, true);
+            UIDA_TabItem tabItem = TabItemAt(null, index, true);
             if (tabItem == null)
             {
                 Engine.TraceInLogFile("TabItem not found");
@@ -197,7 +197,7 @@ namespace UIDeskAutomationLib
         /// <param name="caseSensitive">true if the tab item text search is done case sensitive</param>
         public void Select(string itemText = null, bool caseSensitive = true)
         {
-            TabItem tabItem = TabItem(itemText, caseSensitive);
+            UIDA_TabItem tabItem = TabItem(itemText, caseSensitive);
             if (tabItem == null)
             {
                 Engine.TraceInLogFile("TabItem not found");

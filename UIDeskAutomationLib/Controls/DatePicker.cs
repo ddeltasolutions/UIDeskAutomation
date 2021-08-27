@@ -11,13 +11,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a DatePicker UI element
     /// </summary>
-    public class DatePicker: ElementBase
+    public class UIDA_DatePicker: ElementBase
     {
 		/// <summary>
-        /// Creates a DatePicker using an AutomationElement
+        /// Creates a UIDA_DatePicker using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public DatePicker(AutomationElement el)
+        public UIDA_DatePicker(AutomationElement el)
         {
             base.uiElement = el;
         }
@@ -118,8 +118,8 @@ namespace UIDeskAutomationLib
                         parentParent = tw.GetParent(parent);
                     }
                     
-                    Window window = new Window(parent);
-                    Calendar calendar = window.Calendar("Calendar Control", true);
+                    UIDA_Window window = new UIDA_Window(parent);
+                    UIDA_Calendar calendar = window.Calendar("Calendar Control", true);
                     
                     if (calendar != null)
                     {

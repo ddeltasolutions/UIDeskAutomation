@@ -11,13 +11,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Calendar UI element. It works only for WPF and Win32 calendar.
     /// </summary>
-    public class Calendar : ElementBase
+    public class UIDA_Calendar : ElementBase
     {
         /// <summary>
         /// Creates a Calendar using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Calendar(AutomationElement el)
+        public UIDA_Calendar(AutomationElement el)
         {
             base.uiElement = el;
         }
@@ -156,7 +156,7 @@ namespace UIDeskAutomationLib
             }
             
             // set year
-            Button btnHeader = this.Buttons()[1];
+            UIDA_Button btnHeader = this.Buttons()[1];
             if (btnHeader.InnerElement.Current.AutomationId == "PART_HeaderButton")
             {
                 string headerName = btnHeader.InnerElement.Current.Name;
@@ -165,7 +165,7 @@ namespace UIDeskAutomationLib
                 int yearHigh = Convert.ToInt32(parts[1]);
                 if (date.Year < yearLow)
                 {
-                    Button prevBtn = this.Buttons()[0];
+                    UIDA_Button prevBtn = this.Buttons()[0];
                     while (date.Year < yearLow)
                     {
                         object invokePatternObj = null;
@@ -184,7 +184,7 @@ namespace UIDeskAutomationLib
                 }
                 else if (date.Year > yearHigh)
                 {
-                    Button nextBtn = this.Buttons()[2];
+                    UIDA_Button nextBtn = this.Buttons()[2];
                     while (date.Year > yearHigh)
                     {
                         object invokePatternObj = null;
@@ -202,10 +202,10 @@ namespace UIDeskAutomationLib
                     }
                 }
                 
-                Button[] buttons = this.Buttons();
+                UIDA_Button[] buttons = this.Buttons();
                 for (int i = 3; i < buttons.Length; i++)
                 {
-                    Button button = buttons[i];
+                    UIDA_Button button = buttons[i];
                     if (button.InnerElement.Current.Name == date.Year.ToString())
                     {
                         object invokePatternObj = null;
@@ -220,10 +220,10 @@ namespace UIDeskAutomationLib
             }
             
             // set month
-            Button[] monthButtons = this.Buttons();
+            UIDA_Button[] monthButtons = this.Buttons();
             for (int i = 3; i < monthButtons.Length; i++)
             {
-                Button monthBtn = monthButtons[i];
+                UIDA_Button monthBtn = monthButtons[i];
                 DateTime crtMonthDate = DateTime.Parse(monthBtn.InnerElement.Current.Name, CultureInfo.CurrentCulture);
                 
                 if (crtMonthDate.Month == date.Month)
@@ -239,12 +239,12 @@ namespace UIDeskAutomationLib
             }
             
             // set day
-            Button[] dayButtons = this.Buttons();
+            UIDA_Button[] dayButtons = this.Buttons();
             DateTime dateDayMonthYear = new DateTime(date.Year, date.Month, date.Day);
             
             for (int i = 3; i < dayButtons.Length; i++)
             {
-                Button dayBtn = dayButtons[i];
+                UIDA_Button dayBtn = dayButtons[i];
                 string dayStr = dayBtn.InnerElement.Current.Name;
                 DateTime currentDate;
 				

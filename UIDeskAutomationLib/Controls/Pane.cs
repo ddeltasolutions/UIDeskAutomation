@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Pane ui element
     /// </summary>
-    public class Pane : ElementBase
+    public class UIDA_Pane : ElementBase
     {
-        public Pane(AutomationElement el)
+        public UIDA_Pane(AutomationElement el)
         {
             base.uiElement = el;
         }

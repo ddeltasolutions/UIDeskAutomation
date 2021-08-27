@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// This class represents a Static Text control.
     /// </summary>
-    public class Label: ElementBase
+    public class UIDA_Label: ElementBase
     {
-        public Label(AutomationElement el)
+        public UIDA_Label(AutomationElement el)
         {
             this.uiElement = el;
         }

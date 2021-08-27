@@ -10,13 +10,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a CheckBox UI element
     /// </summary>
-    public class CheckBoxElement : ElementBase
+    public class UIDA_CheckBox : ElementBase
     {
         /// <summary>
         /// Creates a CheckBoxElement using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public CheckBoxElement(AutomationElement el)
+        public UIDA_CheckBox(AutomationElement el)
         {
             base.uiElement = el;
         }
@@ -156,9 +156,9 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Gets a boolean to determine if a checkbox is checked or not
+        /// Gets/Sets a boolean to determine if a checkbox is checked or not
         /// </summary>
-        public bool Checked
+        public bool IsChecked
         {
             get
             {

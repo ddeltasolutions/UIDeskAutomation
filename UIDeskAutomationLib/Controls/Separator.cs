@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Separator control.
     /// </summary>
-    public class Separator: ElementBase
+    public class UIDA_Separator: ElementBase
     {
-        public Separator(AutomationElement el)
+        public UIDA_Separator(AutomationElement el)
         {
             base.uiElement = el;
         }

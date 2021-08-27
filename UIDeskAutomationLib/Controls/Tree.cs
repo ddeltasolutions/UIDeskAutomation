@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Tree control.
     /// </summary>
-    public class Tree: ElementBase
+    public class UIDA_Tree: ElementBase
     {
-        public Tree(AutomationElement el)
+        public UIDA_Tree(AutomationElement el)
         {
             this.uiElement = el;
         }
@@ -19,8 +19,8 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets the tree root item.
         /// </summary>
-        /// <returns>TreeItem element</returns>
-        public TreeItem GetRoot()
+        /// <returns>UIDA_TreeItem element</returns>
+        public UIDA_TreeItem GetRoot()
         {
             AutomationElement rootElement = this.FindFirst(ControlType.TreeItem, null,
                 false, false, true);
@@ -39,7 +39,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TreeItem root = new TreeItem(rootElement);
+            UIDA_TreeItem root = new UIDA_TreeItem(rootElement);
             return root;
         }
     }

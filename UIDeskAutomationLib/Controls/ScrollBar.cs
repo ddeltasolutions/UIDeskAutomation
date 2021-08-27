@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a ScrollBar control.
     /// </summary>
-    public class ScrollBar: GenericSpinner
+    public class UIDA_ScrollBar: GenericSpinner
     {
 		/// <summary>
-        /// Creates a ScrollBar using an AutomationElement
+        /// Creates a UIDA_ScrollBar using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public ScrollBar(AutomationElement el): base(el)
+        public UIDA_ScrollBar(AutomationElement el): base(el)
         {
             //this.uiElement = el;
         }

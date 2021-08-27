@@ -9,15 +9,23 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a button UI element
     /// </summary>
-    public class Button: ElementBase
+    public class UIDA_Button: ElementBase
     {
 		/// <summary>
-        /// Creates a Button using an AutomationElement
+        /// Creates a UIDA_Button using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Button(AutomationElement el)
+        public UIDA_Button(AutomationElement el)
         {
             base.uiElement = el;
+        }
+        
+        /// <summary>
+        /// Presses the button
+        /// </summary>
+        public void Press()
+        {
+            base.Invoke();
         }
     }
 }

@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Title Bar ui element
     /// </summary>
-    public class TitleBar: ElementBase
+    public class UIDA_TitleBar: ElementBase
     {
-        public TitleBar(AutomationElement el)
+        public UIDA_TitleBar(AutomationElement el)
         {
             base.uiElement = el;
         }

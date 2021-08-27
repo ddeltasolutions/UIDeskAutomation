@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Group UI element
     /// </summary>
-    public class Group: ElementBase
+    public class UIDA_Group: ElementBase
     {
         /// <summary>
-        /// Creates a Group using an AutomationElement
+        /// Creates a UIDA_Group using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Group(AutomationElement el)
+        public UIDA_Group(AutomationElement el)
         {
             base.uiElement = el;
         }

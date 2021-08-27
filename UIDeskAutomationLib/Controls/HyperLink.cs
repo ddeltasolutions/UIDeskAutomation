@@ -9,11 +9,19 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Hyper Link control.
     /// </summary>
-    public class HyperLink: ElementBase
+    public class UIDA_HyperLink: ElementBase
     {
-        public HyperLink(AutomationElement el)
+        public UIDA_HyperLink(AutomationElement el)
         {
             this.uiElement = el;
+        }
+        
+        /// <summary>
+        /// Accesses the link
+        /// </summary>
+        public void AccessLink()
+        {
+            base.Invoke();
         }
     }
 }

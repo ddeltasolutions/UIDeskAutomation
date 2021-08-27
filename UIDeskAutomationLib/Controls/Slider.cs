@@ -9,13 +9,13 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Slider UI element.
     /// </summary>
-    public class Slider: GenericSpinner
+    public class UIDA_Slider: GenericSpinner
     {
 		/// <summary>
-        /// Creates a Slider using an AutomationElement
+        /// Creates a UIDA_Slider using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Slider(AutomationElement el)
+        public UIDA_Slider(AutomationElement el)
             : base(el)
         { }
 
@@ -24,7 +24,7 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Increment()
         {
-            Button increaseButton = null;
+            UIDA_Button increaseButton = null;
 
             try
             {
@@ -47,7 +47,7 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Decrement()
         {
-            Button decreaseButton = null;
+            UIDA_Button decreaseButton = null;
             try
             {
                 decreaseButton = this.ButtonAt(null, 1);

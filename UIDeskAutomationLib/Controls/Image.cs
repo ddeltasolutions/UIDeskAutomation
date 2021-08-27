@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents an Image control.
     /// </summary>
-    public class Image: ElementBase
+    public class UIDA_Image: ElementBase
     {
-        public Image(AutomationElement el)
+        public UIDA_Image(AutomationElement el)
         {
             this.uiElement = el;
         }

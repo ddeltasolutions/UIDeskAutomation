@@ -9,9 +9,9 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Represents a Thumb control.
     /// </summary>
-    public class Thumb: ElementBase
+    public class UIDA_Thumb: ElementBase
     {
-        public Thumb(AutomationElement el)
+        public UIDA_Thumb(AutomationElement el)
         {
             this.uiElement = el;
         }
