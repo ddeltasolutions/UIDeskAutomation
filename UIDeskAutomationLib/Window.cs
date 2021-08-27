@@ -10,15 +10,15 @@ namespace UIDeskAutomationLib
     /// <summary>
     /// Class that represents a Window ui element.
     /// </summary>
-    public class Window: ElementBase
+    public class UIDA_Window: ElementBase
     {
         private IntPtr hWnd = IntPtr.Zero;
 
         /// <summary>
-        /// Creates a Window using a window handle
+        /// Creates a UIDA_Window using a window handle
         /// </summary>
         /// <param name="hwnd">Window handle</param>
-        public Window(IntPtr hwnd)
+        public UIDA_Window(IntPtr hwnd)
         {
             this.hWnd = hwnd;
 
@@ -30,10 +30,10 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Creates a Window using an AutomationElement
+        /// Creates a UIDA_Window using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public Window(AutomationElement el)
+        public UIDA_Window(AutomationElement el)
         {
             base.uiElement = el;
             try

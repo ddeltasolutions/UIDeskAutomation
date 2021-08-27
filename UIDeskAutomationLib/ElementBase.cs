@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Automation;
-using System.Windows.Forms;
 
 namespace UIDeskAutomationLib
 {
@@ -227,7 +226,7 @@ namespace UIDeskAutomationLib
 
             if (windowHandle != IntPtr.Zero)
             {
-                Window window = new Window(windowHandle);
+                UIDA_Window window = new UIDA_Window(windowHandle);
                 return window.GetWindowText();
             }
             else

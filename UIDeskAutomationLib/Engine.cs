@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Automation;
-using System.Windows.Forms;
 using System.Xml;
 
 namespace UIDeskAutomationLib
@@ -20,7 +19,7 @@ namespace UIDeskAutomationLib
     /// </summary>
     public class Engine
     {
-        private static int wait = 5000; //default wait 5 seconds
+        private static int wait = 10000; //default wait 10 seconds
         private static string logFileName = string.Empty;
         private static bool throwExceptionsWhenSearch = false;
 
@@ -137,8 +136,8 @@ namespace UIDeskAutomationLib
         /// <param name="className">Window class name (optional)</param>
         /// <param name="index">1-based index (optional)</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
-        /// <returns>Window</returns>
-        public Window GetTopLevel(string windowText, string className = null, int index = 0,
+        /// <returns>UIDA_Window</returns>
+        public UIDA_Window GetTopLevel(string windowText, string className = null, int index = 0,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -209,7 +208,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            return new Window(hwnd);
+            return new UIDA_Window(hwnd);
         }
 
         /// <summary>
@@ -221,8 +220,8 @@ namespace UIDeskAutomationLib
         /// <param name="className">Window class name</param>
         /// <param name="index">1-based index</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
-        /// <returns>Top level Window</returns>
-        public Window GetTopLevelByProcName(string processName, 
+        /// <returns>Top level UIDA_Window</returns>
+        public UIDA_Window GetTopLevelByProcName(string processName, 
             string windowText = null, string className = null, int index = 0, bool caseSensitive = true)
         {
             int nWaitMs = Engine.wait;
@@ -275,7 +274,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            return new Window(windowHandle);
+            return new UIDA_Window(windowHandle);
         }
 
         /// <summary>
@@ -284,18 +283,18 @@ namespace UIDeskAutomationLib
         /// <param name="windowText">Window text, wildcards can be used</param>
         /// <param name="className">Window class name</param>
         /// <param name="caseSensitive">searches the windows text case sensitive, default true</param>
-        /// <returns>Windows collection</returns>
-        public Window[] GetTopLevelWindows(
+        /// <returns>UIDA_Window collection</returns>
+        public UIDA_Window[] GetTopLevelWindows(
             string windowText = null, string className = null, bool caseSensitive = true)
         {
             IntPtr[] handles = Helper.GetWindows(IntPtr.Zero, className, 
                 windowText, caseSensitive);
 
-            List<Window> windows = new List<Window>();
+            List<UIDA_Window> windows = new List<UIDA_Window>();
 
             foreach (IntPtr handle in handles)
             {
-                Window wnd = new Window(handle);
+                UIDA_Window wnd = new UIDA_Window(handle);
                 windows.Add(wnd);
             }
 
@@ -309,8 +308,8 @@ namespace UIDeskAutomationLib
         /// <param name="windowText">Window text, wildcards can be used</param>
         /// <param name="className">Window class name</param>
         /// <param name="caseSensitive">searches the window text case sensitive, default true</param>
-        /// <returns>Window</returns>
-        public Window GetTopLevelByProcId(int processId, 
+        /// <returns>UIDA_Window</returns>
+        public UIDA_Window GetTopLevelByProcId(int processId, 
             string windowText = null, string className = null, bool caseSensitive = true)
         {
             Process process = null;
@@ -366,7 +365,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            return new Window(windowHandle);
+            return new UIDA_Window(windowHandle);
         }
 
         private IntPtr FindWindow(string sClassName, string sText, int nIndex = 0)
@@ -402,10 +401,10 @@ namespace UIDeskAutomationLib
         /// Gets a Pane ui element representing the main desktop.
         /// </summary>
         /// <returns>a Pane element that represents the desktop</returns>
-        public Pane GetDesktopPane()
+        public UIDA_Pane GetDesktopPane()
         {
             AutomationElement desktopPane = AutomationElement.RootElement;
-            return new Pane(desktopPane);
+            return new UIDA_Pane(desktopPane);
         }
 
         /// <summary>

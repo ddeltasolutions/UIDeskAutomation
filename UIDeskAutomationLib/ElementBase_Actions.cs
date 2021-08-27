@@ -14,16 +14,16 @@ namespace UIDeskAutomationLib
     partial class ElementBase
     {
         #region Actions
-        
+
         /// <summary>
-        /// Invoke the default action on element
+        /// Invokes the default action on element
         /// </summary>
         public void Invoke()
         {
             if (this.IsAlive == false)
             {
-                Engine.TraceInLogFile("Invoke - Element not available anymore.");
-                throw new Exception("Invoke - Element not available anymore.");
+                Engine.TraceInLogFile("Invoke() - Element not available anymore.");
+                throw new Exception("Invoke() - Element not available anymore.");
             }
 
             object objectPattern = null;

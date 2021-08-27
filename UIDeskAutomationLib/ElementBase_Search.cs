@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Automation;
-using System.Windows.Forms;
 
 namespace UIDeskAutomationLib
 {
@@ -276,8 +275,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">title bar index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>TitleBar</returns>
-        public TitleBar TitleBarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_TitleBar, null if not found</returns>
+        public UIDA_TitleBar TitleBarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -326,7 +325,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TitleBar titleBar = new TitleBar(returnElement);
+            UIDA_TitleBar titleBar = new UIDA_TitleBar(returnElement);
             return titleBar;
         }
 
@@ -336,8 +335,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">title bar name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first TitleBar that matches the search criteria</returns>
-        public TitleBar TitleBar(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_TitleBar that matches the search criteria, null if not found</returns>
+        public UIDA_TitleBar TitleBar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.TitleBar, name,
@@ -357,7 +356,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TitleBar titleBar = new TitleBar(returnElement);
+            UIDA_TitleBar titleBar = new UIDA_TitleBar(returnElement);
             return titleBar;
         }
 
@@ -367,19 +366,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of TitleBar elements, use null to return all TitleBars</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all TitleBar elements that match the search criteria</returns>
-        public TitleBar[] TitleBars(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_TitleBar elements that match the search criteria</returns>
+        public UIDA_TitleBar[] TitleBars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTitleBars = FindAll(ControlType.TitleBar,
                 name, searchDescendants, false, caseSensitive);
 
-            List<TitleBar> titlebars = new List<TitleBar>();
+            List<UIDA_TitleBar> titlebars = new List<UIDA_TitleBar>();
             if (allTitleBars != null)
             {
                 foreach (AutomationElement crtEl in allTitleBars)
                 {
-                    titlebars.Add(new TitleBar(crtEl));
+                    titlebars.Add(new UIDA_TitleBar(crtEl));
                 }
             }
             return titlebars.ToArray();
@@ -392,8 +391,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">menu bar index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>MenuBar</returns>
-        public MenuBar MenuBarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_MenuBar, null if not found</returns>
+        public UIDA_MenuBar MenuBarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -442,7 +441,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            MenuBar menuBar = new MenuBar(returnElement);
+            UIDA_MenuBar menuBar = new UIDA_MenuBar(returnElement);
             return menuBar;
         }
 
@@ -452,8 +451,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">menu bar name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first MenuBar that matches the search criteria</returns>
-        public MenuBar MenuBar(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_MenuBar that matches the search criteria, null if not found</returns>
+        public UIDA_MenuBar MenuBar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.MenuBar, name,
@@ -473,7 +472,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            MenuBar menuBar = new MenuBar(returnElement);
+            UIDA_MenuBar menuBar = new UIDA_MenuBar(returnElement);
             return menuBar;
         }
 
@@ -483,19 +482,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of MenuBar elements, use null to return all MenuBars</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all MenuBar elements that match the search criteria</returns>
-        public MenuBar[] MenuBars(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_MenuBar elements that match the search criteria</returns>
+        public UIDA_MenuBar[] MenuBars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allMenuBars = FindAll(ControlType.MenuBar,
                 name, searchDescendants, false, caseSensitive);
 
-            List<MenuBar> menubars = new List<MenuBar>();
+            List<UIDA_MenuBar> menubars = new List<UIDA_MenuBar>();
             if (allMenuBars != null)
             {
                 foreach (AutomationElement crtEl in allMenuBars)
                 {
-                    menubars.Add(new MenuBar(crtEl));
+                    menubars.Add(new UIDA_MenuBar(crtEl));
                 }
             }
             return menubars.ToArray();
@@ -508,8 +507,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">menu item index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>MenuItem</returns>
-        public MenuItem MenuItemAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_MenuItem, null if not found</returns>
+        public UIDA_MenuItem MenuItemAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -558,7 +557,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            MenuItem menuItem = new MenuItem(returnElement);
+            UIDA_MenuItem menuItem = new UIDA_MenuItem(returnElement);
             return menuItem;
         }
 
@@ -568,8 +567,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">menu item text, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first MenuItem that matches the search criteria</returns>
-        public MenuItem MenuItem(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_MenuItem that matches the search criteria, null if not found</returns>
+        public UIDA_MenuItem MenuItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.MenuItem, name,
@@ -589,7 +588,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            MenuItem menuItem = new MenuItem(returnElement);
+            UIDA_MenuItem menuItem = new UIDA_MenuItem(returnElement);
             return menuItem;
         }
 
@@ -599,19 +598,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of MenuItem elements, use null to return all MenuItems</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all MenuItem elements that match the search criteria</returns>
-        public MenuItem[] MenuItems(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_MenuItem elements that match the search criteria</returns>
+        public UIDA_MenuItem[] MenuItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allMenuItems = FindAll(ControlType.MenuItem,
                 name, searchDescendants, false, caseSensitive);
 
-            List<MenuItem> menuitems = new List<MenuItem>();
+            List<UIDA_MenuItem> menuitems = new List<UIDA_MenuItem>();
             if (allMenuItems != null)
             {
                 foreach (AutomationElement crtEl in allMenuItems)
                 {
-                    menuitems.Add(new MenuItem(crtEl));
+                    menuitems.Add(new UIDA_MenuItem(crtEl));
                 }
             }
             return menuitems.ToArray();
@@ -624,8 +623,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">menu index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>TopLevelMenu</returns>
-        public TopLevelMenu MenuAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_TopLevelMenu, null if not found</returns>
+        public UIDA_TopLevelMenu MenuAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -674,7 +673,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TopLevelMenu menu = new TopLevelMenu(returnElement);
+            UIDA_TopLevelMenu menu = new UIDA_TopLevelMenu(returnElement);
             return menu;
         }
 
@@ -684,8 +683,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">menu text, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first TopLevelMenu that matches the search criteria</returns>
-        public TopLevelMenu Menu(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_TopLevelMenu that matches the search criteria, null if not found</returns>
+        public UIDA_TopLevelMenu Menu(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Menu, name,
@@ -705,7 +704,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TopLevelMenu menu = new TopLevelMenu(returnElement);
+            UIDA_TopLevelMenu menu = new UIDA_TopLevelMenu(returnElement);
             return menu;
         }
 
@@ -715,19 +714,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of TopLevelMenu elements, use null to return all Menus</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all TopLevelMenu elements that match the search criteria</returns>
-        public TopLevelMenu[] Menus(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_TopLevelMenu elements that match the search criteria</returns>
+        public UIDA_TopLevelMenu[] Menus(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allMenus = FindAll(ControlType.Menu,
                 name, searchDescendants, false, caseSensitive);
 
-            List<TopLevelMenu> menus = new List<TopLevelMenu>();
+            List<UIDA_TopLevelMenu> menus = new List<UIDA_TopLevelMenu>();
             if (allMenus != null)
             {
                 foreach (AutomationElement crtEl in allMenus)
                 {
-                    menus.Add(new TopLevelMenu(crtEl));
+                    menus.Add(new UIDA_TopLevelMenu(crtEl));
                 }
             }
             return menus.ToArray();
@@ -740,8 +739,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">button index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Button</returns>
-        public Button ButtonAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Button, null if not found</returns>
+        public UIDA_Button ButtonAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -790,7 +789,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Button button = new Button(returnElement);
+            UIDA_Button button = new UIDA_Button(returnElement);
             return button;
         }
 
@@ -800,8 +799,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">button name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first Button that matches the search criteria</returns>
-        public Button Button(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_Button that matches the search criteria, null if not found</returns>
+        public UIDA_Button Button(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Button, name,
@@ -821,7 +820,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Button button = new Button(returnElement);
+            UIDA_Button button = new UIDA_Button(returnElement);
             return button;
         }
 
@@ -831,19 +830,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Button elements, use null to return all Buttons</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all Button elements that match the search criteria</returns>
-        public Button[] Buttons(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_Button elements that match the search criteria</returns>
+        public UIDA_Button[] Buttons(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allButtons = FindAll(ControlType.Button,
                 name, searchDescendants, false, caseSensitive);
 
-            List<Button> buttons = new List<Button>();
+            List<UIDA_Button> buttons = new List<UIDA_Button>();
             if (allButtons != null)
             {
                 foreach (AutomationElement crtEl in allButtons)
                 {
-                    buttons.Add(new Button(crtEl));
+                    buttons.Add(new UIDA_Button(crtEl));
                 }
             }
             return buttons.ToArray();
@@ -856,8 +855,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">calendar index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Calendar</returns>
-        public Calendar CalendarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Calendar, null if not found</returns>
+        public UIDA_Calendar CalendarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -909,7 +908,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Calendar calendar = new Calendar(returnElement);
+            UIDA_Calendar calendar = new UIDA_Calendar(returnElement);
             return calendar;
         }
 
@@ -919,8 +918,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">calendar name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first Calendar that matches the search criteria</returns>
-        public Calendar Calendar(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_Calendar that matches the search criteria, null if not found</returns>
+        public UIDA_Calendar Calendar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             PropertyCondition typeCond = new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane);
@@ -943,7 +942,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Calendar calendar = new Calendar(returnElement);
+            UIDA_Calendar calendar = new UIDA_Calendar(returnElement);
             return calendar;
         }
 
@@ -954,7 +953,7 @@ namespace UIDeskAutomationLib
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
         /// <returns>all Calendar elements that match the search criteria</returns>
-        public Calendar[] Calendars(string name = null, bool searchDescendants = false,
+        public UIDA_Calendar[] Calendars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             PropertyCondition typeCond = new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Pane);
@@ -964,12 +963,12 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allCalendars = FindAllPlusCondition(ControlType.Calendar,
                 andCond, name, searchDescendants, false, caseSensitive);
 
-            List<Calendar> calendars = new List<Calendar>();
+            List<UIDA_Calendar> calendars = new List<UIDA_Calendar>();
             if (allCalendars != null)
             {
                 foreach (AutomationElement crtEl in allCalendars)
                 {
-                    calendars.Add(new Calendar(crtEl));
+                    calendars.Add(new UIDA_Calendar(crtEl));
                 }
             }
             return calendars.ToArray();
@@ -982,8 +981,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">checkbox index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>CheckBoxElement</returns>
-        public CheckBoxElement CheckBoxAt(string name, int index,
+        /// <returns>UIDA_CheckBox, null if not found</returns>
+        public UIDA_CheckBox CheckBoxAt(string name, int index,
             bool searchDescendants = false, bool caseSensitive = true)
         {
             if (index < 0)
@@ -1032,7 +1031,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            CheckBoxElement checkbox = new CheckBoxElement(returnElement);
+            UIDA_CheckBox checkbox = new UIDA_CheckBox(returnElement);
             return checkbox;
         }
 
@@ -1042,8 +1041,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">checkbox name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first CheckBoxElement that matches the search criteria</returns>
-        public CheckBoxElement CheckBox(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_CheckBox that matches the search criteria, null if not found</returns>
+        public UIDA_CheckBox CheckBox(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.CheckBox, name,
@@ -1063,29 +1062,29 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            CheckBoxElement checkbox = new CheckBoxElement(returnElement);
+            UIDA_CheckBox checkbox = new UIDA_CheckBox(returnElement);
             return checkbox;
         }
 
         /// <summary>
-        /// Returns a collection of CheckBoxElements that matches the search text (name), wildcards can be used.
+        /// Returns a collection of UIDA_CheckBox elements that matches the search text (name), wildcards can be used.
         /// </summary>
-        /// <param name="name">text of CheckBoxElement elements, use null to return all CheckBoxes</param>
+        /// <param name="name">text of CheckBox elements, use null to return all CheckBoxes</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all CheckBoxElement elements that match the search criteria</returns>
-        public CheckBoxElement[] CheckBoxes(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_CheckBox elements that match the search criteria</returns>
+        public UIDA_CheckBox[] CheckBoxes(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allCheckBoxes = FindAll(ControlType.CheckBox,
                 name, searchDescendants, false, caseSensitive);
 
-            List<CheckBoxElement> checkboxes = new List<CheckBoxElement>();
+            List<UIDA_CheckBox> checkboxes = new List<UIDA_CheckBox>();
             if (allCheckBoxes != null)
             {
                 foreach (AutomationElement crtEl in allCheckBoxes)
                 {
-                    checkboxes.Add(new CheckBoxElement(crtEl));
+                    checkboxes.Add(new UIDA_CheckBox(crtEl));
                 }
             }
             return checkboxes.ToArray();
@@ -1098,8 +1097,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">edit control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Edit</returns>
-        public Edit EditAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Edit, null if not found</returns>
+        public UIDA_Edit EditAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1148,7 +1147,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Edit edit = new Edit(returnElement);
+            UIDA_Edit edit = new UIDA_Edit(returnElement);
             return edit;
         }
         /// <summary>
@@ -1157,8 +1156,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">edit control name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Edit</returns>
-        public Edit Edit(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Edit, null if not found</returns>
+        public UIDA_Edit Edit(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Edit, name,
@@ -1178,7 +1177,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Edit edit = new Edit(returnElement);
+            UIDA_Edit edit = new UIDA_Edit(returnElement);
             return edit;
         }
 
@@ -1188,19 +1187,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Edit elements, use null to return all Edits</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Edit elements</returns>
-        public Edit[] Edits(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Edit elements</returns>
+        public UIDA_Edit[] Edits(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allEdits = FindAll(ControlType.Edit,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Edit> edits = new List<Edit>();
+            List<UIDA_Edit> edits = new List<UIDA_Edit>();
             if (allEdits != null)
             {
                 foreach (AutomationElement crtEl in allEdits)
                 {
-                    edits.Add(new Edit(crtEl));
+                    edits.Add(new UIDA_Edit(crtEl));
                 }
             }
             return edits.ToArray();
@@ -1213,8 +1212,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">document control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Document</returns>
-        public Document DocumentAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Document, null if not found</returns>
+        public UIDA_Document DocumentAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1263,7 +1262,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Document document = new Document(returnElement);
+            UIDA_Document document = new UIDA_Document(returnElement);
             return document;
         }
 
@@ -1273,8 +1272,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">document name, wildcards can be used</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>first Document matching the search criteria</returns>
-        public Document Document(string name = null, bool searchDescendants = false,
+        /// <returns>first UIDA_Document matching the search criteria, null if not found</returns>
+        public UIDA_Document Document(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Document,
@@ -1294,7 +1293,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Document document = new Document(returnElement);
+            UIDA_Document document = new UIDA_Document(returnElement);
             return document;
         }
 
@@ -1304,19 +1303,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Document elements, use null to return all Documents</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>all Document elements matching the search criteria</returns>
-        public Document[] Documents(string name = null, bool searchDescendants = false,
+        /// <returns>all UIDA_Document elements matching the search criteria</returns>
+        public UIDA_Document[] Documents(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allDocuments = FindAll(ControlType.Document,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Document> documents = new List<Document>();
+            List<UIDA_Document> documents = new List<UIDA_Document>();
             if (allDocuments != null)
             {
                 foreach (AutomationElement crtEl in allDocuments)
                 {
-                    documents.Add(new Document(crtEl));
+                    documents.Add(new UIDA_Document(crtEl));
                 }
             }
             return documents.ToArray();
@@ -1329,8 +1328,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of pane</param>
         /// <param name="searchDescendants">true is search deep through descendants, false otherwise</param>
         /// <param name="caseSensitive">true if search of name is case sensitive, default true</param>
-        /// <returns>Pane element</returns>
-        public Pane PaneAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Pane element, null if not found</returns>
+        public UIDA_Pane PaneAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1379,7 +1378,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Pane pane = new Pane(returnElement);
+            UIDA_Pane pane = new UIDA_Pane(returnElement);
             return pane;
         }
 
@@ -1389,8 +1388,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of pane, wildcards can be used</param>
         /// <param name="searchDescendants">search deep through descendants</param>
         /// <param name="caseSensitive">specifies if name is searched case sensitive, default true</param>
-        /// <returns>Pane element</returns>
-        public Pane Pane(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Pane element, null if not found</returns>
+        public UIDA_Pane Pane(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Pane,
@@ -1410,7 +1409,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Pane pane = new Pane(returnElement);
+            UIDA_Pane pane = new UIDA_Pane(returnElement);
             return pane;
         }
 
@@ -1420,19 +1419,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Pane elements, use null to return all Panes</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Pane elements</returns>
-        public Pane[] Panes(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Pane elements</returns>
+        public UIDA_Pane[] Panes(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allPanes = FindAll(ControlType.Pane,
                 name, searchDescendants, false, caseSensitive);
 
-            List<Pane> panes = new List<Pane>();
+            List<UIDA_Pane> panes = new List<UIDA_Pane>();
             if (allPanes != null)
             {
                 foreach (AutomationElement crtEl in allPanes)
                 {
-                    panes.Add(new Pane(crtEl));
+                    panes.Add(new UIDA_Pane(crtEl));
                 }
             }
             return panes.ToArray();
@@ -1445,8 +1444,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of DatePicker element</param>
         /// <param name="searchDescendants">true if search through all descendants, default false</param>
         /// <param name="caseSensitive">tells is name is searched case sensitive, default true</param>
-        /// <returns>DatePicker element</returns>
-        public DatePicker DatePickerAt(string name, int index,
+        /// <returns>UIDA_DatePicker element, null if not found</returns>
+        public UIDA_DatePicker DatePickerAt(string name, int index,
             bool searchDescendants = false, bool caseSensitive = true)
         {
             if (index < 0)
@@ -1512,7 +1511,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DatePicker datePicker = new DatePicker(returnElement);
+            UIDA_DatePicker datePicker = new UIDA_DatePicker(returnElement);
             return datePicker;
         }
 
@@ -1522,8 +1521,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of DatePicker element, wildcards can be used</param>
         /// <param name="searchDescendants">true if search through descendants, false if search through direct children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>DatePicker</returns>
-        public DatePicker DatePicker(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DatePicker, null if not found</returns>
+        public UIDA_DatePicker DatePicker(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = null;
@@ -1560,7 +1559,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DatePicker datePicker = new DatePicker(returnElement);
+            UIDA_DatePicker datePicker = new UIDA_DatePicker(returnElement);
             return datePicker;
         }
 
@@ -1570,8 +1569,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of DatePicker elements, use null to return all DatePickers</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>DatePicker elements</returns>
-        public DatePicker[] DatePickers(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DatePicker elements</returns>
+        public UIDA_DatePicker[] DatePickers(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allDatePickers = null;
@@ -1592,12 +1591,12 @@ namespace UIDeskAutomationLib
                     "WindowsForms10.SysDateTimePick32.app.0.378734a", name, searchDescendants, true, caseSensitive);
             }
 
-            List<DatePicker> datepickers = new List<DatePicker>();
+            List<UIDA_DatePicker> datepickers = new List<UIDA_DatePicker>();
             if (allDatePickers != null)
             {
                 foreach (AutomationElement crtEl in allDatePickers)
                 {
-                    datepickers.Add(new DatePicker(crtEl));
+                    datepickers.Add(new UIDA_DatePicker(crtEl));
                 }
             }
             return datepickers.ToArray();
@@ -1609,8 +1608,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of list, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>List element</returns>
-        public List List(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_List element, null if not found</returns>
+        public UIDA_List List(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.List,
@@ -1630,7 +1629,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            List list = new List(returnElement);
+            UIDA_List list = new UIDA_List(returnElement);
             return list;
         }
 
@@ -1641,8 +1640,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index, starts with 1</param>
         /// <param name="searchDescendants">specifies if search is done through descendants or through children, default is false which means search is done through children</param>
         /// <param name="caseSensitive">specifies is name search is done case sensitive or not, default true</param>
-        /// <returns>List element</returns>
-        public List ListAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_List element, null if not found</returns>
+        public UIDA_List ListAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1691,7 +1690,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            List list = new List(returnElement);
+            UIDA_List list = new UIDA_List(returnElement);
             return list;
         }
 
@@ -1701,19 +1700,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of List elements, use null to return all Lists.</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>List elements</returns>
-        public List[] Lists(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_List elements</returns>
+        public UIDA_List[] Lists(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allLists = FindAll(ControlType.List,
                 name, searchDescendants, true, caseSensitive);
 
-            List<List> lists = new List<List>();
+            List<UIDA_List> lists = new List<UIDA_List>();
             if (allLists != null)
             {
                 foreach (AutomationElement crtEl in allLists)
                 {
-                    lists.Add(new List(crtEl));
+                    lists.Add(new UIDA_List(crtEl));
                 }
             }
             return lists.ToArray();
@@ -1725,8 +1724,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of ComboBox, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Combo element</returns>
-        public Combo ComboBox(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ComboBox element, null if not found</returns>
+        public UIDA_ComboBox ComboBox(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ComboBox,
@@ -1746,7 +1745,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Combo comboBox = new Combo(returnElement);
+            UIDA_ComboBox comboBox = new UIDA_ComboBox(returnElement);
             return comboBox;
         }
 
@@ -1757,8 +1756,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of ComboBox</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Combo element</returns>
-        public Combo ComboBoxAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_ComboBox element, null if not found</returns>
+        public UIDA_ComboBox ComboBoxAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1807,7 +1806,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Combo combo = new Combo(returnElement);
+            UIDA_ComboBox combo = new UIDA_ComboBox(returnElement);
             return combo;
         }
 
@@ -1817,19 +1816,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Combo elements, use null to return all Combos</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Combo elements</returns>
-        public Combo[] Combos(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ComboBox elements</returns>
+        public UIDA_ComboBox[] ComboBoxes(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allCombos = FindAll(ControlType.ComboBox,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Combo> combos = new List<Combo>();
+            List<UIDA_ComboBox> combos = new List<UIDA_ComboBox>();
             if (allCombos != null)
             {
                 foreach (AutomationElement crtEl in allCombos)
                 {
-                    combos.Add(new Combo(crtEl));
+                    combos.Add(new UIDA_ComboBox(crtEl));
                 }
             }
             return combos.ToArray();
@@ -1842,8 +1841,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of RadioButton</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>RadioButton element</returns>
-        public RadioButton RadioButtonAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_RadioButton element, null if not found</returns>
+        public UIDA_RadioButton RadioButtonAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -1892,7 +1891,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            RadioButton radio = new RadioButton(returnElement);
+            UIDA_RadioButton radio = new UIDA_RadioButton(returnElement);
             return radio;
         }
 
@@ -1902,8 +1901,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of RadioButton, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>RadioButton element</returns>
-        public RadioButton RadioButton(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_RadioButton element, null if not found</returns>
+        public UIDA_RadioButton RadioButton(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.RadioButton,
@@ -1923,7 +1922,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            RadioButton radio = new RadioButton(returnElement);
+            UIDA_RadioButton radio = new UIDA_RadioButton(returnElement);
             return radio;
         }
 
@@ -1933,19 +1932,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of RadioButton elements, use null to return all RadioButtons</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>RadioButton elements</returns>
-        public RadioButton[] RadioButtons(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_RadioButton elements</returns>
+        public UIDA_RadioButton[] RadioButtons(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allRadios = FindAll(ControlType.RadioButton,
                 name, searchDescendants, true, caseSensitive);
 
-            List<RadioButton> radios = new List<RadioButton>();
+            List<UIDA_RadioButton> radios = new List<UIDA_RadioButton>();
             if (allRadios != null)
             {
                 foreach (AutomationElement crtEl in allRadios)
                 {
-                    radios.Add(new RadioButton(crtEl));
+                    radios.Add(new UIDA_RadioButton(crtEl));
                 }
             }
             return radios.ToArray();
@@ -1957,8 +1956,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Label, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Label element</returns>
-        public Label Label(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Label element, null if not found</returns>
+        public UIDA_Label Label(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Text,
@@ -1978,7 +1977,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Label label = new Label(returnElement);
+            UIDA_Label label = new UIDA_Label(returnElement);
             return label;
         }
 
@@ -1989,8 +1988,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Label</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Label element</returns>
-        public Label LabelAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Label element, null if not found</returns>
+        public UIDA_Label LabelAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2039,7 +2038,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Label label = new Label(returnElement);
+            UIDA_Label label = new UIDA_Label(returnElement);
             return label;
         }
 
@@ -2049,19 +2048,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Label elements, use null to return all Labels</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Label elements</returns>
-        public Label[] Labels(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Label elements</returns>
+        public UIDA_Label[] Labels(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allLabels = FindAll(ControlType.Text,
                 name, searchDescendants, false, caseSensitive);
 
-            List<Label> labels = new List<Label>();
+            List<UIDA_Label> labels = new List<UIDA_Label>();
             if (allLabels != null)
             {
                 foreach (AutomationElement crtEl in allLabels)
                 {
-                    labels.Add(new Label(crtEl));
+                    labels.Add(new UIDA_Label(crtEl));
                 }
             }
             return labels.ToArray();
@@ -2073,8 +2072,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of tree control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Tree element</returns>
-        public Tree Tree(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Tree element, null if not found</returns>
+        public UIDA_Tree Tree(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Tree,
@@ -2094,7 +2093,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Tree tree = new Tree(returnElement);
+            UIDA_Tree tree = new UIDA_Tree(returnElement);
             return tree;
         }
 
@@ -2105,8 +2104,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Tree control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Tree element</returns>
-        public Tree TreeAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Tree element, null if not found</returns>
+        public UIDA_Tree TreeAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2155,7 +2154,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Tree tree = new Tree(returnElement);
+            UIDA_Tree tree = new UIDA_Tree(returnElement);
             return tree;
         }
 
@@ -2165,19 +2164,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Tree elements, use null to return all Trees</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Tree elements</returns>
-        public Tree[] Trees(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Tree elements</returns>
+        public UIDA_Tree[] Trees(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTrees = FindAll(ControlType.Tree,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Tree> trees = new List<Tree>();
+            List<UIDA_Tree> trees = new List<UIDA_Tree>();
             if (allTrees != null)
             {
                 foreach (AutomationElement crtEl in allTrees)
                 {
-                    trees.Add(new Tree(crtEl));
+                    trees.Add(new UIDA_Tree(crtEl));
                 }
             }
             return trees.ToArray();
@@ -2190,8 +2189,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">spinner index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Spinner</returns>
-        public Spinner SpinnerAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Spinner, null if not found</returns>
+        public UIDA_Spinner SpinnerAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2240,7 +2239,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Spinner spinner = new Spinner(returnElement);
+            UIDA_Spinner spinner = new UIDA_Spinner(returnElement);
             return spinner;
         }
 
@@ -2250,8 +2249,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of spinner control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Spinner element</returns>
-        public Spinner Spinner(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Spinner element, null if not found</returns>
+        public UIDA_Spinner Spinner(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Spinner,
@@ -2271,7 +2270,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Spinner spinner = new Spinner(returnElement);
+            UIDA_Spinner spinner = new UIDA_Spinner(returnElement);
             return spinner;
         }
 
@@ -2281,19 +2280,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Spinner elements, use null to return all Spinners</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Spinner elements</returns>
-        public Spinner[] Spinners(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Spinner elements</returns>
+        public UIDA_Spinner[] Spinners(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allSpinners = FindAll(ControlType.Spinner,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Spinner> spinners = new List<Spinner>();
+            List<UIDA_Spinner> spinners = new List<UIDA_Spinner>();
             if (allSpinners != null)
             {
                 foreach (AutomationElement crtEl in allSpinners)
                 {
-                    spinners.Add(new Spinner(crtEl));
+                    spinners.Add(new UIDA_Spinner(crtEl));
                 }
             }
             return spinners.ToArray();
@@ -2306,8 +2305,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">slider index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Slider</returns>
-        public Slider SliderAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Slider, null if not found</returns>
+        public UIDA_Slider SliderAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2356,7 +2355,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Slider slider = new Slider(returnElement);
+            UIDA_Slider slider = new UIDA_Slider(returnElement);
             return slider;
         }
 
@@ -2366,8 +2365,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of slider control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Slider element</returns>
-        public Slider Slider(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Slider element, null if not found</returns>
+        public UIDA_Slider Slider(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Slider,
@@ -2387,7 +2386,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Slider slider = new Slider(returnElement);
+            UIDA_Slider slider = new UIDA_Slider(returnElement);
             return slider;
         }
 
@@ -2397,19 +2396,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Slider elements, use null to return all Sliders</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Slider elements</returns>
-        public Slider[] Sliders(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Slider elements</returns>
+        public UIDA_Slider[] Sliders(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allSliders = FindAll(ControlType.Slider,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Slider> sliders = new List<Slider>();
+            List<UIDA_Slider> sliders = new List<UIDA_Slider>();
             if (allSliders != null)
             {
                 foreach (AutomationElement crtEl in allSliders)
                 {
-                    sliders.Add(new Slider(crtEl));
+                    sliders.Add(new UIDA_Slider(crtEl));
                 }
             }
             return sliders.ToArray();
@@ -2422,8 +2421,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">progressbar index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>ProgressBar</returns>
-        public ProgressBar ProgressBarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_ProgressBar, null if not found</returns>
+        public UIDA_ProgressBar ProgressBarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2472,7 +2471,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ProgressBar progressbar = new ProgressBar(returnElement);
+            UIDA_ProgressBar progressbar = new UIDA_ProgressBar(returnElement);
             return progressbar;
         }
 
@@ -2482,8 +2481,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of progressbar control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>ProgressBar element</returns>
-        public ProgressBar ProgressBar(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ProgressBar element, null if not found</returns>
+        public UIDA_ProgressBar ProgressBar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ProgressBar,
@@ -2503,7 +2502,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ProgressBar progressbar = new ProgressBar(returnElement);
+            UIDA_ProgressBar progressbar = new UIDA_ProgressBar(returnElement);
             return progressbar;
         }
 
@@ -2513,19 +2512,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of ProgressBar elements, use null to return all ProgressBars</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>ProgressBar elements</returns>
-        public ProgressBar[] ProgressBars(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ProgressBar elements</returns>
+        public UIDA_ProgressBar[] ProgressBars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allProgressBars = FindAll(ControlType.ProgressBar,
                 name, searchDescendants, true, caseSensitive);
 
-            List<ProgressBar> progressBars = new List<ProgressBar>();
+            List<UIDA_ProgressBar> progressBars = new List<UIDA_ProgressBar>();
             if (allProgressBars != null)
             {
                 foreach (AutomationElement crtEl in allProgressBars)
                 {
-                    progressBars.Add(new ProgressBar(crtEl));
+                    progressBars.Add(new UIDA_ProgressBar(crtEl));
                 }
             }
             return progressBars.ToArray();
@@ -2537,8 +2536,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of hyperlink control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>HyperLink element</returns>
-        public HyperLink Hyperlink(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_HyperLink element, null if not found</returns>
+        public UIDA_HyperLink Hyperlink(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Hyperlink,
@@ -2558,7 +2557,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            HyperLink hyperlink = new HyperLink(returnElement);
+            UIDA_HyperLink hyperlink = new UIDA_HyperLink(returnElement);
             return hyperlink;
         }
 
@@ -2569,8 +2568,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">hyperlink index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>HyperLink</returns>
-        public HyperLink HyperlinkAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_HyperLink, null if not found</returns>
+        public UIDA_HyperLink HyperlinkAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2619,7 +2618,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            HyperLink hyperlink = new HyperLink(returnElement);
+            UIDA_HyperLink hyperlink = new UIDA_HyperLink(returnElement);
             return hyperlink;
         }
 
@@ -2629,19 +2628,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of HyperLink elements, use null to return all HyperLinks</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>HyperLink elements</returns>
-        public HyperLink[] HyperLinks(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_HyperLink elements</returns>
+        public UIDA_HyperLink[] HyperLinks(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allHyperLinks = FindAll(ControlType.Hyperlink,
                 name, searchDescendants, false, caseSensitive);
 
-            List<HyperLink> hyperlinks = new List<HyperLink>();
+            List<UIDA_HyperLink> hyperlinks = new List<UIDA_HyperLink>();
             if (allHyperLinks != null)
             {
                 foreach (AutomationElement crtEl in allHyperLinks)
                 {
-                    hyperlinks.Add(new HyperLink(crtEl));
+                    hyperlinks.Add(new UIDA_HyperLink(crtEl));
                 }
             }
             return hyperlinks.ToArray();
@@ -2653,8 +2652,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of Tab control</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>TabCtrl element</returns>
-        public TabCtrl TabCtrl(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_TabCtrl element, null if not found</returns>
+        public UIDA_TabCtrl TabCtrl(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Tab,
@@ -2674,7 +2673,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TabCtrl tabCtrl = new TabCtrl(returnElement);
+            UIDA_TabCtrl tabCtrl = new UIDA_TabCtrl(returnElement);
             return tabCtrl;
         }
 
@@ -2686,7 +2685,7 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of TabItem control</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>TabItem element</returns>
+        /// <returns>TabItem element, null if not found</returns>
         public TabItem TabItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
@@ -2721,8 +2720,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">tab control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>TabCtrl</returns>
-        public TabCtrl TabCtrlAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_TabCtrl, null if not found</returns>
+        public UIDA_TabCtrl TabCtrlAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2771,7 +2770,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TabCtrl tabCtrl = new TabCtrl(returnElement);
+            UIDA_TabCtrl tabCtrl = new UIDA_TabCtrl(returnElement);
             return tabCtrl;
         }
 
@@ -2781,19 +2780,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of TabCtrl elements, use null to return all TabCtrls</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>TabCtrl elements</returns>
-        public TabCtrl[] TabCtrls(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_TabCtrl elements</returns>
+        public UIDA_TabCtrl[] TabCtrls(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTabCtrls = FindAll(ControlType.Tab,
                 name, searchDescendants, false, caseSensitive);
 
-            List<TabCtrl> tabctrls = new List<TabCtrl>();
+            List<UIDA_TabCtrl> tabctrls = new List<UIDA_TabCtrl>();
             if (allTabCtrls != null)
             {
                 foreach (AutomationElement crtEl in allTabCtrls)
                 {
-                    tabctrls.Add(new TabCtrl(crtEl));
+                    tabctrls.Add(new UIDA_TabCtrl(crtEl));
                 }
             }
             return tabctrls.ToArray();
@@ -2805,8 +2804,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of Image control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Image element</returns>
-        public Image Image(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Image element, null if not found</returns>
+        public UIDA_Image Image(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Image,
@@ -2826,7 +2825,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Image image = new Image(returnElement);
+            UIDA_Image image = new UIDA_Image(returnElement);
             return image;
         }
 
@@ -2837,8 +2836,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">image control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Image</returns>
-        public Image ImageAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Image, null if not found</returns>
+        public UIDA_Image ImageAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -2887,7 +2886,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Image image = new Image(returnElement);
+            UIDA_Image image = new UIDA_Image(returnElement);
             return image;
         }
 
@@ -2897,19 +2896,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Image elements, use null to return all Images</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Image elements</returns>
-        public Image[] Images(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Image elements</returns>
+        public UIDA_Image[] Images(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allImages = FindAll(ControlType.Image,
                 name, searchDescendants, true, caseSensitive);
 
-            List<Image> images = new List<Image>();
+            List<UIDA_Image> images = new List<UIDA_Image>();
             if (allImages != null)
             {
                 foreach (AutomationElement crtEl in allImages)
                 {
-                    images.Add(new Image(crtEl));
+                    images.Add(new UIDA_Image(crtEl));
                 }
             }
             return images.ToArray();
@@ -2921,8 +2920,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name of ScrollBar control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>ScrollBar element</returns>
-        public ScrollBar ScrollBar(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ScrollBar element, null if not found</returns>
+        public UIDA_ScrollBar ScrollBar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ScrollBar,
@@ -2942,7 +2941,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ScrollBar scrollbar = new ScrollBar(returnElement);
+            UIDA_ScrollBar scrollbar = new UIDA_ScrollBar(returnElement);
             return scrollbar;
         }
 
@@ -2953,8 +2952,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">scrollbar control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>ScrollBar</returns>
-        public ScrollBar ScrollBarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_ScrollBar, null if not found</returns>
+        public UIDA_ScrollBar ScrollBarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3003,7 +3002,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ScrollBar scrollbar = new ScrollBar(returnElement);
+            UIDA_ScrollBar scrollbar = new UIDA_ScrollBar(returnElement);
             return scrollbar;
         }
 
@@ -3013,19 +3012,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of ScrollBar elements, use null to return all ScrollBars</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>ScrollBar elements</returns>
-        public ScrollBar[] ScrollBars(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ScrollBar elements</returns>
+        public UIDA_ScrollBar[] ScrollBars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allScrollBars = FindAll(ControlType.ScrollBar,
                 name, searchDescendants, false, caseSensitive);
 
-            List<ScrollBar> scrollbars = new List<ScrollBar>();
+            List<UIDA_ScrollBar> scrollbars = new List<UIDA_ScrollBar>();
             if (allScrollBars != null)
             {
                 foreach (AutomationElement crtEl in allScrollBars)
                 {
-                    scrollbars.Add(new ScrollBar(crtEl));
+                    scrollbars.Add(new UIDA_ScrollBar(crtEl));
                 }
             }
             return scrollbars.ToArray();
@@ -3037,8 +3036,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of Table control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Table element</returns>
-        public Table Table(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Table element, null if not found</returns>
+        public UIDA_Table Table(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Table,
@@ -3058,7 +3057,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Table table = new Table(returnElement);
+            UIDA_Table table = new UIDA_Table(returnElement);
             return table;
         }
 
@@ -3069,8 +3068,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">table control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>Table element</returns>
-        public Table TableAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Table element, null if not found</returns>
+        public UIDA_Table TableAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3119,7 +3118,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Table table = new Table(returnElement);
+            UIDA_Table table = new UIDA_Table(returnElement);
             return table;
         }
 		
@@ -3129,14 +3128,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Table elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Table collection</returns>
-        public Table[] Tables(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Table collection</returns>
+        public UIDA_Table[] Tables(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTables = FindAll(ControlType.Table,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTables.Cast<Table>().ToArray();
+            return allTables.Cast<UIDA_Table>().ToArray();
         }
 
         /// <summary>
@@ -3146,8 +3145,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">datagrid control index, starts with 1</param>
         /// <param name="searchDescendants">search descendants, default false</param>
         /// <param name="caseSensitive">search name with case sensitive criteria</param>
-        /// <returns>DataGrid element</returns>
-        public DataGrid DataGridAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_DataGrid element, null if not found</returns>
+        public UIDA_DataGrid DataGridAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3196,7 +3195,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DataGrid dataGrid = new DataGrid(returnElement);
+            UIDA_DataGrid dataGrid = new UIDA_DataGrid(returnElement);
             return dataGrid;
         }
 
@@ -3206,8 +3205,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">name or label of DataGrid control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>DataGrid element</returns>
-        public DataGrid DataGrid(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DataGrid element, null if not found</returns>
+        public UIDA_DataGrid DataGrid(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.DataGrid,
@@ -3227,7 +3226,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            DataGrid dataGrid = new DataGrid(returnElement);
+            UIDA_DataGrid dataGrid = new UIDA_DataGrid(returnElement);
             return dataGrid;
         }
 		
@@ -3237,14 +3236,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of DataGrid elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>DataGrid collection</returns>
-        public DataGrid[] DataGrids(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_DataGrid collection</returns>
+        public UIDA_DataGrid[] DataGrids(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allDataGrids = FindAll(ControlType.DataGrid,
                 name, searchDescendants, false, caseSensitive);
 
-            return allDataGrids.Cast<DataGrid>().ToArray();
+            return allDataGrids.Cast<UIDA_DataGrid>().ToArray();
         }
 
         /// <summary>
@@ -3254,8 +3253,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Custom control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Custom element</returns>
-        public Custom CustomAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Custom element, null if not found</returns>
+        public UIDA_Custom CustomAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3304,7 +3303,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Custom custom = new Custom(returnElement);
+            UIDA_Custom custom = new UIDA_Custom(returnElement);
             return custom;
         }
 
@@ -3314,8 +3313,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Custom control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Custom element</returns>
-        public Custom Custom(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Custom element, null if not found</returns>
+        public UIDA_Custom Custom(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Custom,
@@ -3335,7 +3334,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Custom custom = new Custom(returnElement);
+            UIDA_Custom custom = new UIDA_Custom(returnElement);
             return custom;
         }
 
@@ -3345,19 +3344,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Custom elements, use null to return all Custom elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Custom elements</returns>
-        public Custom[] Customs(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Custom elements</returns>
+        public UIDA_Custom[] Customs(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allCustoms = FindAll(ControlType.Custom,
                 name, searchDescendants, false, caseSensitive);
 
-            List<Custom> customs = new List<Custom>();
+            List<UIDA_Custom> customs = new List<UIDA_Custom>();
             if (allCustoms != null)
             {
                 foreach (AutomationElement crtEl in allCustoms)
                 {
-                    customs.Add(new Custom(crtEl));
+                    customs.Add(new UIDA_Custom(crtEl));
                 }
             }
             return customs.ToArray();
@@ -3370,8 +3369,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Separator control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Separator element</returns>
-        public Separator SeparatorAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Separator element, null if not found</returns>
+        public UIDA_Separator SeparatorAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3420,7 +3419,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Separator separator = new Separator(returnElement);
+            UIDA_Separator separator = new UIDA_Separator(returnElement);
             return separator;
         }
 
@@ -3430,8 +3429,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Separator control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Separator element</returns>
-        public Separator Separator(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Separator element, null if not found</returns>
+        public UIDA_Separator Separator(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Separator,
@@ -3451,7 +3450,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Separator separator = new Separator(returnElement);
+            UIDA_Separator separator = new UIDA_Separator(returnElement);
             return separator;
         }
 
@@ -3461,19 +3460,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Separator elements, use null to return all Separators</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Separator elements</returns>
-        public Separator[] Separators(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Separator elements</returns>
+        public UIDA_Separator[] Separators(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allSeparators = FindAll(ControlType.Separator,
                 name, searchDescendants, false, caseSensitive);
 
-            List<Separator> separators = new List<Separator>();
+            List<UIDA_Separator> separators = new List<UIDA_Separator>();
             if (allSeparators != null)
             {
                 foreach (AutomationElement crtEl in allSeparators)
                 {
-                    separators.Add(new Separator(crtEl));
+                    separators.Add(new UIDA_Separator(crtEl));
                 }
             }
             return separators.ToArray();
@@ -3486,8 +3485,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of SplitButton control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>SplitButton element</returns>
-        public SplitButton SplitButtonAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_SplitButton element, null if not found</returns>
+        public UIDA_SplitButton SplitButtonAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3536,7 +3535,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            SplitButton splitButton = new SplitButton(returnElement);
+            UIDA_SplitButton splitButton = new UIDA_SplitButton(returnElement);
             return splitButton;
         }
 
@@ -3546,8 +3545,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of SplitButton control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>SplitButton element</returns>
-        public SplitButton SplitButton(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_SplitButton element, null if not found</returns>
+        public UIDA_SplitButton SplitButton(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.SplitButton,
@@ -3567,7 +3566,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            SplitButton splitButton = new SplitButton(returnElement);
+            UIDA_SplitButton splitButton = new UIDA_SplitButton(returnElement);
             return splitButton;
         }
 
@@ -3577,19 +3576,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of SplitButton elements, use null to return all SplitButtons</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>SplitButton elements</returns>
-        public SplitButton[] SplitButtons(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_SplitButton elements</returns>
+        public UIDA_SplitButton[] SplitButtons(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allSplitButtons = FindAll(ControlType.SplitButton,
                 name, searchDescendants, false, caseSensitive);
 
-            List<SplitButton> splitButtons = new List<SplitButton>();
+            List<UIDA_SplitButton> splitButtons = new List<UIDA_SplitButton>();
             if (allSplitButtons != null)
             {
                 foreach (AutomationElement crtEl in allSplitButtons)
                 {
-                    splitButtons.Add(new SplitButton(crtEl));
+                    splitButtons.Add(new UIDA_SplitButton(crtEl));
                 }
             }
             return splitButtons.ToArray();
@@ -3602,8 +3601,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of StatusBar control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>StatusBar element</returns>
-        public StatusBar StatusBarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_StatusBar element, null if not found</returns>
+        public UIDA_StatusBar StatusBarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3652,7 +3651,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            StatusBar statusBar = new StatusBar(returnElement);
+            UIDA_StatusBar statusBar = new UIDA_StatusBar(returnElement);
             return statusBar;
         }
 
@@ -3662,8 +3661,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of StatusBar control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>StatusBar element</returns>
-        public StatusBar StatusBar(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_StatusBar element, null if not found</returns>
+        public UIDA_StatusBar StatusBar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.StatusBar,
@@ -3683,7 +3682,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            StatusBar statusBar = new StatusBar(returnElement);
+            UIDA_StatusBar statusBar = new UIDA_StatusBar(returnElement);
             return statusBar;
         }
 		
@@ -3693,14 +3692,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of StatusBar elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>StatusBar collection</returns>
-        public StatusBar[] StatusBars(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_StatusBar collection</returns>
+        public UIDA_StatusBar[] StatusBars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allStatusBars = FindAll(ControlType.StatusBar,
                 name, searchDescendants, false, caseSensitive);
 
-            return allStatusBars.Cast<StatusBar>().ToArray();
+            return allStatusBars.Cast<UIDA_StatusBar>().ToArray();
         }
 
         /// <summary>
@@ -3710,8 +3709,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Thumb control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Thumb element</returns>
-        public Thumb ThumbAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Thumb element, null if not found</returns>
+        public UIDA_Thumb ThumbAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3760,7 +3759,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Thumb thumb = new Thumb(returnElement);
+            UIDA_Thumb thumb = new UIDA_Thumb(returnElement);
             return thumb;
         }
 
@@ -3770,8 +3769,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text or name of Thumb control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Thumb element</returns>
-        public Thumb Thumb(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Thumb element, null if not found</returns>
+        public UIDA_Thumb Thumb(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Thumb,
@@ -3791,7 +3790,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Thumb thumb = new Thumb(returnElement);
+            UIDA_Thumb thumb = new UIDA_Thumb(returnElement);
             return thumb;
         }
 		
@@ -3801,14 +3800,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Thumb elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Thumb collection</returns>
-        public Thumb[] Thumbs(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Thumb collection</returns>
+        public UIDA_Thumb[] Thumbs(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allThumbs = FindAll(ControlType.Thumb,
                 name, searchDescendants, false, caseSensitive);
 
-            return allThumbs.Cast<Thumb>().ToArray();
+            return allThumbs.Cast<UIDA_Thumb>().ToArray();
         }
 
         /// <summary>
@@ -3818,8 +3817,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Toolbar control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Toolbar element</returns>
-        public Toolbar ToolbarAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Toolbar element, null if not found</returns>
+        public UIDA_Toolbar ToolbarAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3868,7 +3867,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Toolbar toolbar = new Toolbar(returnElement);
+            UIDA_Toolbar toolbar = new UIDA_Toolbar(returnElement);
             return toolbar;
         }
 
@@ -3878,8 +3877,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text or name of Toolbar control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Toolbar element</returns>
-        public Toolbar Toolbar(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Toolbar element, null if not found</returns>
+        public UIDA_Toolbar Toolbar(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ToolBar,
@@ -3899,7 +3898,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Toolbar toolbar = new Toolbar(returnElement);
+            UIDA_Toolbar toolbar = new UIDA_Toolbar(returnElement);
             return toolbar;
         }
 		
@@ -3909,14 +3908,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Toolbar elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Toolbar collection</returns>
-        public Toolbar[] Toolbars(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Toolbar collection</returns>
+        public UIDA_Toolbar[] Toolbars(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allToolbars = FindAll(ControlType.ToolBar,
                 name, searchDescendants, false, caseSensitive);
 
-            return allToolbars.Cast<Toolbar>().ToArray();
+            return allToolbars.Cast<UIDA_Toolbar>().ToArray();
         }
 
         /// <summary>
@@ -3926,8 +3925,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Tooltip control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Tooltip element</returns>
-        public Tooltip ToolTipAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Tooltip element, null if not found</returns>
+        public UIDA_Tooltip ToolTipAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -3976,7 +3975,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Tooltip tooltip = new Tooltip(returnElement);
+            UIDA_Tooltip tooltip = new UIDA_Tooltip(returnElement);
             return tooltip;
         }
 
@@ -3986,8 +3985,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Tooltip control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Tooltip element</returns>
-        public Tooltip ToolTip(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Tooltip element, null if not found</returns>
+        public UIDA_Tooltip ToolTip(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ToolTip,
@@ -4007,7 +4006,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Tooltip tooltip = new Tooltip(returnElement);
+            UIDA_Tooltip tooltip = new UIDA_Tooltip(returnElement);
             return tooltip;
         }
 		
@@ -4017,14 +4016,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Tooltip elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Tooltip collection</returns>
-        public Tooltip[] Tooltips(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Tooltip collection</returns>
+        public UIDA_Tooltip[] Tooltips(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTooltips = FindAll(ControlType.ToolTip,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTooltips.Cast<Tooltip>().ToArray();
+            return allTooltips.Cast<UIDA_Tooltip>().ToArray();
         }
 		
 		/// <summary>
@@ -4033,8 +4032,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Group control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Group element</returns>
-        public Group Group(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Group element, null if not found</returns>
+        public UIDA_Group Group(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Group,
@@ -4054,7 +4053,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            return new Group(returnElement);
+            return new UIDA_Group(returnElement);
         }
 		
 		/// <summary>
@@ -4064,8 +4063,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of Group control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Group element</returns>
-        public Group GroupAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Group element, null if not found</returns>
+        public UIDA_Group GroupAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -4114,7 +4113,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            return new Group(returnElement);
+            return new UIDA_Group(returnElement);
         }
 		
 		/// <summary>
@@ -4123,24 +4122,24 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of Group elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Group collection</returns>
-        public Group[] Groups(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Group collection</returns>
+        public UIDA_Group[] Groups(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allGroups = FindAll(ControlType.Group,
                 name, searchDescendants, false, caseSensitive);
 
-            return allGroups.Cast<Group>().ToArray();
+            return allGroups.Cast<UIDA_Group>().ToArray();
         }
 
         /// <summary>
-        /// Searches a Window control in the current element.
+        /// Searches a UIDA_Window control in the current element.
         /// </summary>
         /// <param name="name">text of Window control, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>Window element</returns>
-        public Window Window(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Window element, null if not found</returns>
+        public UIDA_Window Window(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.Window,
@@ -4160,19 +4159,19 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Window window = new Window(returnElement);
+            UIDA_Window window = new UIDA_Window(returnElement);
             return window;
         }
 
         /// <summary>
-        /// Searches for a Window with a specified text at a specified index.
+        /// Searches for a UIDA_Window with a specified text at a specified index.
         /// </summary>
         /// <param name="name">text of Window control, wildcards can be used</param>
         /// <param name="index">index of Window control</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Window element</returns>
-        public Window WindowAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_Window element, null if not found</returns>
+        public UIDA_Window WindowAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -4221,28 +4220,28 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            Window window = new Window(returnElement);
+            UIDA_Window window = new UIDA_Window(returnElement);
             return window;
         }
 
         /// <summary>
-        /// Returns a collection of Windows that matches the search text (name), wildcards can be used.
+        /// Returns a collection of UIDA_Windows that matches the search text (name), wildcards can be used.
         /// </summary>
         /// <param name="name">text of Window elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>Window elements</returns>
-        public Window[] Windows(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_Window elements</returns>
+        public UIDA_Window[] Windows(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allWindows = FindAll(ControlType.Window,
                 name, searchDescendants, false, caseSensitive);
 
-        	List<Window> windows = new List<Window>();
+        	List<UIDA_Window> windows = new List<UIDA_Window>();
         	
         	foreach (AutomationElement el in allWindows)
         	{
-        		Window window = new Window(el);
+        		UIDA_Window window = new UIDA_Window(el);
         		windows.Add(window);
         	}
         	
@@ -4256,8 +4255,8 @@ namespace UIDeskAutomationLib
         /// <param name="text">text of tree item, wildcards can be used</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
-        /// <returns>TreeItem element</returns>
-        public TreeItem TreeItem(string text = null, bool searchDescendants = false,
+        /// <returns>UIDA_TreeItem element, null if not found</returns>
+        public UIDA_TreeItem TreeItem(string text = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.TreeItem,
@@ -4277,7 +4276,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TreeItem treeItem = new TreeItem(returnElement);
+            UIDA_TreeItem treeItem = new UIDA_TreeItem(returnElement);
             return treeItem;
         }
 		
@@ -4288,8 +4287,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index of TreeView item</param>
         /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>TreeItem element</returns>
-        public TreeItem TreeItemAt(string text, int index, bool searchDescendants = false,
+        /// <returns>UIDA_TreeItem element, null if not found</returns>
+        public UIDA_TreeItem TreeItemAt(string text, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -4338,7 +4337,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            TreeItem treeItem = new TreeItem(returnElement);
+            UIDA_TreeItem treeItem = new UIDA_TreeItem(returnElement);
             return treeItem;
         }
 		
@@ -4348,14 +4347,14 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of TreeItem elements</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>TreeItem collection</returns>
-        public TreeItem[] TreeItems(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_TreeItem collection</returns>
+        public UIDA_TreeItem[] TreeItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allTreeItems = FindAll(ControlType.TreeItem,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTreeItems.Cast<TreeItem>().ToArray();
+            return allTreeItems.Cast<UIDA_TreeItem>().ToArray();
         }
 		
 		/// <summary>
@@ -4364,8 +4363,8 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of list item, wildcards accepted</param>
         /// <param name="searchDescendants">true is search through all descendants, false if search only through children collection, default false</param>
         /// <param name="caseSensitive">true is name search is done case sensitive, default true</param>
-        /// <returns>ListItem element</returns>
-        public ListItem ListItem(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ListItem element, null if not found</returns>
+        public UIDA_ListItem ListItem(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             AutomationElement returnElement = this.FindFirst(ControlType.ListItem, name,
@@ -4385,7 +4384,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ListItem listItem = new ListItem(returnElement);
+            UIDA_ListItem listItem = new UIDA_ListItem(returnElement);
             return listItem;
         }
 
@@ -4396,8 +4395,8 @@ namespace UIDeskAutomationLib
         /// <param name="index">index, starts with 1</param>
         /// <param name="searchDescendants">true is search through descendants, false if search through children, default false</param>
         /// <param name="caseSensitive">true is name search is done case sensitive, false otherwise, default true</param>
-        /// <returns>ListItem element</returns>
-        public ListItem ListItemAt(string name, int index, bool searchDescendants = false,
+        /// <returns>UIDA_ListItem element, null if not found</returns>
+        public UIDA_ListItem ListItemAt(string name, int index, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             if (index < 0)
@@ -4446,7 +4445,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
-            ListItem listItem = new ListItem(returnElement);
+            UIDA_ListItem listItem = new UIDA_ListItem(returnElement);
             return listItem;
         }
 
@@ -4456,19 +4455,19 @@ namespace UIDeskAutomationLib
         /// <param name="name">text of ListItem elements, use null to return all ListItems</param>
         /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
         /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
-        /// <returns>ListItem elements</returns>
-        public ListItem[] ListItems(string name = null, bool searchDescendants = false,
+        /// <returns>UIDA_ListItem elements</returns>
+        public UIDA_ListItem[] ListItems(string name = null, bool searchDescendants = false,
             bool caseSensitive = true)
         {
             List<AutomationElement> allListItems = FindAll(ControlType.ListItem,
                 name, searchDescendants, false, caseSensitive);
 
-            List<ListItem> listitems = new List<ListItem>();
+            List<UIDA_ListItem> listitems = new List<UIDA_ListItem>();
             if (allListItems != null)
             {
                 foreach (AutomationElement crtEl in allListItems)
                 {
-                    listitems.Add(new ListItem(crtEl));
+                    listitems.Add(new UIDA_ListItem(crtEl));
                 }
             }
             return listitems.ToArray();

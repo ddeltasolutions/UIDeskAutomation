@@ -60,6 +60,7 @@
     <Compile Include="Controls\DatePicker.cs" />
     <Compile Include="Controls\Document.cs" />
     <Compile Include="Controls\Edit.cs" />
+    <Compile Include="Controls\Group.cs" />
     <Compile Include="Controls\Separator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\StatusBar.cs" />
