@@ -15,5 +15,17 @@ namespace UIDeskAutomationLib
         {
             this.uiElement = el;
         }
+		
+		/// <summary>
+        /// Gets the text of the label.
+        /// </summary>
+        /// <returns>text of the label</returns>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
     }
 }

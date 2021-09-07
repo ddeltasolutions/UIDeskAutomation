@@ -261,8 +261,9 @@ namespace UIDeskAutomationLib
 
         /// <summary>
         /// Gets or sets the checked state of the current list item.
+		/// true = checked, false = unchecked, null = indeterminate
         /// </summary>
-        public bool IsChecked
+        public bool? IsChecked
         {
             get
             {
@@ -283,7 +284,7 @@ namespace UIDeskAutomationLib
                             new IntPtr(index), 
                             new IntPtr(Win32Constants.LVIS_STATEIMAGEMASK));
 
-                        return (itemState.ToInt32() == 0x2000);
+                        return ((itemState.ToInt32() & 0x2000) != 0);
                     }
                 }
 
@@ -306,15 +307,20 @@ namespace UIDeskAutomationLib
                         {
                             return true;
                         }
-                        else
+                        else if (togglePattern.Current.ToggleState == ToggleState.Off)
                         {
                             return false;
                         }
+						else
+						{
+							// indeterminate
+							return null;
+						}
                     }
                     catch (Exception ex)
                     { 
                         Engine.TraceInLogFile("ListItem.IsChecked failed: " + ex.Message);
-                        throw new Exception("ListItem.Checked failed: " + ex.Message);
+                        throw new Exception("ListItem.IsChecked failed: " + ex.Message);
                     }
                 }
 
@@ -409,11 +415,16 @@ namespace UIDeskAutomationLib
                             Engine.TraceInLogFile("Cannot check list item");
                             throw new Exception("Cannot check list item");
                         }
-                        else
+                        else if (value == false)
                         {
                             Engine.TraceInLogFile("Cannot uncheck list item");
                             throw new Exception("Cannot uncheck list item");
                         }
+						else
+						{
+							Engine.TraceInLogFile("Cannot set the list item checked state");
+                            throw new Exception("Cannot set the list item checked state");
+						}
                     }
 
                     if (value == true)
@@ -421,8 +432,12 @@ namespace UIDeskAutomationLib
                         // try to check list item
                         try
                         {
-                            if ((togglePattern.Current.ToggleState == ToggleState.Indeterminate) ||
-                                (togglePattern.Current.ToggleState == ToggleState.Off))
+                            if (togglePattern.Current.ToggleState != ToggleState.On)
+                            {
+                                togglePattern.Toggle();
+                            }
+							
+							if (togglePattern.Current.ToggleState != ToggleState.On)
                             {
                                 togglePattern.Toggle();
                             }
@@ -441,17 +456,22 @@ namespace UIDeskAutomationLib
                             throw new Exception("Cannot check list item: " + ex.Message);
                         }
                     }
-                    else
+                    else if (value == false)
                     {
                         // try to uncheck
                         try
                         {
-                            if (togglePattern.Current.ToggleState == ToggleState.On)
+                            if (togglePattern.Current.ToggleState != ToggleState.Off)
+                            {
+                                togglePattern.Toggle();
+                            }
+							
+							if (togglePattern.Current.ToggleState != ToggleState.Off)
                             {
                                 togglePattern.Toggle();
                             }
 
-                            if (togglePattern.Current.ToggleState == ToggleState.On)
+                            if (togglePattern.Current.ToggleState != ToggleState.Off)
                             {
                                 //this.SimulateDoubleClick();
 								this.DoubleClick();
@@ -461,10 +481,42 @@ namespace UIDeskAutomationLib
                         }
                         catch (Exception ex)
                         {
-                            Engine.TraceInLogFile("Cannot uncheck list item" + ex.Message);
-                            throw new Exception("Cannot uncheck list item" + ex.Message);
+                            Engine.TraceInLogFile("Cannot uncheck list item: " + ex.Message);
+                            throw new Exception("Cannot uncheck list item: " + ex.Message);
                         }
                     }
+					else // indeterminate
+					{
+                        try
+                        {
+                            if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                togglePattern.Toggle();
+                            }
+							
+							if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                togglePattern.Toggle();
+                            }
+
+                            if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                //this.SimulateDoubleClick();
+                                this.DoubleClick();
+                            }
+							if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                this.DoubleClick();
+                            }
+
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            Engine.TraceInLogFile("Cannot check list item: " + ex.Message);
+                            throw new Exception("Cannot check list item: " + ex.Message);
+                        }
+					}
                 }
 
                 if (value == true)
@@ -472,11 +524,16 @@ namespace UIDeskAutomationLib
                     Engine.TraceInLogFile("Cannot check list item");
                     throw new Exception("Cannot check list item");
                 }
-                else
+                else if (value == false)
                 { 
                     Engine.TraceInLogFile("Cannot uncheck list item");
                     throw new Exception("Cannot uncheck list item");
                 }
+				else
+				{
+					Engine.TraceInLogFile("Cannot set the checked state of the list item");
+                    throw new Exception("Cannot set the checked state of the list item");
+				}
             }
         }
     }

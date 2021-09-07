@@ -39,13 +39,20 @@ namespace UIDeskAutomationLib
                 TogglePattern togglePattern = togglePatternObject as TogglePattern;
                 Debug.Assert(togglePattern != null);
 
-                if ((togglePattern.Current.ToggleState == ToggleState.Indeterminate) ||
-                    (togglePattern.Current.ToggleState == ToggleState.Off))
+                if (togglePattern.Current.ToggleState != ToggleState.On)
+                {
+                    togglePattern.Toggle();
+                }
+				
+				if (togglePattern.Current.ToggleState != ToggleState.On)
                 {
                     togglePattern.Toggle();
                 }
 
-                return;
+				if (togglePattern.Current.ToggleState == ToggleState.On)
+				{
+					return;
+				}
             }
 
             // current element does not support Toggle Pattern
@@ -74,7 +81,7 @@ namespace UIDeskAutomationLib
                     IntPtr result = UnsafeNativeFunctions.SendMessage(hwnd,
                         ButtonMessages.BM_GETCHECK, IntPtr.Zero, IntPtr.Zero);
 
-                    if (result.ToInt32() == (int)ButtonMessages.BST_UNCHECKED)
+                    if (result.ToInt32() != (int)ButtonMessages.BST_CHECKED)
                     {
                         UnsafeNativeFunctions.SendMessage(hwnd, ButtonMessages.BM_SETCHECK,
                             new IntPtr(ButtonMessages.BST_CHECKED), IntPtr.Zero);
@@ -107,12 +114,20 @@ namespace UIDeskAutomationLib
                 TogglePattern togglePattern = togglePatternObject as TogglePattern;
                 Debug.Assert(togglePattern != null);
 
-                if (togglePattern.Current.ToggleState == ToggleState.On)
+                if (togglePattern.Current.ToggleState != ToggleState.Off)
+                {
+                    togglePattern.Toggle();
+                }
+				
+				if (togglePattern.Current.ToggleState != ToggleState.Off)
                 {
                     togglePattern.Toggle();
                 }
 
-                return;
+				if (togglePattern.Current.ToggleState == ToggleState.Off)
+				{
+					return;
+				}
             }
 
             // current element does not support Toggle Pattern
@@ -141,7 +156,7 @@ namespace UIDeskAutomationLib
                     IntPtr result = UnsafeNativeFunctions.SendMessage(hwnd,
                         ButtonMessages.BM_GETCHECK, IntPtr.Zero, IntPtr.Zero);
 
-                    if (result.ToInt32() == (int)ButtonMessages.BST_CHECKED)
+                    if (result.ToInt32() != (int)ButtonMessages.BST_UNCHECKED)
                     {
                         UnsafeNativeFunctions.SendMessage(hwnd, ButtonMessages.BM_SETCHECK,
                             new IntPtr(ButtonMessages.BST_UNCHECKED), IntPtr.Zero);
@@ -154,11 +169,112 @@ namespace UIDeskAutomationLib
                 //handle when checkbox is not a common Win32 checkbox
             }
         }
+		
+		/// <summary>
+        /// Puts the checkbox in an indeterminate state if it is possible
+        /// </summary>
+        public void SetIndeterminate()
+        {
+            if (this.IsAlive == false)
+            {
+                throw new Exception("This UI element is not available to the user anymore.");
+            }
+
+            object togglePatternObject = null;
+
+            if (base.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, 
+                out togglePatternObject) == true)
+            {
+                TogglePattern togglePattern = togglePatternObject as TogglePattern;
+                Debug.Assert(togglePattern != null);
+
+                if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                {
+                    togglePattern.Toggle();
+                }
+				
+				if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                {
+                    togglePattern.Toggle();
+                }
+
+				if (togglePattern.Current.ToggleState == ToggleState.Indeterminate)
+				{
+					return;
+				}
+            }
+
+            // current element does not support Toggle Pattern
+            // todo: simulate click
+            IntPtr hwnd = IntPtr.Zero;
+
+            try
+            {
+                hwnd = new IntPtr(this.uiElement.Current.NativeWindowHandle);
+            }
+            catch
+            { }
+
+            bool isWin32Button = false;
+
+            if (hwnd != IntPtr.Zero)
+            {
+                StringBuilder className = new StringBuilder(256);
+                UnsafeNativeFunctions.GetClassName(hwnd, className, 256);
+
+                if (className.ToString() == "Button")
+                {
+                    isWin32Button = true;
+
+                    // common Win32 checkbox window
+                    IntPtr result = UnsafeNativeFunctions.SendMessage(hwnd,
+                        ButtonMessages.BM_GETCHECK, IntPtr.Zero, IntPtr.Zero);
+
+                    if (result.ToInt32() != (int)ButtonMessages.BST_INDETERMINATE)
+                    {
+                        UnsafeNativeFunctions.SendMessage(hwnd, ButtonMessages.BM_SETCHECK,
+                            new IntPtr(ButtonMessages.BST_INDETERMINATE), IntPtr.Zero);
+                    }
+                }
+            }
+
+            if (!isWin32Button)
+            {
+
+            }
+        }
+		
+		/// <summary>
+        /// Toggles between the states of a checkbox
+        /// </summary>
+        public void Toggle()
+        {
+            if (this.IsAlive == false)
+            {
+                throw new Exception("This UI element is not available to the user anymore.");
+            }
+
+            object togglePatternObject = null;
+
+            if (base.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, 
+                out togglePatternObject) == true)
+            {
+                TogglePattern togglePattern = togglePatternObject as TogglePattern;
+                Debug.Assert(togglePattern != null);
+				
+				togglePattern.Toggle();
+			}
+			else
+			{
+				throw new Exception("Cannot toggle checkbox");
+			}
+		}
 
         /// <summary>
-        /// Gets/Sets a boolean to determine if a checkbox is checked or not
+        /// Gets/Sets a boolean to determine if a checkbox is checked or not,
+		/// true = checked, false = unchecked, null = indeterminate
         /// </summary>
-        public bool IsChecked
+        public bool? IsChecked
         {
             get
             {
@@ -178,7 +294,8 @@ namespace UIDeskAutomationLib
                     {
                         if (togglePattern.Current.ToggleState == ToggleState.Indeterminate)
                         {
-                            throw new Exception("This checkbox is in an indeterminate state.");
+                            // This checkbox is in an indeterminate state
+							return null;
                         }
                         if (togglePattern.Current.ToggleState == ToggleState.Off)
                         {
@@ -222,10 +339,15 @@ namespace UIDeskAutomationLib
                             //checked
                             return true;
                         }
+						else
+						{
+							return null;
+						}
                     }
                 }
 
-                return false;
+                //return null;
+				throw new Exception("Could not get the checked state of the checkbox");
             }
             set
             {
@@ -233,10 +355,14 @@ namespace UIDeskAutomationLib
                 {
                     this.Check();
                 }
-                else
+                else if (value == false)
                 {
                     this.Uncheck();
                 }
+				else
+				{
+					this.SetIndeterminate();
+				}
             }
         }
     }

@@ -223,8 +223,8 @@ namespace UIDeskAutomationLib
 		/// <summary>
         /// Gets or sets the checked state of the tree item if supported.
         /// </summary>
-		/// <returns>true if tree item is checked, false otherwise</returns>
-        public bool IsChecked
+		/// <returns>true if tree item is checked, false if it's unchecked and null if it's in an indeterminate state</returns>
+        public bool? IsChecked
         {
             get
             {
@@ -247,10 +247,14 @@ namespace UIDeskAutomationLib
                         {
                             return true;
                         }
-                        else
+                        else if (togglePattern.Current.ToggleState == ToggleState.Off)
                         {
                             return false;
                         }
+						else // indeterminate
+						{
+							return null;
+						}
                     }
                     catch (Exception ex)
                     { 
@@ -310,7 +314,7 @@ namespace UIDeskAutomationLib
                             throw new Exception("Cannot check tree item: " + ex.Message);
                         }
                     }
-                    else
+                    else if (value == false)
                     {
                         // try to uncheck
                         try
@@ -330,10 +334,34 @@ namespace UIDeskAutomationLib
                         }
                         catch (Exception ex)
                         {
-                            Engine.TraceInLogFile("Cannot uncheck tree item" + ex.Message);
-                            throw new Exception("Cannot uncheck tree item" + ex.Message);
+                            Engine.TraceInLogFile("Cannot uncheck tree item: " + ex.Message);
+                            throw new Exception("Cannot uncheck tree item: " + ex.Message);
                         }
                     }
+					else
+					{
+						// try to set in an indeterminate checked state
+						try
+                        {
+                            if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                togglePattern.Toggle();
+                            }
+
+                            if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
+                            {
+                                //this.SimulateDoubleClick();
+								togglePattern.Toggle();
+                            }
+
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            Engine.TraceInLogFile("Cannot set tree item checked state: " + ex.Message);
+                            throw new Exception("Cannot set tree item checked state: " + ex.Message);
+                        }
+					}
                 }
 
                 if (value == true)
@@ -341,11 +369,16 @@ namespace UIDeskAutomationLib
                     Engine.TraceInLogFile("Cannot check tree item");
                     throw new Exception("Cannot check tree item");
                 }
-                else
+                else if (value == false)
                 { 
                     Engine.TraceInLogFile("Cannot uncheck tree item");
                     throw new Exception("Cannot uncheck tree item");
                 }
+				else
+				{
+					Engine.TraceInLogFile("Cannot set tree item checked state");
+                    throw new Exception("Cannot set tree item checked state");
+				}
             }
         }
     }
