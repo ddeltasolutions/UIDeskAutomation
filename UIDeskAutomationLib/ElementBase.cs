@@ -182,21 +182,14 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Gets this element text.
+        /// Gets the text of this element.
         /// </summary>
-        /// <returns>text of current element</returns>
+        /// <returns>text of the element</returns>
         public string GetText()
         {
-            string name = null;
-
             ValuePattern valuePattern = Helper.GetValuePattern(this.uiElement);
 
-            if (valuePattern == null)
-            {
-                //Engine.TraceInLogFile("GetText() - ValuePattern not supported");
-                //throw new Exception("GetText() - ValuePattern not supported");
-            }
-            else
+            if (valuePattern != null)
             {
                 try
                 {
@@ -208,6 +201,7 @@ namespace UIDeskAutomationLib
                 }
             }
 
+			string name = null;
             try
             {
                 name = this.uiElement.Current.Name;

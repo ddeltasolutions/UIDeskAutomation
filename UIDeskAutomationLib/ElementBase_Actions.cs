@@ -226,7 +226,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Left mouse click the element at a clickable position.
+        /// Left mouse click in the center of the element.
         /// </summary>
         /// <param name="keys">keys pressed, 0 - None, 1 - Control pressed, 
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
@@ -242,7 +242,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Right mouse click the element at a clickable position.
+        /// Right mouse click in the center of the element.
         /// </summary>
         /// <param name="keys">keys pressed, 0 - None, 1 - Control pressed, 
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
@@ -258,7 +258,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Clicks the element with the middle mouse button at a clickable position.
+        /// Clicks in the center of the element with the middle mouse button.
         /// </summary>
         /// <param name="keys">keys pressed, 0 - None, 1 - Control pressed, 
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
@@ -317,14 +317,14 @@ namespace UIDeskAutomationLib
             int x = -1;
             int y = -1;
 
-            System.Windows.Point point = new System.Windows.Point();
-            if (this.uiElement.TryGetClickablePoint(out point) == true)
-            {
-                x = (int)point.X;
-                y = (int)point.Y;
-            }
-            else
-            {
+            //System.Windows.Point point = new System.Windows.Point();
+            //if (this.uiElement.TryGetClickablePoint(out point) == true)
+            //{
+            //    x = (int)point.X;
+            //    y = (int)point.Y;
+            //}
+            //else
+            //{
                 System.Windows.Rect? boundingRectangle = null;
 
                 try
@@ -338,7 +338,7 @@ namespace UIDeskAutomationLib
                     x = (int)((boundingRectangle.Value.Left + boundingRectangle.Value.Right) / 2.0);
                     y = (int)((boundingRectangle.Value.Top + boundingRectangle.Value.Bottom) / 2.0);
                 }
-            }
+            //}
 
             if (x >= 0)
             {
@@ -351,7 +351,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Double left mouse button click the element at a clickable position.
+        /// Double left mouse button click in the center of the element.
         /// </summary>
         /// <param name="keys">keys pressed, 0 - None, 1 - Control pressed, 
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
