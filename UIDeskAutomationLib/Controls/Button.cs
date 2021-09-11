@@ -25,8 +25,30 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Press()
         {
-            base.Invoke();
+			object objTogglePattern = null;
+            this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out objTogglePattern);
+			
+			if (objTogglePattern != null && this.uiElement.Current.FrameworkId == "WPF")
+			{
+				//For WPF ToggleButtons use mouse click because TogglePattern.Toggle() does not call the button's Click event handler
+				this.Click();
+			}
+			else
+			{
+				base.Invoke();
+			}
         }
+		
+		/// <summary>
+        /// Gets the text of the button
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
 		
 		/// <summary>
         /// Gets a boolean to determine if the button is pressed or not. This is supported only for toggle buttons.

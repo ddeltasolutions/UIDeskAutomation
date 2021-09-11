@@ -247,5 +247,16 @@ namespace UIDeskAutomationLib
 				}
             }
         }
+		
+		/// <summary>
+        /// Gets the text of the menu item
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
     }
 }

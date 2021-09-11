@@ -41,12 +41,29 @@ namespace UIDeskAutomationLib
 
                 if (togglePattern.Current.ToggleState != ToggleState.On)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						// for WPF use mouse click because TogglePattern.Toggle() does not call the checkbox's Click event handler
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 				
 				if (togglePattern.Current.ToggleState != ToggleState.On)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 
 				if (togglePattern.Current.ToggleState == ToggleState.On)
@@ -116,12 +133,28 @@ namespace UIDeskAutomationLib
 
                 if (togglePattern.Current.ToggleState != ToggleState.Off)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 				
 				if (togglePattern.Current.ToggleState != ToggleState.Off)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 
 				if (togglePattern.Current.ToggleState == ToggleState.Off)
@@ -190,12 +223,28 @@ namespace UIDeskAutomationLib
 
                 if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 				
 				if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
                 {
-                    togglePattern.Toggle();
+					if (this.uiElement.Current.FrameworkId == "WPF")
+					{
+						this.Click();
+						Engine.GetInstance().Sleep(100);
+					}
+					else
+					{
+						togglePattern.Toggle();
+					}
                 }
 
 				if (togglePattern.Current.ToggleState == ToggleState.Indeterminate)
@@ -253,6 +302,13 @@ namespace UIDeskAutomationLib
             {
                 throw new Exception("This UI element is not available to the user anymore.");
             }
+			
+			if (this.uiElement.Current.FrameworkId == "WPF")
+			{
+				this.Click();
+				Engine.GetInstance().Sleep(100);
+				return;
+			}
 
             object togglePatternObject = null;
 
@@ -365,5 +421,16 @@ namespace UIDeskAutomationLib
 				}
             }
         }
+		
+		/// <summary>
+        /// Gets the text of the checkbox
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
     }
 }

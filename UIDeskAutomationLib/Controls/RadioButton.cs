@@ -17,38 +17,41 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Returns the selected state.
+        /// Gets the selected state of the radio button.
         /// </summary>
         /// <returns>true - is selected, false otherwise</returns>
-        public bool GetIsSelected()
+        public bool IsSelected
         {
-            object selectionItemPatternObj = null;
+			get
+			{
+				object selectionItemPatternObj = null;
 
-            if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
-                out selectionItemPatternObj) == true)
-            {
-                SelectionItemPattern selectionItemPattern = 
-                    selectionItemPatternObj as SelectionItemPattern;
+				if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
+					out selectionItemPatternObj) == true)
+				{
+					SelectionItemPattern selectionItemPattern = 
+						selectionItemPatternObj as SelectionItemPattern;
 
-                if (selectionItemPattern == null)
-                {
-                    Engine.TraceInLogFile("RadioButton.GetIsSelected() - method failed");
-                    throw new Exception("RadioButton.GetIsSelected() - method failed");
-                }
+					if (selectionItemPattern == null)
+					{
+						Engine.TraceInLogFile("RadioButton.GetIsSelected() - method failed");
+						throw new Exception("RadioButton.GetIsSelected() - method failed");
+					}
 
-                bool isSelected = false;
+					bool isSelected = false;
 
-                try
-                {
-                    isSelected = selectionItemPattern.Current.IsSelected;
+					try
+					{
+						isSelected = selectionItemPattern.Current.IsSelected;
 
-                    return isSelected;
-                }
-                catch { }
-            }
+						return isSelected;
+					}
+					catch { }
+				}
 
-            Engine.TraceInLogFile("RadioButton.GetIsSelected() - method failed");
-            throw new Exception("RadioButton.GetIsSelected() - method failed");
+				Engine.TraceInLogFile("RadioButton.GetIsSelected() - method failed");
+				throw new Exception("RadioButton.GetIsSelected() - method failed");
+			}
         }
 
         /// <summary>
@@ -56,6 +59,16 @@ namespace UIDeskAutomationLib
         /// </summary>
         public void Select()
         {
+			this.Click();
+			//Engine.GetInstance().Sleep(100);
+			
+			/*if (this.uiElement.Current.FrameworkId == "WPF")
+			{
+				// for WPF use mouse click because SelectionItemPattern.Select() is not calling the radio button's Click event handler
+				this.Click();
+				return;
+			}
+			
             object selectionItemPatternObj = null;
 
             if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
@@ -79,7 +92,18 @@ namespace UIDeskAutomationLib
             }
 
             Engine.TraceInLogFile("RadioButton.Select() - method failed");
-            throw new Exception("RadioButton.Select() - method failed");
+            throw new Exception("RadioButton.Select() - method failed"); */
         }
+		
+		/// <summary>
+        /// Gets the text of the radio button
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
     }
 }
