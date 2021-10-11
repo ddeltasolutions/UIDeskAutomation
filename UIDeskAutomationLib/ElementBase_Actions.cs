@@ -108,6 +108,18 @@ namespace UIDeskAutomationLib
                 //}
             }
         }
+		
+		/// <summary>
+        /// Brings the container window to foreground
+        /// </summary>
+        public void BringToForeground()
+        {
+            IntPtr hwnd = this.GetWindow();
+            if (hwnd != IntPtr.Zero)
+            {
+                UnsafeNativeFunctions.SetForegroundWindow(hwnd);
+            }
+        }
 
         /// <summary>
         /// Sends keystrokes to this element. Main window must be in foreground. 
@@ -751,14 +763,13 @@ namespace UIDeskAutomationLib
         /// </summary>
         /// <param name="fileName">Image file path. If only the file name is provided, without a full path, then the image will be saved in the current directory of the application which loaded this library.</param>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
-        public void CaptureToFile(string fileName, Rect? cropRect = null)
+        public void CaptureToFile(string fileName, UIDA_Rect cropRect = null)
         {
             Bitmap bitmap = Helper.CaptureElement(uiElement);
 			
-			if (cropRect.HasValue)
+			if (cropRect != null)
 			{
-				Rectangle cropRectangle = new Rectangle((int)cropRect.Value.X, (int)cropRect.Value.Y, 
-					(int)cropRect.Value.Width, (int)cropRect.Value.Height);
+				Rectangle cropRectangle = new Rectangle(cropRect.Left, cropRect.Top, cropRect.Width, cropRect.Height);
 				bitmap = Helper.CropImage(bitmap, cropRectangle);
 			}
             
@@ -786,8 +797,9 @@ namespace UIDeskAutomationLib
         /// </summary>
         /// <param name="fileName">Image file path. If only the file name is provided, without a full path, then the image will be saved in the current directory of the application which loaded this library.</param>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
-        public void CaptureVisibleToFile(string fileName, Rect? cropRect = null)
+        public void CaptureVisibleToFile(string fileName, UIDA_Rect cropRect = null)
         {
+			this.BringToForeground();
             Bitmap bitmap = Helper.CaptureVisibleElement(uiElement, cropRect);
             
             if (bitmap != null)
@@ -813,14 +825,13 @@ namespace UIDeskAutomationLib
 		/// Use it when the element may be partially or fully hidden or overlapped by another window.
         /// </summary>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
-        public Bitmap CaptureToBitmap(Rect? cropRect = null)
+        public Bitmap CaptureToBitmap(UIDA_Rect cropRect = null)
         {
             Bitmap bitmap = Helper.CaptureElement(uiElement);
 			
-			if (cropRect.HasValue)
+			if (cropRect != null)
 			{
-				Rectangle cropRectangle = new Rectangle((int)cropRect.Value.X, (int)cropRect.Value.Y, 
-					(int)cropRect.Value.Width, (int)cropRect.Value.Height);
+				Rectangle cropRectangle = new Rectangle(cropRect.Left, cropRect.Top, cropRect.Width, cropRect.Height);
 				bitmap = Helper.CropImage(bitmap, cropRectangle);
 			}
 			
@@ -832,8 +843,9 @@ namespace UIDeskAutomationLib
 		/// Use it when the element is entirely visible.
         /// </summary>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
-        public Bitmap CaptureVisibleToBitmap(Rect? cropRect = null)
+        public Bitmap CaptureVisibleToBitmap(UIDA_Rect cropRect = null)
         {
+			this.BringToForeground();
             return Helper.CaptureVisibleElement(uiElement, cropRect);
 		}
 		
@@ -871,4 +883,55 @@ namespace UIDeskAutomationLib
 
         #endregion
     }
+	
+	/// <summary>
+    /// Class that defines a rectangle
+    /// </summary>
+	public class UIDA_Rect
+	{
+		public int Left { get; set; }
+		public int Top { get; set; }
+		public int Right { get; set; }
+		public int Bottom { get; set; }
+		
+		public UIDA_Rect()
+		{
+			Left = 0;
+			Top = 0;
+			Right = 0;
+			Bottom = 0;
+		}
+		
+		public UIDA_Rect(int left, int top, int right, int bottom)
+		{
+			Left = left;
+			Top = top;
+			Right = right;
+			Bottom = bottom;
+		}
+		
+		public int Width
+		{
+			get
+			{
+				return (Right - Left);
+			}
+			set
+			{
+				Right = Left + value;
+			}
+		}
+		
+		public int Height
+		{
+			get
+			{
+				return (Bottom - Top);
+			}
+			set
+			{
+				Bottom = Top + value;
+			}
+		}
+	}
 }

@@ -1227,21 +1227,32 @@ namespace UIDeskAutomationLib
 			return bitmap;
         }
 		
-		internal static Bitmap CaptureVisibleElement(AutomationElement element, Rect? cropRect = null)
+		internal static Bitmap CaptureVisibleElement(AutomationElement element, UIDA_Rect cropRect = null)
 		{
 			Rect rect = element.Current.BoundingRectangle;
 			System.Drawing.Size size = new System.Drawing.Size((int)rect.Width, (int)rect.Height);
-			if (cropRect.HasValue)
+			if (cropRect != null)
 			{
-				size = new System.Drawing.Size((int)cropRect.Value.Width, (int)cropRect.Value.Height);
+				size = new System.Drawing.Size(cropRect.Width, cropRect.Height);
 			}
-			Bitmap bitmap = new Bitmap(size.Width, size.Height);
+			//Bitmap bitmap = new Bitmap(size.Width, size.Height);
+			IntPtr hwnd = new IntPtr(element.Current.NativeWindowHandle);
+			Bitmap bitmap = null;
+			if (hwnd == IntPtr.Zero)
+			{
+				bitmap = new Bitmap(size.Width, size.Height);
+			}
+			else
+			{
+				Graphics gFromHwnd = Graphics.FromHwnd(hwnd);
+				bitmap = new Bitmap(size.Width, size.Height, gFromHwnd);
+			}
 			
 			using (Graphics g = Graphics.FromImage(bitmap))
 			{
-				if (cropRect.HasValue)
+				if (cropRect != null)
 				{
-					g.CopyFromScreen((int)(rect.Left + cropRect.Value.Left), (int)(rect.Top + cropRect.Value.Top), 0, 0, size);
+					g.CopyFromScreen((int)(rect.Left + cropRect.Left), (int)(rect.Top + cropRect.Top), 0, 0, size);
 				}
 				else
 				{

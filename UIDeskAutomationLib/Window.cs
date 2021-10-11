@@ -159,7 +159,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Determines if a window if minimized
+        /// Determines if a window is minimized
         /// </summary>
         public bool IsMinimized
         { 
@@ -241,9 +241,9 @@ namespace UIDeskAutomationLib
         /// <param name="verticalOffset">vertical offset</param>
         public void MoveOffset(int horizontalOffset, int verticalOffset)
         {
-			System.Windows.Point pt = GetPosition();
-			int newX = (int)(pt.X + horizontalOffset);
-			int newY = (int)(pt.Y + verticalOffset);
+			UIDA_Point pt = GetPosition();
+			int newX = pt.X + horizontalOffset;
+			int newY = pt.Y + verticalOffset;
 
             this.Move(newX, newY);
         }
@@ -274,9 +274,9 @@ namespace UIDeskAutomationLib
         /// Gets upper-left corner position of window in screen coordinates
         /// </summary>
         /// <returns>Point position</returns>
-        public System.Windows.Point GetPosition()
+        public UIDA_Point GetPosition()
         {
-            System.Windows.Point point = new System.Windows.Point(0.0, 0.0);
+            UIDA_Point point = new UIDA_Point(0, 0);
 
             if (this.hWnd == IntPtr.Zero)
             {
@@ -287,14 +287,14 @@ namespace UIDeskAutomationLib
             RECT rect = new RECT(0, 0, 0, 0);
             UnsafeNativeFunctions.GetWindowRect(this.hWnd, out rect);
 
-            point.X = (double)rect.Left;
-            point.Y = (double)rect.Top;
+            point.X = rect.Left;
+            point.Y = rect.Top;
 
             return point;
         }
 
         /// <summary>
-        /// gets/sets width of this window
+        /// gets/sets the width of this window
         /// </summary>
         public int WindowWidth
         {
@@ -334,7 +334,7 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// gets/sets window height
+        /// gets/sets the window height
         /// </summary>
         public int WindowHeight
         {
@@ -411,4 +411,22 @@ namespace UIDeskAutomationLib
             }
         }
     }
+	
+	public class UIDA_Point
+	{
+		public int X { get; set; }
+		public int Y { get; set; }
+		
+		public UIDA_Point()
+		{
+			X = 0;
+			Y = 0;
+		}
+		
+		public UIDA_Point(int x, int y)
+		{
+			X = x;
+			Y = y;
+		}
+	}
 }
