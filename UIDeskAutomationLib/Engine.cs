@@ -9,11 +9,19 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Automation;
 using System.Xml;
 
 namespace UIDeskAutomationLib
 {
+	/// <summary>
+    /// Namespace for all classes.
+    /// </summary>
+	public static class NamespaceDoc
+	{}
+
     /// <summary>
     /// Main entry point class. You need only one instance of this class.
     /// </summary>
@@ -562,6 +570,43 @@ namespace UIDeskAutomationLib
             SendInputClass.DoubleClick(x, y, keys);
         }
 		
+		/// <summary>
+        /// Presses the left mouse button, without releasing it. 
+		/// It can be used in combination with MoveMouse and LeftMouseButtonUp for drag and drop operations.
+        /// </summary>
+        public void LeftMouseButtonDown()
+        {
+            SendInputClass.LeftMouseButtonDown();
+			Sleep(100);
+        }
+		
+		/// <summary>
+        /// Releases the left mouse button
+        /// </summary>
+        public void LeftMouseButtonUp()
+        {
+            SendInputClass.LeftMouseButtonUp();
+			Sleep(100);
+        }
+		
+		/// <summary>
+        /// Presses the right mouse button, without releasing it
+        /// </summary>
+        public void RightMouseButtonDown()
+        {
+            SendInputClass.RightMouseButtonDown();
+			Sleep(100);
+        }
+		
+		/// <summary>
+        /// Releases the right mouse button
+        /// </summary>
+        public void RightMouseButtonUp()
+        {
+            SendInputClass.RightMouseButtonUp();
+			Sleep(100);
+        }
+		
 		// simulate click functions
 
         /// <summary>
@@ -623,6 +668,20 @@ namespace UIDeskAutomationLib
         public void MoveMouse(int x, int y, int keys = 0)
         {
             SendInputClass.MoveMousePointer(x, y, keys);
+        }
+		
+		/// <summary>
+        /// Moves mouse pointer relatively to the current mouse position
+        /// </summary>
+        /// <param name="dx">dx - horizontal offset</param>
+        /// <param name="dy">dy - vertical offset</param>
+        /// <param name="keys">keys pressed, 0 - None, 1 - Control pressed, 
+        /// 2 - Shift pressed, 3 - Both Control and Shift pressed</param>
+        public void MoveMouseOffset(int dx, int dy, int keys = 0)
+        {
+			int x = System.Windows.Forms.Cursor.Position.X;
+			int y = System.Windows.Forms.Cursor.Position.Y;
+            SendInputClass.MoveMousePointer(x + dx, y + dy, keys);
         }
 		
         /// <summary>
@@ -999,6 +1058,45 @@ namespace UIDeskAutomationLib
 				throw new Exception("Sleep failed: " + ex.Message);
 			}
 		}
+		
+		/// <summary>
+        /// Captures the screen and saves the image in an System.Drawing.Bitmap object. 
+		/// You can capture a part of the screen using a crop rectangle.
+        /// </summary>
+		/// <param name="cropRect">Coordinates of the rectangle to crop. Don't specify it if you want to capture the entire screen.</param>
+		/// <returns>System.Drawing.Bitmap that contains the screen or the captured portion of the screen</returns>
+        public Bitmap CaptureScreenToBitmap(UIDA_Rect cropRect = null)
+        {
+            return Helper.CaptureScreen(cropRect);
+		}
+		
+		/// <summary>
+        /// Captures the screen and saves the image in the specified file. Supported formats: BMP, JPG/JPEG and PNG. 
+		/// You can capture a part of the screen using a crop rectangle.
+        /// </summary>
+        /// <param name="fileName">Image file path. If only the file name is provided, without a full path, then the image will be saved in the current directory of the application which loaded this library.</param>
+		/// <param name="cropRect">Coordinates of the rectangle to crop. Don't specify it if you want to capture the entire screen.</param>
+        public void CaptureScreenToFile(string fileName, UIDA_Rect cropRect = null)
+        {
+            Bitmap bitmap = Helper.CaptureScreen(cropRect);
+            
+            if (bitmap != null)
+            {
+                ImageFormat format = ImageFormat.Bmp;
+                string extension = System.IO.Path.GetExtension(fileName).ToLower();
+                if (extension == "jpg" || extension == "jpeg")
+                {
+                    format = ImageFormat.Jpeg;
+                }
+                else if (extension == "png")
+                {
+                    format = ImageFormat.Png;
+                }
+                
+                bitmap.Save(fileName, format);
+                bitmap.Dispose();
+            }
+        }
     }
 
     internal enum Errors

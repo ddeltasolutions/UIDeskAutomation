@@ -758,7 +758,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Button, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -1000,7 +999,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.CheckBox, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -1116,7 +1114,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Edit, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -1231,7 +1228,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Document, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -1347,7 +1343,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Pane, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -1551,7 +1546,7 @@ namespace UIDeskAutomationLib
 
                 if (Engine.ThrowExceptionsWhenSearch == true)
                 {
-                    throw new Exception("DatePicker nethod - element not found");
+                    throw new Exception("DatePicker method - element not found");
                 }
                 else
                 {
@@ -1659,7 +1654,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.List, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2007,7 +2001,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Text, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -2123,7 +2116,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Tree, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2208,7 +2200,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Spinner, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2324,7 +2315,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Slider, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2440,7 +2430,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ProgressBar, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2587,7 +2576,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Hyperlink, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -2739,7 +2727,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Tab, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -2796,6 +2783,149 @@ namespace UIDeskAutomationLib
                 }
             }
             return tabctrls.ToArray();
+        }
+		
+		/// <summary>
+        /// Searches a TabItem page in the current element
+        /// </summary>
+        /// <param name="name">name of tab item</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
+        /// <returns>UIDA_TabItem element, null if not found</returns>
+        public UIDA_TabItem TabItem(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            AutomationElement returnElement = this.FindFirst(ControlType.TabItem,
+                name, searchDescendants, false, caseSensitive);
+
+            if (returnElement == null)
+            {
+                Engine.TraceInLogFile("TabItem method - TabItem element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("TabItem method - TabItem element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+			UIDA_TabItem tabItem = null;
+			if (this.uiElement.Current.ControlType == ControlType.Tab)
+			{
+				tabItem = new UIDA_TabItem(returnElement, this as UIDA_TabCtrl);
+			}
+			else
+			{
+				tabItem = new UIDA_TabItem(returnElement);
+			}
+            return tabItem;
+        }
+
+        /// <summary>
+        /// Searches for a tab item among the children of the current element
+        /// or its descendants.
+        /// </summary>
+        /// <param name="name">name of tab item</param>
+        /// <param name="index">tab item index</param>
+        /// <param name="searchDescendants">search descendants, default false</param>
+        /// <param name="caseSensitive">search name with case sensitive criteria</param>
+        /// <returns>UIDA_TabItem, null if not found</returns>
+        public UIDA_TabItem TabItemAt(string name, int index, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            if (index < 0)
+            {
+                Engine.TraceInLogFile("TabItemAt method - index cannot be less than zero");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("TabItemAt method - index cannot be less than zero");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            AutomationElement returnElement = null;
+            Errors error = this.FindAt(ControlType.TabItem, name, index, searchDescendants,
+                false, caseSensitive, out returnElement);
+
+            if (error == Errors.ElementNotFound)
+            {
+                Engine.TraceInLogFile("TabItemAt method - button element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("TabItemAt method - button element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (error == Errors.IndexTooBig)
+            {
+                Engine.TraceInLogFile("TabItemAt method - index too big");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("TabItemAt method - index too big");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+			UIDA_TabItem tabItem = null;
+			if (this.uiElement.Current.ControlType == ControlType.Tab)
+			{
+				tabItem = new UIDA_TabItem(returnElement, this as UIDA_TabCtrl);
+			}
+			else
+			{
+				tabItem = new UIDA_TabItem(returnElement);
+			}
+            return tabItem;
+        }
+
+        /// <summary>
+        /// Returns a collection of TabItems that matches the search text (name), wildcards can be used.
+        /// </summary>
+        /// <param name="name">text of TabItem elements, use null to return all TabItems</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_TabItem elements</returns>
+        public UIDA_TabItem[] TabItems(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            List<AutomationElement> allTabItems = FindAll(ControlType.TabItem,
+                name, searchDescendants, false, caseSensitive);
+
+			bool isTabCtrl = (this.uiElement.Current.ControlType == ControlType.Tab);
+            List<UIDA_TabItem> tabitems = new List<UIDA_TabItem>();
+            if (allTabItems != null)
+            {
+				if (isTabCtrl)
+				{
+					foreach (AutomationElement crtEl in allTabItems)
+					{
+						tabitems.Add(new UIDA_TabItem(crtEl, this as UIDA_TabCtrl));
+					}
+				}
+				else
+				{
+					foreach (AutomationElement crtEl in allTabItems)
+					{
+						tabitems.Add(new UIDA_TabItem(crtEl));
+					}
+				}
+            }
+            return tabitems.ToArray();
         }
 
         /// <summary>
@@ -2855,7 +2985,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Image, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -2971,7 +3100,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ScrollBar, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3087,7 +3215,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Table, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -3135,7 +3262,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allTables = FindAll(ControlType.Table,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTables.Cast<UIDA_Table>().ToArray();
+			List<UIDA_Table> tables = new List<UIDA_Table>();
+            if (allTables != null)
+            {
+                foreach (AutomationElement crtEl in allTables)
+                {
+                    tables.Add(new UIDA_Table(crtEl));
+                }
+            }
+            return tables.ToArray();
         }
 
         /// <summary>
@@ -3164,7 +3299,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.DataGrid, name, index, searchDescendants,
                 true, caseSensitive, out returnElement);
 
@@ -3243,7 +3377,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allDataGrids = FindAll(ControlType.DataGrid,
                 name, searchDescendants, false, caseSensitive);
 
-            return allDataGrids.Cast<UIDA_DataGrid>().ToArray();
+			List<UIDA_DataGrid> dataGrids = new List<UIDA_DataGrid>();
+            if (allDataGrids != null)
+            {
+                foreach (AutomationElement crtEl in allDataGrids)
+                {
+                    dataGrids.Add(new UIDA_DataGrid(crtEl));
+                }
+            }
+            return dataGrids.ToArray();
         }
 
         /// <summary>
@@ -3272,7 +3414,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Custom, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3388,7 +3529,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Separator, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3504,7 +3644,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.SplitButton, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3620,7 +3759,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.StatusBar, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3699,7 +3837,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allStatusBars = FindAll(ControlType.StatusBar,
                 name, searchDescendants, false, caseSensitive);
 
-            return allStatusBars.Cast<UIDA_StatusBar>().ToArray();
+			List<UIDA_StatusBar> statusBars = new List<UIDA_StatusBar>();
+            if (allStatusBars != null)
+            {
+                foreach (AutomationElement crtEl in allStatusBars)
+                {
+                    statusBars.Add(new UIDA_StatusBar(crtEl));
+                }
+            }
+            return statusBars.ToArray();
         }
 
         /// <summary>
@@ -3728,7 +3874,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Thumb, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3807,7 +3952,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allThumbs = FindAll(ControlType.Thumb,
                 name, searchDescendants, false, caseSensitive);
 
-            return allThumbs.Cast<UIDA_Thumb>().ToArray();
+			List<UIDA_Thumb> thumbs = new List<UIDA_Thumb>();
+            if (allThumbs != null)
+            {
+                foreach (AutomationElement crtEl in allThumbs)
+                {
+                    thumbs.Add(new UIDA_Thumb(crtEl));
+                }
+            }
+            return thumbs.ToArray();
         }
 
         /// <summary>
@@ -3836,7 +3989,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ToolBar, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -3915,7 +4067,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allToolbars = FindAll(ControlType.ToolBar,
                 name, searchDescendants, false, caseSensitive);
 
-            return allToolbars.Cast<UIDA_Toolbar>().ToArray();
+			List<UIDA_Toolbar> toolbars = new List<UIDA_Toolbar>();
+            if (allToolbars != null)
+            {
+                foreach (AutomationElement crtEl in allToolbars)
+                {
+                    toolbars.Add(new UIDA_Toolbar(crtEl));
+                }
+            }
+            return toolbars.ToArray();
         }
 
         /// <summary>
@@ -3944,7 +4104,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ToolTip, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -4023,7 +4182,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allTooltips = FindAll(ControlType.ToolTip,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTooltips.Cast<UIDA_Tooltip>().ToArray();
+			List<UIDA_Tooltip> tooltips = new List<UIDA_Tooltip>();
+            if (allTooltips != null)
+            {
+                foreach (AutomationElement crtEl in allTooltips)
+                {
+                    tooltips.Add(new UIDA_Tooltip(crtEl));
+                }
+            }
+            return tooltips.ToArray();
         }
 		
 		/// <summary>
@@ -4082,7 +4249,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Group, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -4129,7 +4295,356 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allGroups = FindAll(ControlType.Group,
                 name, searchDescendants, false, caseSensitive);
 
-            return allGroups.Cast<UIDA_Group>().ToArray();
+			List<UIDA_Group> groups = new List<UIDA_Group>();
+            if (allGroups != null)
+            {
+                foreach (AutomationElement crtEl in allGroups)
+                {
+                    groups.Add(new UIDA_Group(crtEl));
+                }
+            }
+            return groups.ToArray();
+        }
+		
+		/// <summary>
+        /// Searches a header in the current element
+        /// </summary>
+        /// <param name="name">text of header</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
+        /// <returns>UIDA_Header element, null if not found</returns>
+        public UIDA_Header Header(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            AutomationElement returnElement = this.FindFirst(ControlType.Header,
+                name, searchDescendants, false, caseSensitive);
+
+            if (returnElement == null)
+            {
+                Engine.TraceInLogFile("Header method - Header element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("Header method - Header element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_Header header = new UIDA_Header(returnElement);
+            return header;
+        }
+		
+		/// <summary>
+        /// Searches for a Header with a specified text at a specified index.
+        /// </summary>
+        /// <param name="name">text of Header</param>
+        /// <param name="index">index of Header</param>
+        /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_Header element, null if not found</returns>
+        public UIDA_Header HeaderAt(string name, int index, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            if (index < 0)
+            {
+                Engine.TraceInLogFile("HeaderAt method - index cannot be negative");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderAt method - index cannot be negative");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            AutomationElement returnElement = null;
+            Errors error = this.FindAt(ControlType.Header, name, index, searchDescendants,
+                false, caseSensitive, out returnElement);
+
+            if (error == Errors.ElementNotFound)
+            {
+                Engine.TraceInLogFile("HeaderAt method - Header element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderAt method - Header element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (error == Errors.IndexTooBig)
+            {
+                Engine.TraceInLogFile("HeaderAt method - index too big");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderAt method - index too big");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_Header header = new UIDA_Header(returnElement);
+            return header;
+        }
+		
+		/// <summary>
+        /// Returns a collection of Headers that matches the search text (name), wildcards can be used.
+        /// </summary>
+        /// <param name="name">text of Header elements</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_Header collection</returns>
+        public UIDA_Header[] Headers(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            List<AutomationElement> allHeaders = FindAll(ControlType.Header,
+                name, searchDescendants, false, caseSensitive);
+
+			List<UIDA_Header> headers = new List<UIDA_Header>();
+			foreach (AutomationElement element in allHeaders)
+			{
+				UIDA_Header header = new UIDA_Header(element);
+				headers.Add(header);
+			}
+			return headers.ToArray();
+        }
+		
+		/// <summary>
+        /// Searches a header item in the current element
+        /// </summary>
+        /// <param name="name">text of header item</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
+        /// <returns>UIDA_HeaderItem element, null if not found</returns>
+        public UIDA_HeaderItem HeaderItem(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            AutomationElement returnElement = this.FindFirst(ControlType.HeaderItem,
+                name, searchDescendants, false, caseSensitive);
+
+            if (returnElement == null)
+            {
+                Engine.TraceInLogFile("HeaderItem method - HeaderItem element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderItem method - HeaderItem element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_HeaderItem headerItem = new UIDA_HeaderItem(returnElement);
+            return headerItem;
+        }
+
+        /// <summary>
+        /// Searches for a HeaderItem with a specified text at a specified index.
+        /// </summary>
+        /// <param name="name">text of HeaderItem</param>
+        /// <param name="index">index of HeaderItem</param>
+        /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_HeaderItem element, null if not found</returns>
+        public UIDA_HeaderItem HeaderItemAt(string name, int index, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            if (index < 0)
+            {
+                Engine.TraceInLogFile("HeaderItemAt method - index cannot be negative");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderItemAt method - index cannot be negative");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            AutomationElement returnElement = null;
+            Errors error = this.FindAt(ControlType.HeaderItem, name, index, searchDescendants,
+                false, caseSensitive, out returnElement);
+
+            if (error == Errors.ElementNotFound)
+            {
+                Engine.TraceInLogFile("HeaderItemAt method - HeaderItem element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderItemAt method - HeaderItem element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (error == Errors.IndexTooBig)
+            {
+                Engine.TraceInLogFile("HeaderItemAt method - index too big");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("HeaderItemAt method - index too big");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_HeaderItem headerItem = new UIDA_HeaderItem(returnElement);
+            return headerItem;
+        }
+		
+		/// <summary>
+        /// Returns a collection of HeaderItems that matches the search text (name), wildcards can be used.
+        /// </summary>
+        /// <param name="name">text of HeaderItem elements</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_HeaderItem collection</returns>
+        public UIDA_HeaderItem[] HeaderItems(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            List<AutomationElement> allHeaderItems = FindAll(ControlType.HeaderItem,
+                name, searchDescendants, false, caseSensitive);
+
+			List<UIDA_HeaderItem> headerItems = new List<UIDA_HeaderItem>();
+			foreach (AutomationElement element in allHeaderItems)
+			{
+				UIDA_HeaderItem headerItem = new UIDA_HeaderItem(element);
+				headerItems.Add(headerItem);
+			}
+			return headerItems.ToArray();
+        }
+		
+		/// <summary>
+        /// Searches a data item in the current element
+        /// </summary>
+        /// <param name="name">text of data item</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is case sensitive, default true</param>
+        /// <returns>UIDA_DataItem element, null if not found</returns>
+        public UIDA_DataItem DataItem(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            AutomationElement returnElement = this.FindFirst(ControlType.DataItem,
+                name, searchDescendants, false, caseSensitive);
+
+            if (returnElement == null)
+            {
+                Engine.TraceInLogFile("DataItem method - DataItem element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("DataItem method - DataItem element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_DataItem dataItem = new UIDA_DataItem(returnElement);
+            return dataItem;
+        }
+
+        /// <summary>
+        /// Searches for a DataItem with a specified text at a specified index.
+        /// </summary>
+        /// <param name="name">text of DataItem</param>
+        /// <param name="index">index of DataItem</param>
+        /// <param name="searchDescendants">true if search through descendants, false if search only through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_DataItem element, null if not found</returns>
+        public UIDA_DataItem DataItemAt(string name, int index, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            if (index < 0)
+            {
+                Engine.TraceInLogFile("DataItemAt method - index cannot be negative");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("DataItemAt method - index cannot be negative");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            AutomationElement returnElement = null;
+            Errors error = this.FindAt(ControlType.DataItem, name, index, searchDescendants,
+                false, caseSensitive, out returnElement);
+
+            if (error == Errors.ElementNotFound)
+            {
+                Engine.TraceInLogFile("DataItemAt method - DataItem element not found");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("DataItemAt method - DataItem element not found");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (error == Errors.IndexTooBig)
+            {
+                Engine.TraceInLogFile("DataItemAt method - index too big");
+
+                if (Engine.ThrowExceptionsWhenSearch == true)
+                {
+                    throw new Exception("DataItemAt method - index too big");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            UIDA_DataItem dataItem = new UIDA_DataItem(returnElement);
+            return dataItem;
+        }
+        
+        /// <summary>
+        /// Returns a collection of DataItem that matches the search text (name), wildcards can be used.
+        /// </summary>
+        /// <param name="name">text of DataItem elements, use null to return all DataItems</param>
+        /// <param name="searchDescendants">true is search deep through descendants, false is search through children, default false</param>
+        /// <param name="caseSensitive">true if name search is done case sensitive, default true</param>
+        /// <returns>UIDA_DataItem elements</returns>
+        public UIDA_DataItem[] DataItems(string name = null, bool searchDescendants = false,
+            bool caseSensitive = true)
+        {
+            List<AutomationElement> allDataItems = FindAll(ControlType.DataItem,
+                name, searchDescendants, false, caseSensitive);
+
+            List<UIDA_DataItem> dataitems = new List<UIDA_DataItem>();
+            if (allDataItems != null)
+            {
+                foreach (AutomationElement crtEl in allDataItems)
+                {
+                    dataitems.Add(new UIDA_DataItem(crtEl));
+                }
+            }
+            return dataitems.ToArray();
         }
 
         /// <summary>
@@ -4189,7 +4704,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.Window, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -4245,7 +4759,6 @@ namespace UIDeskAutomationLib
         		windows.Add(window);
         	}
         	
-            //return allWindows.Cast<Window>().ToArray();
             return windows.ToArray();
         }
 
@@ -4306,7 +4819,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.TreeItem, text, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 
@@ -4354,7 +4866,15 @@ namespace UIDeskAutomationLib
             List<AutomationElement> allTreeItems = FindAll(ControlType.TreeItem,
                 name, searchDescendants, false, caseSensitive);
 
-            return allTreeItems.Cast<UIDA_TreeItem>().ToArray();
+			List<UIDA_TreeItem> treeitems = new List<UIDA_TreeItem>();
+            if (allTreeItems != null)
+            {
+                foreach (AutomationElement crtEl in allTreeItems)
+                {
+                    treeitems.Add(new UIDA_TreeItem(crtEl));
+                }
+            }
+            return treeitems.ToArray();
         }
 		
 		/// <summary>
@@ -4414,7 +4934,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ListItem, name, index, searchDescendants,
                 false, caseSensitive, out returnElement);
 

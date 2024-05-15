@@ -32,9 +32,6 @@ namespace UIDeskAutomationLib
 
             if (invokePattern == null)
             {
-                //Engine.TraceInLogFile("Invoke method - Invoke pattern not supported");
-                //throw new Exception("Invoke method - Invoke pattern not supported");
-
                 Engine.TraceInLogFile("Invoke method - Invoke pattern not supported, Try TogglePattern");
 				
                 object objTogglePattern = null;
@@ -73,7 +70,6 @@ namespace UIDeskAutomationLib
             }
             catch (Exception ex)
             {
-                //IntPtr hwnd = new IntPtr(this.uiElement.Current.NativeWindowHandle);
                 IntPtr hwnd = this.GetWindow();
 
                 if (hwnd == IntPtr.Zero)
@@ -101,11 +97,11 @@ namespace UIDeskAutomationLib
                     windowThreadId, false);
                 Debug.Assert(bResult == true);
 
-                //if (hwndResult == IntPtr.Zero)
-                //{
-                //    Engine.TraceInLogFile("Focus failed: " + ex.Message);
-                //    throw ex;
-                //}
+                /*if (hwndResult == IntPtr.Zero)
+                {
+                    Engine.TraceInLogFile("Focus failed: " + ex.Message);
+                    throw ex;
+                }*/
             }
         }
 		
@@ -132,6 +128,7 @@ namespace UIDeskAutomationLib
             try
             {
                 this.Focus();
+				Thread.Sleep(100);
                 System.Windows.Forms.SendKeys.SendWait(text);
             }
             catch (Exception ex)
@@ -148,6 +145,7 @@ namespace UIDeskAutomationLib
         public void KeyDown(VirtualKeys key)
         {
             this.Focus();
+			Thread.Sleep(100);
             SendInputClass.KeyDown(key);
         }
         
@@ -158,6 +156,7 @@ namespace UIDeskAutomationLib
         public void KeyPress(VirtualKeys key)
         {
             this.Focus();
+			Thread.Sleep(100);
             SendInputClass.KeyDown(key);
             SendInputClass.KeyUp(key);
         }
@@ -169,6 +168,7 @@ namespace UIDeskAutomationLib
         public void KeysPress(VirtualKeys[] keys)
         {
             this.Focus();
+			Thread.Sleep(100);
             foreach (VirtualKeys key in keys)
             {
                 SendInputClass.KeyDown(key);
@@ -293,6 +293,8 @@ namespace UIDeskAutomationLib
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
         private void Click(int mouseButton, int keys)
         {
+			this.BringToForeground();
+			
             System.Drawing.Point? clickablePoint =
                 GetElementClickablePointScreenCoordinates();
 
@@ -329,14 +331,14 @@ namespace UIDeskAutomationLib
             int x = -1;
             int y = -1;
 
-            //System.Windows.Point point = new System.Windows.Point();
-            //if (this.uiElement.TryGetClickablePoint(out point) == true)
-            //{
-            //    x = (int)point.X;
-            //    y = (int)point.Y;
-            //}
-            //else
-            //{
+            /*System.Windows.Point point = new System.Windows.Point();
+            if (this.uiElement.TryGetClickablePoint(out point) == true)
+            {
+                x = (int)point.X;
+                y = (int)point.Y;
+            }
+            else
+            {*/
                 System.Windows.Rect? boundingRectangle = null;
 
                 try
@@ -443,6 +445,8 @@ namespace UIDeskAutomationLib
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
         private void ClickAt(int x, int y, int mouseButton, int keys)
         {
+			this.BringToForeground();
+			
             // transform relative coordinates to screen coordinates
 
             //get bounding rectangle
@@ -504,7 +508,7 @@ namespace UIDeskAutomationLib
         }
 		
 		/// <summary>
-        /// Moves the mouse pointer at a specified point.
+        /// Moves the mouse pointer at a specified point relative to this element.
         /// </summary>
         /// <param name="x">x coordinate relative to this element</param>
         /// <param name="y">y coordinate relative to this element</param>
@@ -512,6 +516,8 @@ namespace UIDeskAutomationLib
         /// 2 - Shift pressed, 3 - Both Control and Shift are pressed</param>
         public void MoveMouse(int x, int y, int keys = 0)
 		{
+			this.BringToForeground();
+			
 			// transform relative coordinates to screen coordinates
 
             //get bounding rectangle
@@ -535,6 +541,40 @@ namespace UIDeskAutomationLib
 			if (Engine.GetInstance() != null)
 			{
 				Engine.GetInstance().MoveMouse(xScreen, yScreen, keys);
+			}
+		}
+		
+		/// <summary>
+        /// Moves the mouse pointer over the element in the center of it.
+		/// It can be used for drag and drop operations, see LeftMouseButtonDown(), MoveMouseOffset(), LeftMouseButtonUp() methods of Engine class.
+        /// </summary>
+        public void MoveMouseInCenter()
+		{
+			this.BringToForeground();
+			
+			// transform relative coordinates to screen coordinates
+
+            //get bounding rectangle
+            System.Windows.Rect? boundingRect = null;
+
+            try
+            {
+                boundingRect = this.uiElement.Current.BoundingRectangle;
+            }
+            catch { }
+
+            if (boundingRect.HasValue == false)
+            {
+                Engine.TraceInLogFile("Cannot get element coordinates.");
+                throw new Exception("Cannot get element coordinates.");
+            }
+
+            int xCenter = (int)((boundingRect.Value.Left + boundingRect.Value.Right) / 2);
+            int yCenter = (int)((boundingRect.Value.Top + boundingRect.Value.Bottom) / 2);
+			
+			if (Engine.GetInstance() != null)
+			{
+				Engine.GetInstance().MoveMouse(xCenter, yCenter);
 			}
 		}
 		
@@ -825,6 +865,7 @@ namespace UIDeskAutomationLib
 		/// Use it when the element may be partially or fully hidden or overlapped by another window.
         /// </summary>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
+		/// <returns>System.Drawing.Bitmap that contains the captured element</returns>
         public Bitmap CaptureToBitmap(UIDA_Rect cropRect = null)
         {
             Bitmap bitmap = Helper.CaptureElement(uiElement);
@@ -843,6 +884,7 @@ namespace UIDeskAutomationLib
 		/// Use it when the element is entirely visible.
         /// </summary>
 		/// <param name="cropRect">Coordinates of the rectangle to crop relatively to this element. Don't specify it if you want to capture the whole element.</param>
+		/// <returns>System.Drawing.Bitmap that contains the captured element</returns>
         public Bitmap CaptureVisibleToBitmap(UIDA_Rect cropRect = null)
         {
 			this.BringToForeground();
@@ -894,6 +936,7 @@ namespace UIDeskAutomationLib
 		public int Right { get; set; }
 		public int Bottom { get; set; }
 		
+		/// Default constructor
 		public UIDA_Rect()
 		{
 			Left = 0;

@@ -327,5 +327,203 @@ namespace UIDeskAutomationLib
 				return -1;
 			}
 		}
+		
+		/// <summary>
+        /// Gets the parent of the element. You need to cast the parent to the proper type. For example, if the current 
+		/// element is a list item you can write: "UIDA_List list = listItem.Parent as UIDA_List;"
+        /// </summary>
+		public ElementBase Parent
+		{
+			get
+			{
+				TreeWalker tw = TreeWalker.ControlViewWalker;
+				AutomationElement parent = null;
+				
+				try
+				{
+					parent = tw.GetParent(this.uiElement);
+				}
+				catch { }
+				
+				if (parent == null)
+				{
+					return null;
+				}
+				
+				ControlType controlType = parent.Current.ControlType;
+				if (controlType == ControlType.Button)
+				{
+					return new UIDA_Button(parent);
+				}
+				else if (controlType == ControlType.Calendar)
+				{
+					return new UIDA_Calendar(parent);
+				}
+				else if (controlType == ControlType.CheckBox)
+				{
+					return new UIDA_CheckBox(parent);
+				}
+				else if (controlType == ControlType.ComboBox)
+				{
+					return new UIDA_ComboBox(parent);
+				}
+				else if (controlType == ControlType.Hyperlink)
+				{
+					return new UIDA_HyperLink(parent);
+				}
+				else if (controlType == ControlType.Image)
+				{
+					return new UIDA_Image(parent);
+				}
+				else if (controlType == ControlType.ListItem)
+				{
+					return new UIDA_ListItem(parent);
+				}
+				else if (controlType == ControlType.List)
+				{
+					return new UIDA_List(parent);
+				}
+				else if (controlType == ControlType.Menu)
+				{
+					return new UIDA_TopLevelMenu(parent);
+				}
+				else if (controlType == ControlType.MenuBar)
+				{
+					return new UIDA_MenuBar(parent);
+				}
+				else if (controlType == ControlType.MenuItem)
+				{
+					return new UIDA_MenuItem(parent);
+				}
+				else if (controlType == ControlType.ProgressBar)
+				{
+					return new UIDA_ProgressBar(parent);
+				}
+				else if (controlType == ControlType.RadioButton)
+				{
+					return new UIDA_RadioButton(parent);
+				}
+				else if (controlType == ControlType.ScrollBar)
+				{
+					return new UIDA_ScrollBar(parent);
+				}
+				else if (controlType == ControlType.Slider)
+				{
+					return new UIDA_Slider(parent);
+				}
+				else if (controlType == ControlType.Spinner)
+				{
+					return new UIDA_Spinner(parent);
+				}
+				else if (controlType == ControlType.StatusBar)
+				{
+					return new UIDA_StatusBar(parent);
+				}
+				else if (controlType == ControlType.Tab)
+				{
+					return new UIDA_TabCtrl(parent);
+				}
+				else if (controlType == ControlType.TabItem)
+				{
+					return new UIDA_TabItem(parent);
+				}
+				else if (controlType == ControlType.Text)
+				{
+					return new UIDA_Label(parent);
+				}
+				else if (controlType == ControlType.ToolBar)
+				{
+					return new UIDA_Toolbar(parent);
+				}
+				else if (controlType == ControlType.ToolTip)
+				{
+					return new UIDA_Tooltip(parent);
+				}
+				else if (controlType == ControlType.Tree)
+				{
+					return new UIDA_Tree(parent);
+				}
+				else if (controlType == ControlType.TreeItem)
+				{
+					return new UIDA_TreeItem(parent);
+				}
+				else if (controlType == ControlType.Custom)
+				{
+					return new UIDA_Custom(parent);
+				}
+				else if (controlType == ControlType.Group)
+				{
+					return new UIDA_Group(parent);
+				}
+				else if (controlType == ControlType.Thumb)
+				{
+					return new UIDA_Thumb(parent);
+				}
+				else if (controlType == ControlType.DataGrid)
+				{
+					return new UIDA_DataGrid(parent);
+				}
+				else if (controlType == ControlType.DataItem)
+				{
+					return new UIDA_DataItem(parent);
+				}
+				else if (controlType == ControlType.Document)
+				{
+					return new UIDA_Document(parent);
+				}
+				else if (controlType == ControlType.SplitButton)
+				{
+					return new UIDA_SplitButton(parent);
+				}
+				else if (controlType == ControlType.Window)
+				{
+					return new UIDA_Window(parent);
+				}
+				else if (controlType == ControlType.Pane)
+				{
+					return new UIDA_Pane(parent);
+				}
+				else if (controlType == ControlType.Header)
+				{
+					return new UIDA_Header(parent);
+				}
+				else if (controlType == ControlType.HeaderItem)
+				{
+					return new UIDA_HeaderItem(parent);
+				}
+				else if (controlType == ControlType.Table)
+				{
+					return new UIDA_Table(parent);
+				}
+				else if (controlType == ControlType.TitleBar)
+				{
+					return new UIDA_TitleBar(parent);
+				}
+				else if (controlType == ControlType.Separator)
+				{
+					return new UIDA_Separator(parent);
+				}
+				
+				return null;
+			}
+		}
+		
+		/// <summary>
+        /// Gets a boolean to determine if the UI element is enabled.
+        /// </summary>
+		public bool IsEnabled
+		{
+			get
+			{
+				try
+				{
+					return this.uiElement.Current.IsEnabled;
+				}
+				catch 
+				{
+					return true;
+				}
+			}
+		}
     }
 }

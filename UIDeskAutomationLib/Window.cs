@@ -46,7 +46,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Gets a window description
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the description</returns>
         public string WindowDescription()
         {
             if (this.hWnd == IntPtr.Zero)
@@ -56,11 +56,9 @@ namespace UIDeskAutomationLib
             }
 
             StringBuilder sBuilderClassName = new StringBuilder(256);
-
             UnsafeNativeFunctions.GetClassName(this.hWnd, sBuilderClassName, 256);
 
             StringBuilder sBuilderWindowText = new StringBuilder(256);
-
             UnsafeNativeFunctions.GetWindowText(this.hWnd, sBuilderWindowText, 256);
 
             return "Class name: \"" + sBuilderClassName.ToString() + 
@@ -69,7 +67,8 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Shows a window
+        /// Shows a window. It acts like Restore(). This function doesn't bring the window in foreground. 
+		/// If you want the window in foreground call BringToForeground().
         /// </summary>
         public void Show()
         {
@@ -135,8 +134,7 @@ namespace UIDeskAutomationLib
                 return;
             }
 
-            UnsafeNativeFunctions.SendMessage(hWnd, WindowMessages.WM_CLOSE, 
-                IntPtr.Zero, IntPtr.Zero);
+            UnsafeNativeFunctions.SendMessage(hWnd, WindowMessages.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 
             int timeOut = Engine.GetInstance().Timeout;
 
@@ -148,7 +146,6 @@ namespace UIDeskAutomationLib
                 }
 
                 timeOut -= ElementBase.waitPeriod;
-
                 Thread.Sleep(ElementBase.waitPeriod);
             }
 
@@ -200,7 +197,7 @@ namespace UIDeskAutomationLib
         /// <summary>
         /// Brings window to foreground
         /// </summary>
-        public void BringToForeground()
+        new public void BringToForeground()
         {
             if (hWnd == IntPtr.Zero)
             {
@@ -394,9 +391,7 @@ namespace UIDeskAutomationLib
                     int textLength = textLengthPtr.ToInt32() + 1;
 
                     StringBuilder text = new StringBuilder(textLength);
-
-                    UnsafeNativeFunctions.SendMessage(this.hWnd,
-                        WindowMessages.WM_GETTEXT, textLength, text);
+                    UnsafeNativeFunctions.SendMessage(this.hWnd, WindowMessages.WM_GETTEXT, textLength, text);
 
                     return text.ToString();
                 }
@@ -410,8 +405,91 @@ namespace UIDeskAutomationLib
                 return sBuilderWindowText.ToString();
             }
         }
+		
+		/// <summary>
+        /// gets the window handle
+        /// </summary>
+		public IntPtr HWND
+		{
+			get
+			{
+				return this.hWnd;
+			}
+		}
+		
+		private AutomationEventHandler UIAeventHandler = null;
+		internal Action OnWindowClosed = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to window closed event
+        /// </summary>
+		public event Action WindowClosedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.OnWindowClosed == null)
+					{
+						this.UIAeventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+		
+						Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent,
+									base.uiElement, TreeScope.Element, this.UIAeventHandler);
+					}
+					
+					this.OnWindowClosed += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.OnWindowClosed -= value;
+				
+					if (this.OnWindowClosed == null)
+					{
+						if (this.UIAeventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationEventHandler(WindowPattern.WindowClosedEvent, 
+									base.uiElement, this.UIAeventHandler);
+								UIAeventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private DateTime? lastTime = null;
+		private void OnUIAutomationEvent(object sender, AutomationEventArgs e)
+		{
+			if (e.EventId == WindowPattern.WindowClosedEvent && this.OnWindowClosed != null)
+			{
+				DateTime now = DateTime.Now;
+				if (lastTime != null && (now - lastTime.Value) < TimeSpan.FromMilliseconds(500))
+				{
+					lastTime = now;
+					return;
+				}
+				lastTime = now;
+				this.OnWindowClosed();
+			}
+		}
     }
 	
+	/// <summary>
+    /// Class that defines a 2D point
+    /// </summary>
 	public class UIDA_Point
 	{
 		public int X { get; set; }

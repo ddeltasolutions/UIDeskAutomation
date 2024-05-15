@@ -221,14 +221,18 @@ namespace UIDeskAutomationLib
     /// </summary>
     public enum VirtualKeys : ushort
     {
+        /// <summary>Ctrl-Break</summary>
         Cancel = 0x03,
+        /// <summary>Backspace</summary>
         Back = 0x08,
         Tab = 0x09,
         Clear = 0x0C,
-        Return = 0x0D,
+        //Return = 0x0D,
+		Enter = 0x0D,
         Shift = 0x10,
         Control = 0x11,
-        Menu = 0x12,
+        /// <summary>Alt (or Menu) key</summary>
+        Alt = 0x12,
         Pause = 0x13,
         CapsLock = 0x14,
         Kana = 0x15,
@@ -244,8 +248,10 @@ namespace UIDeskAutomationLib
         Accept = 0x1E,
         ModeChange = 0x1F,
         Space = 0x20,
-        Prior = 0x21,
-        Next = 0x22,
+        //Prior = 0x21, // Page Up
+		PageUp = 0x21,
+        //Next = 0x22, // Page Down
+		PageDown = 0x22,
         End = 0x23,
         Home = 0x24,
         Left = 0x25,
@@ -255,7 +261,8 @@ namespace UIDeskAutomationLib
         Select = 0x29,
         Print = 0x2A,
         Execute = 0x2B,
-        Snapshot = 0x2C,
+        //Snapshot = 0x2C,
+		PrintScreen = 0x2C,
         Insert = 0x2D,
         Delete = 0x2E,
         Help = 0x2F,
@@ -351,8 +358,8 @@ namespace UIDeskAutomationLib
         RightShift = 0xA1,
         LeftControl = 0xA2,
         RightControl = 0xA3,
-        LeftMenu = 0xA4,
-        RightMenu = 0xA5,
+        LeftAlt = 0xA4,
+        RightAlt = 0xA5,
         BrowserBack = 0xA6,
         BrowserForward = 0xA7,
         BrowserRefresh = 0xA8,
@@ -371,17 +378,24 @@ namespace UIDeskAutomationLib
         LaunchMediaSelect = 0xB5,
         LaunchApplication1 = 0xB6,
         LaunchApplication2 = 0xB7,
-        OEM1 = 0xBA,
-        OEMPlus = 0xBB,
-        OEMComma = 0xBC,
-        OEMMinus = 0xBD,
-        OEMPeriod = 0xBE,
-        OEM2 = 0xBF,
-        OEM3 = 0xC0,
-        OEM4 = 0xDB,
-        OEM5 = 0xDC,
-        OEM6 = 0xDD,
-        OEM7 = 0xDE,
+        //OEM1 = 0xBA,
+		Semicolon = 0xBA,
+        Plus = 0xBB,
+        Comma = 0xBC,
+        Minus = 0xBD,
+        Period = 0xBE,
+        //OEM2 = 0xBF,
+		ForwardSlash = 0xBF,
+        //OEM3 = 0xC0,
+		Tilde = 0xC0,
+        //OEM4 = 0xDB,
+		OpenSquareBracket = 0xDB,
+        //OEM5 = 0xDC,
+		BackSlash = 0xDC,
+        //OEM6 = 0xDD,
+		CloseSquareBracket = 0xDD,
+        //OEM7 = 0xDE,
+		SingleQuote = 0xDE,
         OEM8 = 0xDF,
         OEMAX = 0xE1,
         OEM102 = 0xE2,
@@ -867,6 +881,22 @@ namespace UIDeskAutomationLib
             SendInputClass.KeysUp(keys);
         }
 		
+		/*public static void MoveMousePointerOffset(int dx, int dy, int keys)
+        {
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = SendInputEventType.InputMouse;
+            mouseInput.mkhi.mi.dx = dx;
+            mouseInput.mkhi.mi.dy = dy;
+            mouseInput.mkhi.mi.mouseData = 0;
+
+            SendInputClass.KeysDown(keys);
+
+            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE;
+            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+
+            SendInputClass.KeysUp(keys);
+        }*/
+		
 		public static void MouseScroll(uint wheelTicks)
         {
             INPUT mouseInput = new INPUT();
@@ -901,6 +931,26 @@ namespace UIDeskAutomationLib
 
             SendInputClass.KeysUp(keys);
         }
+		
+		public static void LeftMouseButtonDown()
+        {
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = SendInputEventType.InputMouse;
+            mouseInput.mkhi.mi.mouseData = 0;
+
+            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN;
+            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+        }
+		
+		public static void LeftMouseButtonUp()
+        {
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = SendInputEventType.InputMouse;
+            mouseInput.mkhi.mi.mouseData = 0;
+
+            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP;
+            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+        }
 
         // x, y - screen coordinates
         // keys = 0 - no key pressed, keys = 1 - Control key pressed,
@@ -925,6 +975,26 @@ namespace UIDeskAutomationLib
             SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
 
             SendInputClass.KeysUp(keys);
+        }
+		
+		public static void RightMouseButtonDown()
+        {
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = SendInputEventType.InputMouse;
+            mouseInput.mkhi.mi.mouseData = 0;
+
+            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTDOWN;
+            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+        }
+		
+		public static void RightMouseButtonUp()
+        {
+            INPUT mouseInput = new INPUT();
+            mouseInput.type = SendInputEventType.InputMouse;
+            mouseInput.mkhi.mi.mouseData = 0;
+
+            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_RIGHTUP;
+            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
         }
 
         public static void ClickMiddleMouseButton(int x, int y, int keys)

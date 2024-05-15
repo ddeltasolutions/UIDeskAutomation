@@ -107,8 +107,7 @@ namespace UIDeskAutomationLib
                 index = 1;
             }*/
 
-            IntPtr[] windows = Helper.GetWindows(/*IntPtr.Zero*/ 
-                parentHandle, className, windowText, caseSensitive);
+            IntPtr[] windows = Helper.GetWindows(parentHandle, className, windowText, caseSensitive);
 
             if ((windows == null) || (windows.Length == 0))
             {
@@ -248,11 +247,9 @@ namespace UIDeskAutomationLib
             do
             {
                 windowHandle = UnsafeNativeFunctions.FindWindowEx(IntPtr.Zero, windowHandle, className, null);
-
                 UnsafeNativeFunctions.GetWindowThreadProcessId(windowHandle, out currentProcessId);
 
                 StringBuilder windowTextBuilder = new StringBuilder(256);
-
                 UnsafeNativeFunctions.GetWindowText(windowHandle, windowTextBuilder, 256);
 
                 string currentWindowText = windowTextBuilder.ToString();
@@ -304,8 +301,7 @@ namespace UIDeskAutomationLib
             ControlType type = null;
             try
             {
-                object typeObj =
-                    element.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty);
+                object typeObj = element.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty);
                 type = typeObj as ControlType;
             }
             catch { }
@@ -612,7 +608,7 @@ namespace UIDeskAutomationLib
                     {
                         // Alt up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Alt), IntPtr.Zero);
                         bAltIsPressed = false;
                     }
 
@@ -625,7 +621,7 @@ namespace UIDeskAutomationLib
                 {
                     // Alt key down
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Alt), IntPtr.Zero);
                     bAltIsPressed = true;
                 }
                 else if (key == "+")
@@ -671,7 +667,7 @@ namespace UIDeskAutomationLib
                 else if (key == "{ENTER}")
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr((int)VirtualKeys.Return), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.Enter), IntPtr.Zero);
                 }
                 else if (key == "{ESC}")
                 {
@@ -701,17 +697,17 @@ namespace UIDeskAutomationLib
                 else if (key == "{PGDN}") // page down
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr((int)VirtualKeys.Next), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.PageDown), IntPtr.Zero);
                 }
                 else if (key == "{PGUP}") // page up
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr((int)VirtualKeys.Prior), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.PageUp), IntPtr.Zero);
                 }
                 else if (key == "{PRTSC}") // print screen
                 {
                     UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                        new IntPtr((int)VirtualKeys.Snapshot), IntPtr.Zero);
+                        new IntPtr((int)VirtualKeys.PrintScreen), IntPtr.Zero);
                 }
                 else if (key == "{RIGHT}")
                 {
@@ -836,7 +832,7 @@ namespace UIDeskAutomationLib
                     {
                         // Enter
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYDOWN,
-                            new IntPtr((int)VirtualKeys.Return), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Enter), IntPtr.Zero);
                     }
                     else
                     {
@@ -867,7 +863,7 @@ namespace UIDeskAutomationLib
                     {
                         // Alt up
                         UnsafeNativeFunctions.PostMessage(hwnd, WindowMessages.WM_KEYUP,
-                            new IntPtr((int)VirtualKeys.Menu), IntPtr.Zero);
+                            new IntPtr((int)VirtualKeys.Alt), IntPtr.Zero);
                         bAltIsPressed = false;
                     }
                 }
@@ -922,11 +918,9 @@ namespace UIDeskAutomationLib
                 UnsafeNativeFunctions.GetWindowThreadProcessId(windowHandle, out currentProcessId);
 
                 Process currentProcess = Process.GetProcessById((int)currentProcessId);
-
                 string currentProcessName = currentProcess.ProcessName.ToLower() + ".exe";
 
                 StringBuilder windowTextBuilder = new StringBuilder(256);
-
                 UnsafeNativeFunctions.GetWindowText(windowHandle, windowTextBuilder, 256);
 
                 string currentWindowText = windowTextBuilder.ToString();
@@ -981,8 +975,7 @@ namespace UIDeskAutomationLib
         }
 
         //Returns true is elements are identical, false otherwise.
-        internal static bool CompareAutomationElements(AutomationElement el1,
-            AutomationElement el2)
+        internal static bool CompareAutomationElements(AutomationElement el1, AutomationElement el2)
         {
             int[] runtimeId1 = null;
             int[] runtimeId2 = null;
@@ -1024,25 +1017,17 @@ namespace UIDeskAutomationLib
         internal static ValuePattern GetValuePattern(AutomationElement uiElement)
         {
             object valuePatternObj = null;
-
-            uiElement.TryGetCurrentPattern(ValuePattern.Pattern,
-                out valuePatternObj);
-
+            uiElement.TryGetCurrentPattern(ValuePattern.Pattern, out valuePatternObj);
             ValuePattern valuePattern = valuePatternObj as ValuePattern;
 
             return valuePattern;
         }
 
-        internal static RangeValuePattern GetRangeValuePattern(
-            AutomationElement uiElement)
+        internal static RangeValuePattern GetRangeValuePattern(AutomationElement uiElement)
         {
             object rangeValuePatternObj = null;
-
-            uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
-                out rangeValuePatternObj);
-
-            RangeValuePattern rangeValuePattern = 
-                rangeValuePatternObj as RangeValuePattern;
+            uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out rangeValuePatternObj);
+            RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
 
             return rangeValuePattern;
         }
@@ -1235,7 +1220,7 @@ namespace UIDeskAutomationLib
 			{
 				size = new System.Drawing.Size(cropRect.Width, cropRect.Height);
 			}
-			//Bitmap bitmap = new Bitmap(size.Width, size.Height);
+			
 			IntPtr hwnd = new IntPtr(element.Current.NativeWindowHandle);
 			Bitmap bitmap = null;
 			if (hwnd == IntPtr.Zero)
@@ -1274,6 +1259,32 @@ namespace UIDeskAutomationLib
 			}
 			
 			return result;
+		}
+		
+		internal static Bitmap CaptureScreen(UIDA_Rect cropRect = null)
+		{
+			System.Drawing.Size size = new System.Drawing.Size(
+				System.Windows.Forms.SystemInformation.VirtualScreen.Width, 
+				System.Windows.Forms.SystemInformation.VirtualScreen.Height);
+			if (cropRect != null)
+			{
+				size = new System.Drawing.Size(cropRect.Width, cropRect.Height);
+			}
+			
+			Bitmap bitmap = new Bitmap(size.Width, size.Height);
+			using (Graphics g = Graphics.FromImage(bitmap))
+			{
+				if (cropRect != null)
+				{
+					g.CopyFromScreen(cropRect.Left, cropRect.Top, 0, 0, size);
+				}
+				else
+				{
+					g.CopyFromScreen(0, 0, 0, 0, size);
+				}
+			}
+			
+			return bitmap;
 		}
     }
 

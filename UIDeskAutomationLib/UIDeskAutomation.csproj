@@ -53,14 +53,17 @@
   <ItemGroup>
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Calendar.cs" />
-    <Compile Include="Controls\CheckBoxElement.cs" />
+    <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\Combo.cs" />
     <Compile Include="Controls\Custom.cs" />
     <Compile Include="Controls\DataGrid.cs" />
+	<Compile Include="Controls\DataItem.cs" />
     <Compile Include="Controls\DatePicker.cs" />
     <Compile Include="Controls\Document.cs" />
     <Compile Include="Controls\Edit.cs" />
     <Compile Include="Controls\Group.cs" />
+	<Compile Include="Controls\Header.cs" />
+	<Compile Include="Controls\HeaderItem.cs" />
     <Compile Include="Controls\Separator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\StatusBar.cs" />
