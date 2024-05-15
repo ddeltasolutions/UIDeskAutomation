@@ -31,9 +31,7 @@ namespace UIDeskAutomationLib
             if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
                 out selectionItemPatternObj) == true)
             {
-                SelectionItemPattern selectionItemPattern =
-                    selectionItemPatternObj as SelectionItemPattern;
-
+                SelectionItemPattern selectionItemPattern = selectionItemPatternObj as SelectionItemPattern;
                 if (selectionItemPattern != null)
                 {
                     try
@@ -49,17 +47,14 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Removes the current list items from the collection of selected list items
+        /// Removes the current list item from the collection of selected list items
         /// </summary>
         public void RemoveFromSelection()
         {
             object selectionItemPatternObj = null;
-            if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
-                out selectionItemPatternObj) == true)
+            if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern, out selectionItemPatternObj) == true)
             {
-                SelectionItemPattern selectionItemPattern =
-                    selectionItemPatternObj as SelectionItemPattern;
-
+                SelectionItemPattern selectionItemPattern = selectionItemPatternObj as SelectionItemPattern;
                 if (selectionItemPattern != null)
                 {
                     try
@@ -80,12 +75,9 @@ namespace UIDeskAutomationLib
         public void AddToSelection()
         {
             object selectionItemPatternObj = null;
-            if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
-                out selectionItemPatternObj) == true)
+            if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern, out selectionItemPatternObj) == true)
             {
-                SelectionItemPattern selectionItemPattern =
-                    selectionItemPatternObj as SelectionItemPattern;
-
+                SelectionItemPattern selectionItemPattern = selectionItemPatternObj as SelectionItemPattern;
                 if (selectionItemPattern != null)
                 {
                     try
@@ -110,12 +102,21 @@ namespace UIDeskAutomationLib
                 TreeWalker treeWalker = TreeWalker.ControlViewWalker;
                 AutomationElement parent = treeWalker.GetParent(this.uiElement);
 
+				UIDA_ListItem[] listItems = null;
                 while (parent != null)
                 {
                     try
                     {
                         if (parent.Current.ControlType == ControlType.List)
                         {
+							UIDA_List parentList = new UIDA_List(parent);
+							listItems = parentList.Items;
+                            break;
+                        }
+						if (parent.Current.ControlType == ControlType.ComboBox)
+                        {
+							UIDA_ComboBox parentComboBox = new UIDA_ComboBox(parent);
+							listItems = parentComboBox.Items;
                             break;
                         }
                     }
@@ -133,8 +134,8 @@ namespace UIDeskAutomationLib
                     throw new Exception("Error getting ListItem index");
                 }
 
-                UIDA_List parentList = new UIDA_List(parent);
-                UIDA_ListItem[] listItems = parentList.Items;
+                //UIDA_List parentList = new UIDA_List(parent);
+                //UIDA_ListItem[] listItems = parentList.Items;
 
                 int index = -1;
 
@@ -196,12 +197,9 @@ namespace UIDeskAutomationLib
             get
             {
                 object selectionItemPatternObj = null;
-                if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
-                    out selectionItemPatternObj) == true)
+                if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern, out selectionItemPatternObj) == true)
                 {
-                    SelectionItemPattern selectionItemPattern =
-                        selectionItemPatternObj as SelectionItemPattern;
-
+                    SelectionItemPattern selectionItemPattern = selectionItemPatternObj as SelectionItemPattern;
                     if (selectionItemPattern != null)
                     {
                         try
@@ -221,18 +219,15 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Brings the current List item into viewable area of the parent List control.
+        /// Brings the current List Item into viewable area of the parent List control.
         /// </summary>
         public void BringIntoView()
         {
             object scrollItemPatternObj = null;
 
-            if (this.uiElement.TryGetCurrentPattern(ScrollItemPattern.Pattern,
-                out scrollItemPatternObj) == true)
+            if (this.uiElement.TryGetCurrentPattern(ScrollItemPattern.Pattern, out scrollItemPatternObj) == true)
             {
-                ScrollItemPattern scrollItemPattern =
-                    scrollItemPatternObj as ScrollItemPattern;
-
+                ScrollItemPattern scrollItemPattern = scrollItemPatternObj as ScrollItemPattern;
                 if (scrollItemPattern == null)
                 {
                     Engine.TraceInLogFile("ListItem.BringIntoView method failed");
@@ -242,7 +237,6 @@ namespace UIDeskAutomationLib
                 try
                 {
                     scrollItemPattern.ScrollIntoView();
-
                     return;
                 }
                 catch (Exception ex)
@@ -290,11 +284,9 @@ namespace UIDeskAutomationLib
 
                 object togglePatternObj = null;
 
-                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern,
-                    out togglePatternObj) == true)
+                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out togglePatternObj) == true)
                 {
                     TogglePattern togglePattern = togglePatternObj as TogglePattern;
-
                     if (togglePattern == null)
                     {
                         Engine.TraceInLogFile("ListItem.IsChecked failed");
@@ -355,8 +347,7 @@ namespace UIDeskAutomationLib
 
                         uint processId = 0;
 
-                        UnsafeNativeFunctions.GetWindowThreadProcessId(hwndList,
-                            out processId);
+                        UnsafeNativeFunctions.GetWindowThreadProcessId(hwndList, out processId);
 
                         IntPtr hProcess = UnsafeNativeFunctions.OpenProcess(
                             ProcessAccessFlags.VirtualMemoryWrite | ProcessAccessFlags.VirtualMemoryOperation, 
@@ -403,11 +394,9 @@ namespace UIDeskAutomationLib
 
                 object togglePatternObj = null;
 
-                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern,
-                    out togglePatternObj) == true)
+                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out togglePatternObj) == true)
                 {
                     TogglePattern togglePattern = togglePatternObj as TogglePattern;
-
                     if (togglePattern == null)
                     {
                         if (value == true)
@@ -445,6 +434,7 @@ namespace UIDeskAutomationLib
                             if (togglePattern.Current.ToggleState != ToggleState.On)
                             {
                                 //this.SimulateDoubleClick();
+								this.BringIntoView();
                                 this.DoubleClick();
                             }
 
@@ -474,6 +464,7 @@ namespace UIDeskAutomationLib
                             if (togglePattern.Current.ToggleState != ToggleState.Off)
                             {
                                 //this.SimulateDoubleClick();
+								this.BringIntoView();
 								this.DoubleClick();
                             }
 
@@ -502,6 +493,7 @@ namespace UIDeskAutomationLib
                             if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
                             {
                                 //this.SimulateDoubleClick();
+								this.BringIntoView();
                                 this.DoubleClick();
                             }
 							if (togglePattern.Current.ToggleState != ToggleState.Indeterminate)
@@ -536,5 +528,16 @@ namespace UIDeskAutomationLib
 				}
             }
         }
+		
+		/// <summary>
+        /// Gets the text of the list item.
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
     }
 }

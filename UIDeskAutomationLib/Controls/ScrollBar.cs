@@ -15,10 +15,7 @@ namespace UIDeskAutomationLib
         /// Creates a UIDA_ScrollBar using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public UIDA_ScrollBar(AutomationElement el): base(el)
-        {
-            //this.uiElement = el;
-        }
+        public UIDA_ScrollBar(AutomationElement el): base(el) {}
 
         /// <summary>
         /// Increments the value of ScrollBar. 
@@ -32,11 +29,20 @@ namespace UIDeskAutomationLib
             try
             {
                 smallChange = base.GetSmallChange();
-                base.Value += smallChange;
+				double maximum = base.GetMaximum();
+				if (base.Value + smallChange <= maximum)
+				{
+					base.Value += smallChange;
+				}
+				else
+				{
+					base.Value = maximum;
+				}
             }
             catch (Exception ex)
             {
-                throw ex;
+                Engine.TraceInLogFile("ScrollBar.SmallIncrement: " + ex.Message);
+				throw ex;
             }
         }
 
@@ -51,11 +57,20 @@ namespace UIDeskAutomationLib
             try
             {
                 double largeChange = base.GetLargeChange();
-                base.Value += largeChange;
+				double maximum = base.GetMaximum();
+				if (base.Value + largeChange <= maximum)
+				{
+					base.Value += largeChange;
+				}
+				else
+				{
+					base.Value = maximum;
+				}
             }
             catch (Exception ex)
             {
-                throw ex;
+                Engine.TraceInLogFile("ScrollBar.LargeIncrement: " + ex.Message);
+				throw ex;
             }
         }
 
@@ -69,11 +84,20 @@ namespace UIDeskAutomationLib
             try
             {
                 double smallChange = base.GetSmallChange();
-                base.Value -= smallChange;
+				double minimum = base.GetMinimum();
+				if (base.Value - smallChange >= minimum)
+				{
+					base.Value -= smallChange;
+				}
+				else
+				{
+					base.Value = minimum;
+				}
             }
             catch (Exception ex)
             {
-                throw ex;
+                Engine.TraceInLogFile("ScrollBar.SmallDecrement: " + ex.Message);
+				throw ex;
             }
         }
 
@@ -88,11 +112,20 @@ namespace UIDeskAutomationLib
             try
             {
                 double largeChange = base.GetLargeChange();
-                base.Value -= largeChange;
+				double minimum = base.GetMinimum();
+				if (base.Value - largeChange >= minimum)
+				{
+					base.Value -= largeChange;
+				}
+				else
+				{
+					base.Value = minimum;
+				}
             }
             catch (Exception ex)
             {
-                throw ex;
+                Engine.TraceInLogFile("ScrollBar.LargeDecrement: " + ex.Message);
+				throw ex;
             }
         }
 
@@ -122,5 +155,21 @@ namespace UIDeskAutomationLib
             get { return base.Value; }
             set { base.Value = value; }
         }
+		
+		/// <summary>
+        /// Attaches/detaches a handler to value changed event. You can cast the first parameter (sender - of type GenericSpinner) to an UIDA_ScrollBar object.
+		/// The second parameter (of type double) is the new value of the scroll bar.
+        /// </summary>
+		public event ValueChanged ValueChangedEvent
+		{
+			add
+			{
+				base.ValueChangedEvent += value;
+			}
+			remove
+			{
+				base.ValueChangedEvent -= value;
+			}
+		}
     }
 }

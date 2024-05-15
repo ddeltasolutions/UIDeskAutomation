@@ -50,43 +50,48 @@ namespace UIDeskAutomationLib
                 catch { }
 
                 object rangeValuePatternObj = null;
+				this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out rangeValuePatternObj);
+				RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
 
-                if (this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
-                    out rangeValuePatternObj) == true)
-                {
-                    RangeValuePattern rangeValuePattern = rangeValuePatternObj
-                        as RangeValuePattern;
+				if (rangeValuePattern == null)
+				{
+					object valuePatternObj = null;
+					this.uiElement.TryGetCurrentPattern(ValuePattern.Pattern, out valuePatternObj);
+					ValuePattern valuePattern = valuePatternObj as ValuePattern;
+				
+					if (valuePattern == null)
+					{
+						Engine.TraceInLogFile("Cannot get value of " + localizedControlType);
+						throw new Exception("Cannot get value of " + localizedControlType);
+					}
+					
+					try
+					{
+						return double.Parse(valuePattern.Current.Value);
+					}
+					catch (Exception ex)
+					{
+						Engine.TraceInLogFile("Cannot get " + localizedControlType + " value: " + ex.Message);
+						throw new Exception("Cannot get " + localizedControlType + " value: " + ex.Message);
+					}
+				}
 
-                    if (rangeValuePattern == null)
-                    {
-                        Engine.TraceInLogFile("Cannot get value of " + 
-                            localizedControlType);
-                        throw new Exception("Cannot get value of " + 
-                            localizedControlType);
-                    }
-
-                    try
-                    {
-                        return rangeValuePattern.Current.Value;
-                    }
-                    catch (Exception ex)
-                    {
-                        Engine.TraceInLogFile("Cannot get " + 
-                            localizedControlType + " value: " + ex.Message);
-                        throw new Exception("Cannot get " + 
-                            localizedControlType + " value: " + ex.Message);
-                    }
-                }
-
-                Engine.TraceInLogFile("Cannot get value of " + localizedControlType);
-                throw new Exception("Cannot get value of " + localizedControlType);
+				try
+				{
+					return rangeValuePattern.Current.Value;
+				}
+				catch (Exception ex)
+				{
+					Engine.TraceInLogFile("Cannot get " + localizedControlType + " value: " + ex.Message);
+					throw new Exception("Cannot get " + localizedControlType + " value: " + ex.Message);
+				}
             }
 
             set
             {
                 try
                 {
-                    // Don't let the user to set the value of progress bar control.
+                    // Don't let the user set the value of progress bar control.
                     if (this.uiElement.Current.ControlType == ControlType.ProgressBar)
                     {
                         Engine.TraceInLogFile("Cannot set the value of a progress bar");
@@ -119,6 +124,11 @@ namespace UIDeskAutomationLib
 					{
 						try
 						{
+							double maximum = rangeValuePattern.Current.Maximum;
+							if (value > maximum)
+							{
+								value = maximum;
+							}
 							rangeValuePattern.SetValue(value);
 							return;
 						}
@@ -179,8 +189,7 @@ namespace UIDeskAutomationLib
                 while (hwndChild != IntPtr.Zero)
                 {
                     StringBuilder childClassName = new StringBuilder(256);
-                    UnsafeNativeFunctions.GetClassName(
-                        hwndChild, childClassName, 256);
+                    UnsafeNativeFunctions.GetClassName(hwndChild, childClassName, 256);
                     if (childClassName.ToString().ToLower().Contains("edit"))
                     {
                         hwndEdit = hwndChild;
@@ -264,16 +273,12 @@ namespace UIDeskAutomationLib
             if (this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
                 out rangeValuePatternObj) == true)
             {
-                RangeValuePattern rangeValuePattern = rangeValuePatternObj as
-                    RangeValuePattern;
+                RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
 
                 if (rangeValuePattern == null)
                 {
-                    Engine.TraceInLogFile("Cannot get minimum of " + 
-                        localizedControlType);
-
-                    throw new Exception("Cannot get minimum of " + 
-                        localizedControlType);
+                    Engine.TraceInLogFile("Cannot get minimum of " + localizedControlType);
+                    throw new Exception("Cannot get minimum of " + localizedControlType);
                 }
 
                 try
@@ -282,11 +287,8 @@ namespace UIDeskAutomationLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.TraceInLogFile("Cannot get minimum of " + 
-                        localizedControlType + ": " + ex.Message);
-
-                    throw new Exception("Cannot get minimum of " + 
-                        localizedControlType + ": " + ex.Message);
+                    Engine.TraceInLogFile("Cannot get minimum of " + localizedControlType + ": " + ex.Message);
+                    throw new Exception("Cannot get minimum of " + localizedControlType + ": " + ex.Message);
                 }
             }
 
@@ -313,8 +315,7 @@ namespace UIDeskAutomationLib
             if (this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
                 out rangeValuePatternObj) == true)
             {
-                RangeValuePattern rangeValuePattern = rangeValuePatternObj as
-                    RangeValuePattern;
+                RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
 
                 if (rangeValuePattern == null)
                 {
@@ -328,11 +329,8 @@ namespace UIDeskAutomationLib
                 }
                 catch (Exception ex)
                 {
-                    Engine.TraceInLogFile("Cannot get maximum of " + 
-                        localizedControlType + ": " + ex.Message);
-
-                    throw new Exception("Cannot get maximum of " + 
-                        localizedControlType + ": " + ex.Message);
+                    Engine.TraceInLogFile("Cannot get maximum of " + localizedControlType + ": " + ex.Message);
+                    throw new Exception("Cannot get maximum of " + localizedControlType + ": " + ex.Message);
                 }
             }
 
@@ -343,13 +341,9 @@ namespace UIDeskAutomationLib
         internal double GetSmallChange()
         {
             object rangeValuePatternObj = null;
+            this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out rangeValuePatternObj);
 
-            this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
-                out rangeValuePatternObj);
-
-            RangeValuePattern rangeValuePattern = rangeValuePatternObj as 
-                RangeValuePattern;
-
+            RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
             if (rangeValuePattern == null)
             {
                 Engine.TraceInLogFile("GetSmallChange() method: RangeValuePattern not supported");
@@ -371,13 +365,9 @@ namespace UIDeskAutomationLib
         internal double GetLargeChange()
         {
             object rangeValuePatternObj = null;
+            this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out rangeValuePatternObj);
 
-            this.uiElement.TryGetCurrentPattern(RangeValuePattern.Pattern,
-                out rangeValuePatternObj);
-
-            RangeValuePattern rangeValuePattern = rangeValuePatternObj as
-                RangeValuePattern;
-
+            RangeValuePattern rangeValuePattern = rangeValuePatternObj as RangeValuePattern;
             if (rangeValuePattern == null)
             {
                 Engine.TraceInLogFile("GetLargeChange() method: RangeValuePattern not supported");
@@ -395,5 +385,87 @@ namespace UIDeskAutomationLib
                 throw new Exception("GetLargeChange() method failed: " + ex.Message);
             }
         }
+		
+		private AutomationPropertyChangedEventHandler UIA_ValueChangedEventHandler = null;
+		
+		public delegate void ValueChanged(GenericSpinner sender, double newValue);
+		internal ValueChanged ValueChangedHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to value changed event
+        /// </summary>
+		internal event ValueChanged ValueChangedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ValueChangedHandler == null)
+					{
+						this.UIA_ValueChangedEventHandler = new AutomationPropertyChangedEventHandler(OnUIAutomationPropChangedEvent);
+			
+						if (base.uiElement.Current.FrameworkId == "WinForm")
+						{
+							Automation.AddAutomationPropertyChangedEventHandler(base.uiElement, TreeScope.Element,
+								UIA_ValueChangedEventHandler, ValuePattern.ValueProperty);
+						}
+						else
+						{
+							Automation.AddAutomationPropertyChangedEventHandler(base.uiElement, TreeScope.Element,
+								UIA_ValueChangedEventHandler, RangeValuePattern.ValueProperty);
+						}
+					}
+					
+					this.ValueChangedHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ValueChangedHandler -= value;
+				
+					if (this.ValueChangedHandler == null)
+					{
+						if (this.UIA_ValueChangedEventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationPropertyChangedEventHandler(base.uiElement, 
+									this.UIA_ValueChangedEventHandler);
+								UIA_ValueChangedEventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private void OnUIAutomationPropChangedEvent(object sender, AutomationPropertyChangedEventArgs e)
+		{
+			if (e.Property.Id == RangeValuePattern.ValueProperty.Id && this.ValueChangedHandler != null)
+			{
+				double newValue = 0.0;
+				try
+				{
+					newValue = (double)e.NewValue;
+				}
+				catch { }
+				
+				ValueChangedHandler(this, newValue);
+			}
+			if (e.Property.Id == ValuePattern.ValueProperty.Id && this.ValueChangedHandler != null)
+			{
+				ValueChangedHandler(this, this.Value);
+			}
+		}
     }
 }

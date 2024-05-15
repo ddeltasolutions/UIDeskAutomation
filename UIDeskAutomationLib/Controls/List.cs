@@ -29,11 +29,9 @@ namespace UIDeskAutomationLib
             {
                 if (uiElement.Current.FrameworkId != "WPF")
                 {
-                    List<AutomationElement> allListItems = 
-                        this.FindAll(ControlType.ListItem, null, false, false, true);
+                    List<AutomationElement> allListItems = this.FindAll(ControlType.ListItem, null, false, false, true);
 
                     List<UIDA_ListItem> returnCollection = new List<UIDA_ListItem>();
-
                     foreach (AutomationElement listItemEl in allListItems)
                     {
                         UIDA_ListItem listItem = new UIDA_ListItem(listItemEl);
@@ -51,8 +49,7 @@ namespace UIDeskAutomationLib
                     ItemContainerPattern itemContainerPattern = objectPattern as ItemContainerPattern;
                     if (itemContainerPattern == null)
                     {
-                        List<AutomationElement> allListItems = 
-                            this.FindAll(ControlType.ListItem, null, false, false, true);
+                        List<AutomationElement> allListItems = this.FindAll(ControlType.ListItem, null, false, false, true);
                         foreach (AutomationElement listItemEl in allListItems)
                         {
                             UIDA_ListItem listItem = new UIDA_ListItem(listItemEl);
@@ -102,7 +99,6 @@ namespace UIDeskAutomationLib
             get
             {
                 List<UIDA_ListItem> selectedItems = new List<UIDA_ListItem>();
-
                 UIDA_ListItem[] allListItems = this.Items;
 
                 foreach (UIDA_ListItem listItem in allListItems)
@@ -344,7 +340,6 @@ namespace UIDeskAutomationLib
             else
             {
                 UIDA_ListItem[] items = ListItems(itemText, true, caseSensitive);
-
                 foreach (UIDA_ListItem item in items)
                 {
                     item.AddToSelection();
@@ -420,12 +415,267 @@ namespace UIDeskAutomationLib
             else
             {
                 UIDA_ListItem[] items = ListItems(itemText, true, caseSensitive);
-
                 foreach (UIDA_ListItem item in items)
                 {
                     item.RemoveFromSelection();
                 }
             }
         }
+		
+		private AutomationEventHandler UIAeventHandler = null;
+		
+		/// <summary>
+        /// Delegate for Element Selected event
+        /// </summary>
+		/// <param name="sender">The list that sent the event.</param>
+		/// <param name="selectedItem">the new selected list item</param>
+		public delegate void ElementSelected(UIDA_List sender, UIDA_ListItem selectedItem);
+		internal ElementSelected ElementSelectedHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to element selected event
+        /// </summary>
+		public event ElementSelected ElementSelectedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ElementSelectedHandler == null)
+					{
+						UIAeventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+			
+						Automation.AddAutomationEventHandler(SelectionItemPattern.ElementSelectedEvent,
+							base.uiElement, TreeScope.Subtree, UIAeventHandler);
+					}
+					
+					this.ElementSelectedHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ElementSelectedHandler -= value;
+				
+					if (this.ElementSelectedHandler == null)
+					{
+						if (this.UIAeventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationEventHandler(SelectionItemPattern.ElementSelectedEvent, 
+									base.uiElement, this.UIAeventHandler);
+								UIAeventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private AutomationEventHandler UIA_ElementAddedToSelectionEventHandler = null;
+		
+		/// <summary>
+        /// Delegate for Element Added To Selection event
+        /// </summary>
+		/// <param name="sender">The list that sent the event.</param>
+		/// <param name="itemAdded">the list item added to selection</param>
+		public delegate void ElementAddedToSelection(UIDA_List sender, UIDA_ListItem itemAdded);
+		internal ElementAddedToSelection ElementAddedToSelectionHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to element added to selection event
+        /// </summary>
+		public event ElementAddedToSelection ElementAddedToSelectionEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ElementAddedToSelectionHandler == null)
+					{
+						this.UIA_ElementAddedToSelectionEventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+			
+						Automation.AddAutomationEventHandler(SelectionItemPattern.ElementAddedToSelectionEvent,
+							base.uiElement, TreeScope.Subtree, this.UIA_ElementAddedToSelectionEventHandler);
+					}
+					
+					this.ElementAddedToSelectionHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ElementAddedToSelectionHandler -= value;
+				
+					if (this.ElementAddedToSelectionHandler == null)
+					{
+						if (this.UIA_ElementAddedToSelectionEventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationEventHandler(SelectionItemPattern.ElementAddedToSelectionEvent,
+									base.uiElement, this.UIA_ElementAddedToSelectionEventHandler);
+								UIA_ElementAddedToSelectionEventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private AutomationEventHandler UIA_ElementRemovedFromSelectionEventHandler = null;
+		
+		/// <summary>
+        /// Delegate for Element Removed From Selection event
+        /// </summary>
+		/// <param name="sender">The list that sent the event.</param>
+		/// <param name="itemRemoved">the list item removed from selection</param>
+		public delegate void ElementRemovedFromSelection(UIDA_List sender, UIDA_ListItem itemRemoved);
+		internal ElementRemovedFromSelection ElementRemovedFromSelectionHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to element removed from selection event
+        /// </summary>
+		public event ElementRemovedFromSelection ElementRemovedFromSelectionEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ElementRemovedFromSelectionHandler == null)
+					{
+						this.UIA_ElementRemovedFromSelectionEventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+			
+						Automation.AddAutomationEventHandler(SelectionItemPattern.ElementRemovedFromSelectionEvent,
+							base.uiElement, TreeScope.Subtree, this.UIA_ElementRemovedFromSelectionEventHandler);
+					}
+					
+					this.ElementRemovedFromSelectionHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ElementRemovedFromSelectionHandler -= value;
+				
+					if (this.ElementRemovedFromSelectionHandler == null)
+					{
+						if (this.UIA_ElementRemovedFromSelectionEventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationEventHandler(SelectionItemPattern.ElementRemovedFromSelectionEvent,
+									base.uiElement, this.UIA_ElementRemovedFromSelectionEventHandler);
+								UIA_ElementRemovedFromSelectionEventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		//private DateTime lastChecked = DateTime.Now;
+		private AutomationElement lastElement = null;
+		private int lastEventId = -1;
+		
+		private void OnUIAutomationEvent(object sender, AutomationEventArgs e)
+		{
+			//DateTime currentChecked = DateTime.Now;
+			AutomationElement sourceElement = sender as AutomationElement;
+			
+			if (lastEventId == e.EventId.Id && lastElement != null)
+			{
+				if (sourceElement != null && sourceElement == lastElement)
+				{
+					//if (currentChecked - lastChecked <= TimeSpan.FromMilliseconds(100))
+					//{
+						//lastChecked = currentChecked;
+						return;
+					//}
+				}
+			}
+			//lastChecked = currentChecked;
+			lastElement = sourceElement;
+			lastEventId = e.EventId.Id;
+		
+			if (e.EventId == SelectionItemPattern.ElementSelectedEvent && this.ElementSelectedHandler != null)
+			{
+				if (sourceElement != null)
+				{
+					ElementSelectedHandler(this, new UIDA_ListItem(sourceElement));
+				}
+				else
+				{
+					ElementSelectedHandler(this, null);
+				}
+				//CallEventHandler(sourceElement, ElementSelectedHandler);
+			}
+			else if (e.EventId == SelectionItemPattern.ElementAddedToSelectionEvent && 
+				this.ElementAddedToSelectionHandler != null)
+			{
+				if (sourceElement != null)
+				{
+					ElementAddedToSelectionHandler(this, new UIDA_ListItem(sourceElement));
+				}
+				else
+				{
+					ElementAddedToSelectionHandler(this, null);
+				}
+				//CallEventHandler(sourceElement, OnElementAddedToSelection);
+			}
+			else if (e.EventId == SelectionItemPattern.ElementRemovedFromSelectionEvent && 
+				this.ElementRemovedFromSelectionHandler != null)
+			{
+				if (sourceElement != null)
+				{
+					ElementRemovedFromSelectionHandler(this, new UIDA_ListItem(sourceElement));
+				}
+				else
+				{
+					ElementRemovedFromSelectionHandler(this, null);
+				}
+				//CallEventHandler(sourceElement, OnElementRemovedFromSelection);
+			}
+		}
+		
+		private void CallEventHandler(AutomationElement sourceElement, Action<UIDA_ListItem> handler)
+		{
+			if (sourceElement != null)
+			{
+				handler(new UIDA_ListItem(sourceElement));
+			}
+			else
+			{
+				handler(null);
+			}
+		}
     }
 }

@@ -131,7 +131,6 @@ namespace UIDeskAutomationLib
             }
 
             AutomationElement returnElement = null;
-
             Errors error = this.FindAt(ControlType.ListItem, name, index, true,
                 false, caseSensitive, out returnElement);
 
@@ -245,6 +244,17 @@ namespace UIDeskAutomationLib
                 return null;
             }
         }
+		
+		/// <summary>
+        /// Gets the text of the selected item.
+        /// </summary>
+		public string Text
+		{
+			get
+			{
+				return this.GetText();
+			}
+		}
         
         /// <summary>
         /// Expands the combobox.
@@ -329,5 +339,160 @@ namespace UIDeskAutomationLib
                 Collapse();
             }
         }
+		
+		private AutomationPropertyChangedEventHandler UIAPropChangedEventHandler = null;
+		private AutomationEventHandler UIAeventHandler = null;
+		
+		/// <summary>
+        /// Delegate for Selection Changed event
+        /// </summary>
+		/// <param name="sender">The ComboBox that sent the event</param>
+		/// <param name="selectedItem">the text of the selected item</param>
+		public delegate void SelectionChanged(UIDA_ComboBox sender, string selectedItemText);
+		internal SelectionChanged SelectionChangedHandler = null;
+		
+		/// <summary>
+		/// Attaches/detaches a handler to selection changed event
+		/// </summary>
+		public event SelectionChanged SelectionChangedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.SelectionChangedHandler == null)
+					{
+						string cfid = base.uiElement.Current.FrameworkId;
+						//if (cfid == "Win32" || cfid == "XAML")
+						if (cfid != "WPF")
+						{
+							selectedText = null;
+							try
+							{
+								selectedText = this.SelectedItem.GetText();
+							}
+							catch {}
+							if (selectedText == null)
+							{
+								try
+								{
+									selectedText = this.GetText();
+								}
+								catch {}
+							}
+						
+							UIAeventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+						
+							Automation.AddAutomationEventHandler(SelectionItemPattern.ElementSelectedEvent,
+								base.uiElement, TreeScope.Subtree, UIAeventHandler);
+						}
+						else
+						{
+							UIAPropChangedEventHandler = new AutomationPropertyChangedEventHandler(
+								OnUIAutomationPropChangedEvent);
+										
+							Automation.AddAutomationPropertyChangedEventHandler(base.uiElement, TreeScope.Element,
+									UIAPropChangedEventHandler, ValuePattern.ValueProperty);
+						}
+					}
+					
+					this.SelectionChangedHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.SelectionChangedHandler -= value;
+				
+					if (this.SelectionChangedHandler == null)
+					{
+						string cfid = base.uiElement.Current.FrameworkId;
+						if (cfid == "Win32" || cfid == "XAML")
+						{
+							RemoveEventHandlerWin32();
+						}
+						else
+						{
+							RemoveEventHandler();
+						}
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private void RemoveEventHandlerWin32()
+		{
+			if (this.UIAeventHandler == null)
+			{
+				return;
+			}
+			
+			System.Threading.Tasks.Task.Run(() => 
+			{
+				try
+				{
+					Automation.RemoveAutomationEventHandler(SelectionItemPattern.ElementSelectedEvent, 
+						base.uiElement, this.UIAeventHandler);
+					UIAeventHandler = null;
+				}
+				catch { }
+			}).Wait(5000);
+		}
+		
+		private void RemoveEventHandler()
+		{
+			if (this.UIAPropChangedEventHandler == null)
+			{
+				return;
+			}
+			
+			System.Threading.Tasks.Task.Run(() => 
+			{
+				try
+				{
+					Automation.RemoveAutomationPropertyChangedEventHandler(base.uiElement, 
+						this.UIAPropChangedEventHandler);
+					UIAPropChangedEventHandler = null;
+				}
+				catch { }
+			}).Wait(5000);
+		}
+		
+		private void OnUIAutomationPropChangedEvent(object sender, AutomationPropertyChangedEventArgs e)
+		{
+			if (e.Property.Id == ValuePattern.ValueProperty.Id && this.SelectionChangedHandler != null)
+			{
+				string newValue = (e.NewValue == null ? null : e.NewValue.ToString());
+				this.SelectionChangedHandler(this, newValue);
+			}
+		}
+		
+		private string selectedText = null;
+		private void OnUIAutomationEvent(object sender, AutomationEventArgs e)
+		{
+			if (e.EventId == SelectionItemPattern.ElementSelectedEvent && this.SelectionChangedHandler != null)
+			{
+				AutomationElement sourceElement = sender as AutomationElement;
+				string text = null;
+				if (sourceElement != null)
+				{
+					try
+					{
+						text = (new UIDA_ListItem(sourceElement)).GetText();
+						//text = sourceElement.Current.Name;
+					}
+					catch { }
+				}
+			
+				if (text != selectedText)
+				{
+					selectedText = text;
+					this.SelectionChangedHandler(this, text);
+				}
+			}
+		}
     }
 }

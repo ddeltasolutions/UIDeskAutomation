@@ -111,5 +111,129 @@ namespace UIDeskAutomationLib
 				throw new Exception("Could not set the pressed state of the button. This is supported only for toggle buttons.");
             }*/
         }
+		
+		private AutomationPropertyChangedEventHandler UIAPropChangedEventHandler = null;
+		private AutomationEventHandler UIA_ClickedEventHandler = null;
+		
+		/// <summary>
+        /// Delegate for clicked event
+        /// </summary>
+		/// <param name="sender">The button that sent the event</param>
+		public delegate void Clicked(UIDA_Button sender);
+		internal Clicked ClickedHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to click event
+        /// </summary>
+		public event Clicked ClickedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ClickedHandler == null)
+					{
+						string cfid = base.uiElement.Current.FrameworkId;
+						if (cfid == "WinForm")
+						{
+							UIAPropChangedEventHandler = new AutomationPropertyChangedEventHandler(
+								OnUIAutomationPropChangedEvent);
+						
+							Automation.AddAutomationPropertyChangedEventHandler(base.uiElement, TreeScope.Element,
+									UIAPropChangedEventHandler, AutomationElement.NameProperty);
+						}
+						else
+						{
+							this.UIA_ClickedEventHandler = new AutomationEventHandler(OnUIAutomationEvent);
+						
+							Automation.AddAutomationEventHandler(InvokePattern.InvokedEvent,
+									base.uiElement, TreeScope.Element, UIA_ClickedEventHandler);
+						}
+					}
+					
+					this.ClickedHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ClickedHandler -= value;
+				
+					if (this.ClickedHandler == null)
+					{
+						string cfid = base.uiElement.Current.FrameworkId;
+						if (cfid == "WinForm")
+						{
+							RemoveEventHandlerWinForm();
+						}
+						else
+						{
+							RemoveEventHandler();
+						}
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private void RemoveEventHandlerWinForm()
+		{
+			if (this.UIAPropChangedEventHandler == null)
+			{
+				return;
+			}
+			
+			System.Threading.Tasks.Task.Run(() => 
+			{
+				try
+				{
+					Automation.RemoveAutomationPropertyChangedEventHandler(base.uiElement, 
+						this.UIAPropChangedEventHandler);
+					UIAPropChangedEventHandler = null;
+				}
+				catch { }
+			}).Wait(5000);
+		}
+		
+		private void RemoveEventHandler()
+		{
+			if (this.UIA_ClickedEventHandler == null)
+			{
+				return;
+			}
+			
+			System.Threading.Tasks.Task.Run(() => 
+			{
+				try
+				{
+					Automation.RemoveAutomationEventHandler(InvokePattern.InvokedEvent, 
+						base.uiElement, this.UIA_ClickedEventHandler);
+					UIA_ClickedEventHandler = null;
+				}
+				catch { }
+			}).Wait(5000);
+		}
+		
+		private void OnUIAutomationEvent(object sender, AutomationEventArgs e)
+		{
+			if (e.EventId == InvokePattern.InvokedEvent && this.ClickedHandler != null)
+			{
+				ClickedHandler(this);
+			}
+		}
+		
+		private void OnUIAutomationPropChangedEvent(object sender, AutomationPropertyChangedEventArgs e)
+		{
+			if (e.Property.Id == AutomationElement.NameProperty.Id && this.ClickedHandler != null)
+			{
+				AutomationElement sourceElement = sender as AutomationElement;
+				if (sourceElement != null && sourceElement.Current.FrameworkId == "WinForm")
+				{
+					ClickedHandler(this);
+				}
+			}
+		}
     }
 }

@@ -101,6 +101,7 @@ namespace UIDeskAutomationLib
                         return;
                     }
                     
+					this.BringToForeground();
                     System.Windows.Rect boundingRect = this.uiElement.Current.BoundingRectangle;
                     int x = (int)boundingRect.Right - 5;
                     int y = (int)((boundingRect.Top + boundingRect.Bottom) / 2);

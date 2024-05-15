@@ -16,10 +16,7 @@ namespace UIDeskAutomationLib
         /// Creates a UIDA_Spinner using an AutomationElement
         /// </summary>
         /// <param name="el">UI Automation AutomationElement</param>
-        public UIDA_Spinner(AutomationElement el): base(el)
-        {
-            //this.uiElement = el;
-        }
+        public UIDA_Spinner(AutomationElement el): base(el) {}
 
         /// <summary>
         /// Increment the value of spinner. Is like pressing the up arrow.

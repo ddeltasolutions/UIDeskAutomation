@@ -105,7 +105,6 @@ namespace UIDeskAutomationLib
                 }
 
                 AutomationElement returnElement = null;
-
                 Errors error = this.FindAt(ControlType.Header, name, index, searchDescendants,
                     false, caseSensitive, out returnElement);
 
@@ -202,11 +201,9 @@ namespace UIDeskAutomationLib
             private string GetSetValue(string value, bool get = true)
             {
                 object valuePatternObj = null;
-                this.uiElement.TryGetCurrentPattern(ValuePattern.Pattern,
-                    out valuePatternObj);
+                this.uiElement.TryGetCurrentPattern(ValuePattern.Pattern, out valuePatternObj);
 
                 ValuePattern valuePattern = valuePatternObj as ValuePattern;
-
                 if (valuePattern == null)
                 {
                     Engine.TraceInLogFile(

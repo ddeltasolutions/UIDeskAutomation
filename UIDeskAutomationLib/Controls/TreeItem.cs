@@ -49,9 +49,7 @@ namespace UIDeskAutomationLib
             if (this.uiElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern,
                 out expandCollapsePatternObj) == true)
             {
-                ExpandCollapsePattern expandCollapsePattern =
-                    expandCollapsePatternObj as ExpandCollapsePattern;
-
+                ExpandCollapsePattern expandCollapsePattern = expandCollapsePatternObj as ExpandCollapsePattern;
                 if (expandCollapsePattern == null)
                 {
                     Engine.TraceInLogFile("UIDA_TreeItem.Expand method failed");
@@ -76,9 +74,7 @@ namespace UIDeskAutomationLib
             if (this.uiElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern,
                 out expandCollapsePatternObj) == true)
             {
-                ExpandCollapsePattern expandCollapsePattern =
-                    expandCollapsePatternObj as ExpandCollapsePattern;
-
+                ExpandCollapsePattern expandCollapsePattern = expandCollapsePatternObj as ExpandCollapsePattern;
                 if (expandCollapsePattern == null)
                 {
                     Engine.TraceInLogFile("UIDA_TreeItem.Collapse method failed");
@@ -106,9 +102,7 @@ namespace UIDeskAutomationLib
 				if (this.uiElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern,
 					out expandCollapsePatternObj) == true)
 				{
-					ExpandCollapsePattern expandCollapsePattern =
-						expandCollapsePatternObj as ExpandCollapsePattern;
-
+					ExpandCollapsePattern expandCollapsePattern = expandCollapsePatternObj as ExpandCollapsePattern;
 					if (expandCollapsePattern == null)
 					{
 						Engine.TraceInLogFile("UIDA_TreeItem.ExpandCollapseState property failed");
@@ -124,14 +118,13 @@ namespace UIDeskAutomationLib
 		}
 
         /// <summary>
-        /// Cycles through the toggle states (checked, unchecked, indeterminate).
+        /// Cycles through the check states (checked, unchecked, indeterminate).
         /// </summary>
         public void Toggle()
         {
 			object togglePatternObj = null;
 
-			if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern,
-				out togglePatternObj) == true)
+			if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out togglePatternObj) == true)
 			{
 				TogglePattern togglePattern = togglePatternObj as TogglePattern;
 				if (togglePattern == null)
@@ -157,11 +150,54 @@ namespace UIDeskAutomationLib
         }
 
         /// <summary>
-        /// Selects the current tree item and deselects all others selected tree items.
+        /// Selects the current tree item and deselects all other selected tree items.
         /// </summary>
         public void Select()
         {
-            object selectionItemPatternObj = null;
+			object invokePatternObj = null;
+			this.uiElement.TryGetCurrentPattern(InvokePattern.Pattern, out invokePatternObj);
+			InvokePattern invokePattern = invokePatternObj as InvokePattern;
+			
+			if (invokePattern != null)
+			{
+				invokePattern.Invoke();
+			}
+			else
+			{
+				this.BringToForeground();
+				try
+				{
+					this.BringIntoView();
+				}
+				catch { }
+				
+				// click the tree item to make sure all events are raised
+				string fwkid = null;
+				try
+				{
+					fwkid = this.uiElement.Current.FrameworkId;
+				}
+				catch { }
+				
+				if (fwkid == "WPF")
+				{
+					UIDA_Label label = this.Label();
+					if (label != null)
+					{
+						label.Click();
+					}
+					else
+					{
+						this.Click();
+					}
+				}
+				else
+				{
+					this.Click();
+				}
+			}
+			
+            /*object selectionItemPatternObj = null;
 
             if (this.uiElement.TryGetCurrentPattern(SelectionItemPattern.Pattern,
                 out selectionItemPatternObj) == true)
@@ -180,22 +216,19 @@ namespace UIDeskAutomationLib
             }
 
             Engine.TraceInLogFile("UIDA_TreeItem.Select() method failed");
-            throw new Exception("UIDA_TreeItem.Select() method failed");
+            throw new Exception("UIDA_TreeItem.Select() method failed");*/
         }
 
         /// <summary>
-        /// Brings the current TreeView item into viewable area of the parent Tree control.
+        /// Brings the current Tree Item into the viewable area of the parent Tree control.
         /// </summary>
         public void BringIntoView()
         {
             object scrollItemPatternObj = null;
 
-            if (this.uiElement.TryGetCurrentPattern(ScrollItemPattern.Pattern,
-                out scrollItemPatternObj) == true)
+            if (this.uiElement.TryGetCurrentPattern(ScrollItemPattern.Pattern, out scrollItemPatternObj) == true)
             {
-                ScrollItemPattern scrollItemPattern =
-                    scrollItemPatternObj as ScrollItemPattern;
-
+                ScrollItemPattern scrollItemPattern = scrollItemPatternObj as ScrollItemPattern;
                 if (scrollItemPattern == null)
                 {
                     Engine.TraceInLogFile("UIDA_TreeItem.BringIntoView method failed");
@@ -230,11 +263,9 @@ namespace UIDeskAutomationLib
             {
                 object togglePatternObj = null;
 
-                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern,
-                    out togglePatternObj) == true)
+                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out togglePatternObj) == true)
                 {
                     TogglePattern togglePattern = togglePatternObj as TogglePattern;
-
                     if (togglePattern == null)
                     {
                         Engine.TraceInLogFile("UIDA_TreeItem.Checked failed");
@@ -271,11 +302,9 @@ namespace UIDeskAutomationLib
             {
                 object togglePatternObj = null;
 
-                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern,
-                    out togglePatternObj) == true)
+                if (this.uiElement.TryGetCurrentPattern(TogglePattern.Pattern, out togglePatternObj) == true)
                 {
                     TogglePattern togglePattern = togglePatternObj as TogglePattern;
-
                     if (togglePattern == null)
                     {
                         if (value == true)
@@ -381,5 +410,86 @@ namespace UIDeskAutomationLib
 				}
             }
         }
+		
+		private AutomationPropertyChangedEventHandler UIAPropChangedEventHandler = null;
+		
+		/// <summary>
+        /// Delegate for Expanded event
+        /// </summary>
+		/// <param name="sender">The tree item that sent the event.</param>
+		/// <param name="isExpanded">true if expanded, false if not.</param>
+		public delegate void Expanded(UIDA_TreeItem sender, bool isExpanded);
+		internal Expanded ExpandedHandler = null;
+		
+		/// <summary>
+        /// Attaches/detaches a handler to expanded event
+        /// </summary>
+		public event Expanded ExpandedEvent
+		{
+			add
+			{
+				try
+				{
+					if (this.ExpandedHandler == null)
+					{
+						UIAPropChangedEventHandler = new AutomationPropertyChangedEventHandler(
+							OnUIAutomationPropChangedEvent);
+
+						Automation.AddAutomationPropertyChangedEventHandler(base.uiElement, TreeScope.Element,
+								UIAPropChangedEventHandler, ExpandCollapsePattern.ExpandCollapseStateProperty);
+					}
+					
+					this.ExpandedHandler += value;
+				}
+				catch {}
+			}
+			remove
+			{
+				try
+				{
+					this.ExpandedHandler -= value;
+				
+					if (this.ExpandedHandler == null)
+					{
+						if (this.UIAPropChangedEventHandler == null)
+						{
+							return;
+						}
+						
+						System.Threading.Tasks.Task.Run(() => 
+						{
+							try
+							{
+								Automation.RemoveAutomationPropertyChangedEventHandler(base.uiElement, 
+									this.UIAPropChangedEventHandler);
+								UIAPropChangedEventHandler = null;
+							}
+							catch { }
+						}).Wait(5000);
+					}
+				}
+				catch {}
+			}
+		}
+		
+		private void OnUIAutomationPropChangedEvent(object sender, AutomationPropertyChangedEventArgs e)
+		{
+			if (e.Property.Id == ExpandCollapsePattern.ExpandCollapseStateProperty.Id && this.ExpandedHandler != null)
+			{
+				try
+				{
+					ExpandCollapseState state = (ExpandCollapseState)e.NewValue;
+					if (state == ExpandCollapseState.Expanded)
+					{
+						ExpandedHandler(this, true);
+					}
+					else
+					{
+						ExpandedHandler(this, false);
+					}
+				}
+				catch { }
+			}
+		}
     }
 }
